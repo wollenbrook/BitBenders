@@ -1,0 +1,43 @@
+@startuml SmartBracketApp
+
+!define Actor1 <<Organizer>>
+!define Actor2 <<Player>>
+!define Actor3 <<Spectator>>
+
+actor Actor1 as Organizer
+actor Actor2 as Player
+actor Actor3 as Spectator
+
+Organizer --> (Create Brackets)
+Organizer --> (Manage Brackets)
+Organizer --> (Tournament Registration)
+Organizer --> (Bracket Feedback)
+Organizer --> (Scheduling Optimization)
+
+Player --> (Tournament Registration)
+Player --> (Bracket Feedback)
+Player --> (Match Broadcast Viewer Engagement)
+Player --> (Tournament Search)
+
+Spectator --> (View Broadcasts)
+Spectator --> (Vote System towards Specific Matches to be Broadcast)
+Spectator --> (Tournament Search)
+
+(Create Brackets) --> (Smart Seeding Algorithm)
+(Create Brackets) --> (Conflict Resolution)
+
+(Smart Seeding Algorithm) --> (Conflict Resolution)
+
+(User Accounts & Profiles) --> (User Registration)
+(User Accounts & Profiles) --> (User Profile Management)
+
+(User Registration) <-- (Player Registration)
+
+(Bracket Feedback) --> (Feedback for Conflicts)
+(Bracket Feedback) <-- (Conflict Status)
+
+(Notifications/Announcements) --> (Notifications for Seeding Changes)
+(Notifications/Announcements) --> (Notifications for Conflicts)
+(Notifications/Announcements) --> (Announcements for App Changes)
+
+@enduml
