@@ -1,0 +1,45 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+ <g id="Layer_1">
+  <title>Layer 1</title>
+  <path stroke="#000" id="svg_18" d="m240.66666,89l198.00001,0l0,206.99998l-198.00001,0l0,-206.99998z" opacity="undefined" fill="#fff"/>
+  <path id="svg_1" d="m251.66666,128.99999l177,0l0,152l-177,0l0,-152z" opacity="undefined" stroke="#000" fill="#fff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="16" id="svg_2" y="116.99999" x="301.66666" stroke-width="0" stroke="#000" fill="#000000">BitBracket</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_4" y="154.99999" x="281.66666" stroke-width="0" stroke="#000" fill="#000000">Asp.Net Core MVC 8.0</text>
+  <text stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_6" y="234.99999" x="255.66667" stroke-width="0" fill="#000000">Asp.NET Identity</text>
+  <path stroke="#000" id="svg_10" d="m261.66666,359.99999l77,0l0,49l-77,0l0,-49z" opacity="undefined" fill="#fff"/>
+  <path stroke="#000" id="svg_11" d="m381.66666,361.99999l77,0l0,49.00001l-77,0l0,-49.00001z" opacity="undefined" fill="#fff"/>
+  <text stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_13" y="379.99999" x="272.66667" stroke-width="0" fill="#000000">SQL Server</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_14" y="355.99998" x="255.66667" stroke-width="0" stroke="#000" fill="#000000">Authentication DB</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_15" y="358.99998" x="370.66666" stroke-width="0" stroke="#000" fill="#000000">Main application DB</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_16" y="385.99998" x="389.66666" stroke-width="0" stroke="#000" fill="#000000">SQL Server</text>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="16" stroke-width="0" id="svg_19" y="77.99999" x="284.66667" stroke="#000" fill="#000000">Microsoft Azure</text>
+  <text stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_20" y="261.99998" x="291.66667" stroke-width="0" fill="#000000">Entity Framework</text>
+  <path id="svg_21" d="m282.37255,156.99999l0,66" opacity="undefined" stroke="#000" fill="none"/>
+  <line id="svg_22" y2="249.99998" x2="308.66667" y1="236.99998" x1="294.66667" stroke="#000" fill="none"/>
+  <line id="svg_23" y2="345.99998" x2="296.66667" y1="272.99998" x1="314.66667" stroke="#000" fill="none"/>
+  <line id="svg_24" y2="347.99998" x2="396.66666" y1="263.99998" x1="367.66666" stroke="#000" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="16" id="svg_25" y="105.99999" x="476.66666" stroke-width="0" stroke="#000" fill="#000000">Web server</text>
+  <line id="svg_26" y2="104.99999" x2="477.66666" y1="117.99999" x1="439.66666" stroke="#000" fill="none"/>
+  <line id="svg_27" y2="204.99998" x2="484.66666" y1="196.99999" x1="438.66666" stroke="#000" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="16" id="svg_28" y="211.99998" x="499.66666" stroke-width="0" stroke="#000" fill="#000000">AWS Cloud</text>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_29" y="180.94116" x="284.37256" stroke-width="0" stroke="#000" fill="#000000">Api's: StartggAPI, WisperAPI</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_30" y="196.37906" x="286.71816" stroke-width="0" stroke="#000" fill="#000000">ChatGPT</text>
+  <line id="svg_31" y2="170.29198" x2="322.22557" y1="157.24844" x1="322.22557" stroke="#000" fill="none"/>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_33" y="42.89612" x="378.41514" stroke-width="0" stroke="#000" fill="#000000">User Registration</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_34" y="17.48628" x="498.08725" stroke-width="0" stroke="#000" fill="#000000">Tournament Creation</text>
+  <line id="svg_35" y2="95.35512" x2="475.95611" y1="45.35513" x1="459.56267" stroke="#000" fill="none"/>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_37" y="28.14202" x="467.75939" stroke-width="0" stroke="#000" fill="#000000">With and without registration</text>
+  <line id="svg_38" y2="91.25676" x2="548.08725" y1="34.6994" x1="564.48068" stroke="#000" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_39" y="15.84694" x="323.49713" stroke-width="0" stroke="#000" fill="#000000">Profile Pages</text>
+  <line id="svg_41" y2="32.24038" x2="402.18563" y1="12.56825" x1="389.07088" stroke="#000" fill="none"/>
+  <line id="svg_42" y2="20.76497" x2="469.39874" y1="30.60104" x1="438.2512" stroke="#000" fill="none"/>
+  <path stroke="#000" id="svg_46" d="m357.92334,206.55727l44.26229,0l0,22.95082l-44.26229,0l0,-22.95082z" opacity="undefined" fill="#fff"/>
+  <line id="svg_48" y2="210.65564" x2="259.56271" y1="152.45893" x1="279.23484" stroke="#000" fill="none"/>
+  <line id="svg_49" y2="218.03269" x2="361.20204" y1="206.55728" x1="260.38238" stroke="#000" fill="none"/>
+  <line id="svg_50" y2="240.16383" x2="462.84136" y1="224.59006" x1="396.44793" stroke="#000" fill="none"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_52" y="220.47541" x="359.19126" stroke-width="0" stroke="#000" fill="#000000">Entities</text>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_54" y="247.52459" x="464.92894" stroke-width="0" stroke="#000" fill="#000000">Tournaments</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_55" y="261.45902" x="472.30599" stroke-width="0" stroke="#000" fill="#000000">Brackets</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="12" id="svg_56" y="277.85246" x="469.84697" stroke-width="0" stroke="#000" fill="#000000">Matches</text>
+ </g>
+</svg>
