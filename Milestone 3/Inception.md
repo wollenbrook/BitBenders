@@ -6,13 +6,13 @@ Project Inception Worksheet
     We will be developing in 2 week sprints in order to focus on the most important features first and to allow for flexibility in our development process.
     This will emphasize the importance of communication and collaboration between team members while allowing us to be flexible with our plan in response to events or changes that occur in the development process.
     
-    What processes are we following?  How will we run this project? ==> Agile, Scrum, ...      What are we choosing to do, how will we do it and at what level of detail or extent?
+
 
 ## Initial Vision Discussion with Stakeholders
-    Summarize what was discussed.  What do they want? Include:
+    See Stakeholders and Personas Folder for more
 
 ### Description of Clients/Users
-
+    See Stakeholders and Personas Folder for more
 ### List of Stakeholders and their Positions (if applicable)
     (Stakeholders pulled from Milestone2.md)
     Development Team Members - The development team will be responsible for the creation of the application. They will be responsible for the design, implementation, and testing of the application. They will also be responsible for the documentation of the application.
