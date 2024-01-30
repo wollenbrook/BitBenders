@@ -60,7 +60,7 @@
 
 ### Task 2: Vision Statement
 
-Our vision of the BitBracket App is to provide an unmatched easy all in one tournament solution. It's all about making the experience of creating, playing in, and watching tournaments easy and accessible. Utillizing advanced technologies and creating innovative features we aim to seamlessly connect tournament organizers, players, and spectators through our app. We envision a platform that not only simplies the intricacies of the tournament managing process, but also fosters a sense of community and excitement within the sports and gaming ecosystems. Bitbracket is not just a tool, but a gateway where competition, engagment, and camaraderie can thrive.
+Our vision of the BitBracket App is to provide an unmatched easy all in one tournament solution. It's all about making the experience of creating, playing in, and watching tournaments easy and accessible. Utilizing advanced technologies and creating innovative features we aim to seamlessly connect tournament organizers, players, and spectators through our app. We envision a platform that not only simplifies the intricacies of the tournament managing process, but also fosters a sense of community and excitement within the sports and gaming ecosystems. Bitbracket is not just a tool, but a gateway where competition, engagement, and camaraderie can thrive.
 
 ### Task 3: List of Needs and Features
 
@@ -72,28 +72,37 @@ Our vision of the BitBracket App is to provide an unmatched easy all in one tour
    - Users require an intelligent seeding algorithm that optimizes bracket seeding for fair competitions.
 
 3. **User Accounts & Profiles:**
+   - Users require accounts to keep track of their tournaments and to be able to update edit information about their own tournaments
 
 4. **Tournament Registration:**
+   - Users need to be able to register for tournaments so they can join brackets and keep track on their matches
 
 5. **Bracket Feedback:**
+   - Users need to be able to give feedback to tournament organizers in order to resolve conflicts and tournament organizers need to resolve conflicts to have proper seeding
 
 6. **Notifications/Announcements:**
-   - Users and participants need to receive notifications for official seeding changes, schedule updates, and match results.
+   - Users need to be able to receive notifications for seeding changes, schedule updates, and for user Bracket Feedback.
    
 7. **Scheduling Optimization:**
-   - Tournament organizers need tools to optimize match schedules, minimizing downtime and ensuring an efficient event.
+   - Users as tournament organizers need tools to optimize match schedules, minimizing downtime and ensuring an efficient event.
 
 8. **Match Broadcast viewer Engagement:**
+   - Users who watch broadcast need an outlet to voice interest in certain tournament matches to ensure a better broadcast experience
 
 9. **Tournament Search:**
-
+   - Users who are looking for tournaments need to be able to search for tournaments in their area or online with sports or games that they are interested in.
 
 **What Users Can Do with the App:**
 - Create and customize tournament brackets.
 - Utilize the smart seeding algorithm for optimal bracket placement.
-- Resolve scheduling conflicts efficiently.
+- Create an account and customize their profile
+- Register for tournaments
+- Resolve conflicts efficiently through Bracket Feedback.
+- Receive real-time notifications of tournaments changes both as a player and tournament organizer
+- Receive announcements about changes and updates to BitBracket
 - Optimize match schedules for a streamlined tournament.
-- Receive real-time notifications regarding tournament updates.
+- Interact with unplayed matches to share interest of it being shown on the broadcast
+- Search for tournaments
 
 **What the App Will Do for Users:**
 - Simplify the tournament management process.
