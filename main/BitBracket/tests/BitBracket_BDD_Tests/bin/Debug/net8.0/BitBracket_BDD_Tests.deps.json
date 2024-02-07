@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "BitBracket_BDD_Tests/1.0.0": {
+        "runtime": {
+          "BitBracket_BDD_Tests.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BitBracket_BDD_Tests/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

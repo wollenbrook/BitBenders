@@ -1,0 +1,11 @@
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/bin/Debug/net8.0/BitBracket_BDD_Tests.deps.json
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/bin/Debug/net8.0/BitBracket_BDD_Tests.dll
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/bin/Debug/net8.0/BitBracket_BDD_Tests.pdb
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/obj/Debug/net8.0/BitBracket_BDD_Tests.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/obj/Debug/net8.0/BitBracket_BDD_Tests.AssemblyInfoInputs.cache
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/obj/Debug/net8.0/BitBracket_BDD_Tests.AssemblyInfo.cs
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/obj/Debug/net8.0/BitBracket_BDD_Tests.csproj.CoreCompileInputs.cache
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/obj/Debug/net8.0/BitBracket_BDD_Tests.dll
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/obj/Debug/net8.0/refint/BitBracket_BDD_Tests.dll
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/obj/Debug/net8.0/BitBracket_BDD_Tests.pdb
+/Users/mohammedalsalem/Desktop/BitBracket2/tests/BitBracket_BDD_Tests/obj/Debug/net8.0/ref/BitBracket_BDD_Tests.dll
