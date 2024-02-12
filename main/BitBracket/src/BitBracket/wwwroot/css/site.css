@@ -20,3 +20,23 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* CustomStyles.css or within a <style> tag */
+.container {
+  max-width: 800px; /* Adjust based on your preference */
+}
+
+.card-header {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+}
+
+.btn-primary {
+  background-color: #0056b3; /* Slightly darker primary color for the button */
+  border: none;
+}
+
+.form-control:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}

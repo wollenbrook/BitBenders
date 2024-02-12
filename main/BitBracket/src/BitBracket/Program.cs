@@ -2,19 +2,24 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BitBracket.Data;
 using BitBracket.Models;
+using BitBracket.DAL.Abstract;
+using BitBracket.DAL.Concrete;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString1 = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString1));
 
-var connectionString1 = builder.Configuration.GetConnectionString("DatabaseConnection");
+var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
 builder.Services.AddDbContext<BitBracketDbContext>(options => options
                     .UseLazyLoadingProxies()
-                    .UseSqlServer(connectionString1));
+                    .UseSqlServer(connectionString));
 
+builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
+builder.Services.AddControllers();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Announcements";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<section>
+    @await Html.PartialAsync("~/Views/Announcements/_CreateAnnouncementPartial.cshtml")
+</section>
+
+<section>
+    @await Html.PartialAsync("~/Views/Announcements/_AnnouncementsPartial.cshtml")
+</section>
+
+@section Scripts {
+    <script src="~/js/announcementForm.js"></script> <!-- Make sure this path matches your JavaScript file's location -->
+}

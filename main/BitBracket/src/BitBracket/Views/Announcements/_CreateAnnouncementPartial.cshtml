@@ -1,0 +1,30 @@
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            Post a New Announcement
+        </div>
+        <div class="card-body">
+            <form id="createAnnouncementForm">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="Enter title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3" placeholder="Enter description" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="author" class="form-label">Author</label>
+                    <input type="text" class="form-control" id="author" placeholder="Author's name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="adminKey" class="form-label">Admin Key</label>
+                    <input type="password" class="form-control" id="adminKey" placeholder="Enter admin key" required>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Submit Announcement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
