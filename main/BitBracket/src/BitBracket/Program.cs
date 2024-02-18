@@ -13,7 +13,7 @@ var connectionString1 = builder.Configuration.GetConnectionString("DefaultConnec
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString1));
 
-var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
+var connectionString = builder.Configuration.GetConnectionString("BitBracketConnection");
 builder.Services.AddDbContext<BitBracketDbContext>(options => options
                     .UseLazyLoadingProxies()
                     .UseSqlServer(connectionString));
@@ -47,6 +47,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
