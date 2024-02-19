@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BitBracket.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using BitBracket.DAL.Abstract;
 
 namespace BitBracket.Controllers;
 
@@ -10,11 +11,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly IBitUserRepository _bitUserRepository;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager)
+    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository)
     {
         _logger = logger;
         _userManager = userManager;
+        _bitUserRepository = bitUserRepository;
     }
 
     public IActionResult Index()
@@ -36,13 +39,17 @@ public class HomeController : Controller
 
         // info from identity
         string id = _userManager.GetUserId(User);
+        BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
+        string tag = bitUser.Tag;
 
         IdentityUser user = await _userManager.GetUserAsync(User);
         string email = user?.Email ?? "no email";
         string phone = user?.PhoneNumber ?? "no phone number";
+        ViewBag.Tag = tag;
         ViewBag.Name = name;
         ViewBag.Email = email;
         ViewBag.Phone = phone;
+
         
         return View();
     }

@@ -7,7 +7,7 @@
 @if (User.Identity.IsAuthenticated)
 {
     <h1>Welcome, @User.Identity.Name</h1>
-    <p>We hope that we can provide you a wonderful service.</p>
+    <p>Thank you for choosing BitBracket. We hope to provide a great experience. </p>
     <p>@ViewBag.Message</p>
     <body class="bodyprofile">
 
@@ -23,6 +23,11 @@
                     <label for="email">Email:</label>
                     <p id="email">@ViewBag.Email</p>
                 </div>
+                <div>
+                    <label for="tag">Tag:</label>
+                    <p id="tag">@ViewBag.Tag</p>
+                </div>
+
             </div>
         </div>
 
