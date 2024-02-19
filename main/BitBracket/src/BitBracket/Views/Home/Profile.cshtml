@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+@{
+
+    ViewData["Title"] = "Welcome to your Profile Page";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h1 style="text-align: center;"> Welcome, @User.Identity.Name</h1>
+    <p style="text-align: center;">Thank you for choosing BitBracket. We hope to provide a great experience. </p>
+    <p>@ViewBag.Message</p>
+    <body class="bodyprofile">
+
+        <div class="container">
+            <h1>User Profile</h1>
+            <div class="profile-info">
+                <div>
+                    <label for="username">Username:</label>
+                    <p id="username">@ViewBag.Name</p>
+                </div>
+
+                <div>
+                    <label for="email">Email:</label>
+                    <p id="email">@ViewBag.Email</p>
+                </div>
+                <div>
+                    <label for="tag">Tag:</label>
+                    <p id="tag">@ViewBag.Tag</p>
+                </div>
+
+            </div>
+        </div>
+
+    </body>
+}
+else
+{
+    <h1>Welcome, in order to make the most of your experience please register and/or login</h1>
+
+}
+

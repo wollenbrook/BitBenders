@@ -15,3 +15,12 @@ CREATE TABLE [Announcements] (
     [IsActive] BIT NOT NULL,
     [Author] NVARCHAR(50) NOT NULL
 );
+
+CREATE TABLE [BitUser] (
+	[ID] INT PRIMARY KEY IDENTITY(1,1),
+    [ASPNetIdentityID] NVARCHAR(50) NOT NULL,
+	[Username] NVARCHAR(50) NOT NULL,
+    [Tag] NVARCHAR(50) NOT NULL,
+	[Email] NVARCHAR(50) NOT NULL,
+
+);
