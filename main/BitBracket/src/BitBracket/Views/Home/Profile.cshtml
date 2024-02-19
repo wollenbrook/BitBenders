@@ -9,32 +9,20 @@
     <h1>Welcome, @User.Identity.Name</h1>
     <p>We hope that we can provide you a wonderful service.</p>
     <p>@ViewBag.Message</p>
-    <body>
+    <body class="bodyprofile">
 
         <div class="container">
             <h1>User Profile</h1>
             <div class="profile-info">
                 <div>
                     <label for="username">Username:</label>
-                    <p id="username">JohnDoe123</p>
+                    <p id="username">@ViewBag.Name</p>
                 </div>
-                <div>
-                    <label for="fullname">Full Name:</label>
-                    <p id="fullname">John Doe</p>
-                </div>
+
                 <div>
                     <label for="email">Email:</label>
-                    <p id="email">john.doe@example.com</p>
+                    <p id="email">@ViewBag.Email</p>
                 </div>
-                <div>
-                    <label for="birthdate">Date of Birth:</label>
-                    <p id="birthdate">January 1, 1990</p>
-                </div>
-                <div>
-                    <label for="location">Location:</label>
-                    <p id="location">New York, USA</p>
-                </div>
-                <!-- You can add more profile information here -->
             </div>
         </div>
 
@@ -46,50 +34,3 @@ else
 
 }
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        .profile-info {
-            margin-top: 20px;
-        }
-
-            .profile-info div {
-                margin-bottom: 10px;
-            }
-
-            .profile-info label {
-                font-weight: bold;
-            }
-
-            .profile-info p {
-                margin: 0;
-            }
-    </style>
-</head>
-</html>

@@ -40,7 +40,10 @@ public class HomeController : Controller
         IdentityUser user = await _userManager.GetUserAsync(User);
         string email = user?.Email ?? "no email";
         string phone = user?.PhoneNumber ?? "no phone number";
-        ViewBag.Message = $"user {name} is authenticated: {isAuthenticated} using {AuthType}, ID is {id} email is: {email}";
+        ViewBag.Name = name;
+        ViewBag.Email = email;
+        ViewBag.Phone = phone;
+        
         return View();
     }
 
