@@ -33,14 +33,14 @@ public class HomeController : Controller
     public async Task<IActionResult> Profile()
     { 
         // info from controller: non database info
-        bool isAuthenticated = User.Identity.IsAuthenticated;
-        string name = User.Identity.Name;
-        string AuthType = User.Identity.AuthenticationType;
+        string name = User?.Identity?.Name ?? "No user found";
+   
 
         // info from identity
         string id = _userManager.GetUserId(User);
         BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
-        string tag = bitUser.Tag;
+        string tag = bitUser?.Tag ?? "No tag found";
+        
 
         IdentityUser user = await _userManager.GetUserAsync(User);
         string email = user?.Email ?? "no email";
@@ -49,8 +49,6 @@ public class HomeController : Controller
         ViewBag.Name = name;
         ViewBag.Email = email;
         ViewBag.Phone = phone;
-
-        
         return View();
     }
 

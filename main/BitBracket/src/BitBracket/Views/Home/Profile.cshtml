@@ -6,8 +6,8 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h1>Welcome, @User.Identity.Name</h1>
-    <p>Thank you for choosing BitBracket. We hope to provide a great experience. </p>
+    <h1 style="text-align: center;"> Welcome, @User.Identity.Name</h1>
+    <p style="text-align: center;">Thank you for choosing BitBracket. We hope to provide a great experience. </p>
     <p>@ViewBag.Message</p>
     <body class="bodyprofile">
 
