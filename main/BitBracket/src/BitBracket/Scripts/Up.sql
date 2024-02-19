@@ -8,12 +8,12 @@ CREATE TABLE [Tournament] (
 );
 
 CREATE TABLE [Announcements] (
-    [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [Title] NVARCHAR(255) NOT NULL,
+    [ID] INT IDENTITY(1,1) PRIMARY KEY,
+    [Title] NVARCHAR(50) NOT NULL, 
     [CreationDate] DATETIME NOT NULL,
-    [Description] NVARCHAR(MAX) NOT NULL,
+    [Description] NVARCHAR(500) NOT NULL, 
     [IsActive] BIT NOT NULL,
-    [Author] NVARCHAR(50) NOT NULL
+    [Author] NVARCHAR(50) NOT NULL 
 );
 
 CREATE TABLE [BitUser] (
@@ -21,6 +21,4 @@ CREATE TABLE [BitUser] (
     [ASPNetIdentityID] NVARCHAR(50) NOT NULL,
 	[Username] NVARCHAR(50) NOT NULL,
     [Tag] NVARCHAR(50) NOT NULL,
-	[Email] NVARCHAR(50) NOT NULL,
-
 );

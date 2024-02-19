@@ -1,30 +1,35 @@
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
-            Post a New Announcement
+<form id="createAnnouncementForm" class="ui form" style="padding: 20px; background-color: #93a86d; border-radius: 10px;">
+    <div class="ui field">
+        <label>Title</label>
+        <div class="ui left icon input">
+            <input type="text" id="title" placeholder="Announcement Title" required>
+            <i class="announcement icon"></i>
         </div>
-        <div class="card-body">
-            <form id="createAnnouncementForm">
-                <div class="mb-3">
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="title" placeholder="Enter title" required>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" rows="3" placeholder="Enter description" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="author" class="form-label">Author</label>
-                    <input type="text" class="form-control" id="author" placeholder="Author's name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="adminKey" class="form-label">Admin Key</label>
-                    <input type="password" class="form-control" id="adminKey" placeholder="Enter admin key" required>
-                </div>
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">Submit Announcement</button>
-                </div>
-            </form>
-        </div>
+        <div class="ui red text" id="titleError"></div>
     </div>
-</div>
+    <div class="ui field">
+        <label>Description</label>
+        <div class="ui left icon input">
+            <textarea id="description" placeholder="Detailed Description" required></textarea>
+            <i class="align left icon"></i>
+        </div>
+        <div class="ui red text" id="descriptionError"></div>
+    </div>
+    <div class="ui field">
+        <label>Author</label>
+        <div class="ui left icon input">
+            <input type="text" id="author" placeholder="Your Name" required>
+            <i class="user icon"></i>
+        </div>
+        <div class="ui red text" id="authorError"></div>
+    </div>
+        <div class="ui field">
+        <label>Admin Key</label>
+        <div class="ui left icon input">
+            <input type="password" id="adminKey" placeholder="Admin Verification Key" required>
+            <i class="lock icon"></i>
+        </div>
+    <button class="ui fluid large primary submit button" type="submit">Create Announcement</button>
+</form>
+
+

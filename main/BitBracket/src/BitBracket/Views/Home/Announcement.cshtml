@@ -1,17 +1,23 @@
 @{
-    ViewData["Title"] = "Announcements";
+    ViewData["Title"] = "Announcements and Notifications";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="announcement-background">
+    <div class="ui container">
+        <h2 class="title-styling">@ViewData["Title"]</h2>
 
-<section>
-    @await Html.PartialAsync("~/Views/Announcements/_CreateAnnouncementPartial.cshtml")
-</section>
+        <div class="section-gap"></div>
 
-<section>
-    @await Html.PartialAsync("~/Views/Announcements/_AnnouncementsPartial.cshtml")
-</section>
+        <a href="@Url.Action("AnnouncementCreate", "Home")" class="ui button primary">Create a New Announcement</a>
+
+        <div class="section-gap"></div>
+
+        <section>
+            @await Html.PartialAsync("~/Views/Announcements/_AnnouncementsPartial.cshtml")
+        </section>
+    </div>
+</div>
 
 @section Scripts {
-    <script src="~/js/announcementForm.js"></script> <!-- Make sure this path matches your JavaScript file's location -->
+    <script src="~/js/announcementForm.js"></script> 
 }

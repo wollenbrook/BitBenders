@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Create a new Announcement";
+}
+
+<div class="announcement-background">
+    <div class="ui container">
+        <h2 class="title-styling">@ViewData["Title"]</h2>
+
+        <div class="section-gap"></div>
+
+        <section class="section-gap">
+            @await Html.PartialAsync("~/Views/Announcements/_CreateAnnouncementPartial.cshtml")
+        </section>
+
+        <a href="@Url.Action("Announcement", "Home")" class="ui button secondary">Return to Announcement Page</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/announcementCreateForm.js"></script> 
+}
