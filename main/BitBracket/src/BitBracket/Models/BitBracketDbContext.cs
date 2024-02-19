@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using BitBracket.Models;
@@ -34,4 +34,6 @@ public partial class BitBracketDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+public DbSet<BitBracket.Models.BitUser> BitUser { get; set; } = default!;
 }

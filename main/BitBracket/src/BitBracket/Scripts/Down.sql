@@ -1,2 +1,2 @@
-DROP [Tournament] IF EXISTS;
-DROP [Announcements] IF EXISTS;
+DROP TABLE [Tournament];
+DROP TABLE [Announcements];

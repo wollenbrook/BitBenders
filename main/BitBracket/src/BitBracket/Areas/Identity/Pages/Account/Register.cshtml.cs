@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using BitBracket.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -29,14 +30,17 @@ namespace BitBracket.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly BitBracketDbContext _BitBracketDbContext;
 
         public RegisterModel(
+            BitBracketDbContext bitBracketDbContext,
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
+            _BitBracketDbContext = bitBracketDbContext;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -77,6 +81,9 @@ namespace BitBracket.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            [Display(Name = "Tag")]
+            public string Tag { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -126,6 +133,16 @@ namespace BitBracket.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    //we create our own user
+                    var bitUser = new BitUser
+                    {
+                        AspnetIdentityId = user.Id,
+                        Username = Input.UserName,
+                        Tag = Input.Tag
+                    };
+                    //save to database
+                    _BitBracketDbContext.Add(bitUser);
+                    await _BitBracketDbContext.SaveChangesAsync();
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
