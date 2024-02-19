@@ -29,6 +29,10 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult AnnouncementCreate()
+    {
+        return View();
+    }
     
     public async Task<IActionResult> Profile()
     { 

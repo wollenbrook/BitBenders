@@ -1,19 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace BitBracket.Models;
-
-public partial class Announcement
+namespace BitBracket.Models
 {
-    public int Id { get; set; }
+    public class Announcement
+    {
+        public int ID { get; set; }
 
-    public string Title { get; set; } = null!;
+        [Required(ErrorMessage = "The title is required.")]
+        [StringLength(50, ErrorMessage = "The title must be less than 50 characters.")]
+        public string? Title { get; set; }
 
-    public DateTime CreationDate { get; set; }
+        [Required(ErrorMessage = "The creation date is required.")]
+        public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
-    public string Description { get; set; } = null!;
+        [Required(ErrorMessage = "The description is required.")]
+        [StringLength(500, ErrorMessage = "The description must be less than 500 characters.")]
+        public string? Description { get; set; }
 
-    public bool IsActive { get; set; }
+        [Required(ErrorMessage = "The status indicating if the announcement is active is required.")]
+        public bool IsActive { get; set; } = true;
 
-    public string Author { get; set; } = null!;
+        [Required(ErrorMessage = "The author's name is required.")]
+        [StringLength(50, ErrorMessage = "The author's name must be less than 50 characters.")]
+        public string? Author { get; set; }
+    }
 }

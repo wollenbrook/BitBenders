@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using BitBracket.Models;
@@ -24,7 +24,7 @@ public partial class BitBracketDbContext : DbContext
         {
             optionsBuilder
                 .UseLazyLoadingProxies()        // <-- add this line
-                .UseSqlServer("Name=DatabaseConnection");
+                .UseSqlServer("Name=BitBracketConnection");
         }
     }
 

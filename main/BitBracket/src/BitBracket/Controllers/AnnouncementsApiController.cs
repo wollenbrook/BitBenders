@@ -30,7 +30,16 @@ public class AnnouncementsApiController : ControllerBase
             return Unauthorized();
         }
 
-        await _announcementRepo.AddAsync(announcement);
-        return Ok();
+        try
+        {
+            await _announcementRepo.AddAsync(announcement);
+            // Assuming AddAsync sets the ID of the announcement after saving it
+            return Ok(announcement); // Return the created announcement object
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "Internal Server Error - could not create the announcement.");
+        }
     }
+
 }
