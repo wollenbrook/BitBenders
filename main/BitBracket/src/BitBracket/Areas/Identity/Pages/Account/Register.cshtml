@@ -4,12 +4,12 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
-
+<h1 class="title-styling">@ViewData["Title"]</h1>
+<body class="announcement-background">
 <div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+        <div class="col-md-4 offset-md-4 text-center">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2 class="title-styling">Create a new account.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
@@ -45,7 +45,7 @@
     </div>
 
 </div>
-
+</body>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

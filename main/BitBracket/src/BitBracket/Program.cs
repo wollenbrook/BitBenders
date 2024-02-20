@@ -4,13 +4,14 @@ using BitBracket.Data;
 using BitBracket.Models;
 using BitBracket.DAL.Abstract;
 using BitBracket.DAL.Concrete;
+using MyApplication.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString1 = builder.Configuration.GetConnectionString("AuthenticationConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<BitBracket.Data.ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString1));
 
 var connectionString = builder.Configuration.GetConnectionString("BitBracketConnection");
@@ -25,7 +26,7 @@ builder.Services.AddControllers();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<BitBracket.Data.ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

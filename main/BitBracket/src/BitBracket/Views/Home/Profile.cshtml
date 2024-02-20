@@ -6,26 +6,26 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h1 style="text-align: center;"> Welcome, @User.Identity.Name</h1>
-    <p style="text-align: center;">Thank you for choosing BitBracket. We hope to provide a great experience. </p>
-    <p>@ViewBag.Message</p>
-    <body class="bodyprofile">
+    <h1 class="title-styling" style="text-align: center;"> Welcome, @User.Identity.Name</h1>
+    <p class="title-styling" style="text-align: center;">Thank you for choosing BitBracket. We hope to provide a great experience. </p>
+    <body class="announcement-background">
 
         <div class="container">
-            <h1>User Profile</h1>
+            <h1 class="title-styling">User Profile</h1>
             <div class="profile-info">
-                <div>
-                    <label for="username">Username:</label>
-                    <p id="username">@ViewBag.Name</p>
+                <div class="title-styling">
+                        <label for="username" style="display: inline-block;">Username:</label>
+                        <p id="username" style="display: inline-block;">@ViewBag.Name</p>
+         
                 </div>
 
-                <div>
-                    <label for="email">Email:</label>
-                    <p id="email">@ViewBag.Email</p>
+                <div class="title-styling">
+                    <label for="email" style="display: inline-block;">Email:</label>
+                    <p id="email" style="display: inline-block;">@ViewBag.Email</p>
                 </div>
-                <div>
-                    <label for="tag">Tag:</label>
-                    <p id="tag">@ViewBag.Tag</p>
+                <div class="title-styling">
+                    <label for="tag" style="display: inline-block;">Tag:</label>
+                    <p id="tag" style="display: inline-block;">@ViewBag.Tag</p>
                 </div>
 
             </div>
@@ -34,8 +34,10 @@
     </body>
 }
 else
-{
-    <h1>Welcome, in order to make the most of your experience please register and/or login</h1>
-
+{<div class="announcement-background">
+    <div class="ui container">
+            <h1 class="title-styling">Welcome, in order to make the most of your experience please register and/or login</h1>
+    </div>
+</div>
 }
 
