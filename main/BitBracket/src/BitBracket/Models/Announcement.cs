@@ -17,3 +17,4 @@ public partial class Announcement
 
     public string Author { get; set; } = null!;
 }
+//
