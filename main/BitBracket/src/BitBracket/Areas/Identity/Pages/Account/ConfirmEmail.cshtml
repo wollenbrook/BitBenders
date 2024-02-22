@@ -1,9 +1,22 @@
 ﻿@page
 @model ConfirmEmailModel
+
 @{
     ViewData["Title"] = "Confirmed Registration";
+    var loginUrl = Url.Page("/Account/Login");
 }
-<body class = "announcement-background">
-<h1 class="title-styling">@ViewData["Title"]</h1>
-<p class="text-center title-styling">Thank you for registering! Feel free to checkout your profile page.</p>
+
+<body class="announcement-background">
+    <div class="section-gap"></div>
+    <div class="ui container">
+        <h1 class="title-styling">@ViewData["Title"]</h1>
+        <p class="text-styling">Thank you for registering!</p>
+        <div class="ui grid">
+            <div class="row">
+                <div class="column" style="text-align: center;">
+                    <a href="@loginUrl" class="ui button primary">Click here to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>

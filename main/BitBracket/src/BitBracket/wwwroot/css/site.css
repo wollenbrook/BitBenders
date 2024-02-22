@@ -87,11 +87,27 @@ h1 {
   width: 100%;
 }
 
-.title-styling {
+.text-styling {
   color: white;
   font-size: 24px;
   text-align: center;
   padding: 20px 0;
   font-weight: bold; /* Make the font bolder */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle shadow for depth */
+}
+
+.navbar-background {
+  background-color: #f8d291 !important;
+}
+
+.title-styling {
+  color: #f4886d; /* Primary color for text */
+  font-weight: bold; /* Makes the text bold */
+  text-shadow: 
+      -1px -1px 0 #f8d291,  
+       1px -1px 0 #f8d291,
+      -1px  1px 0 #f8d291,
+       1px  1px 0 #f8d291; /* Secondary color as text shadow for stroke effect */
+  font-size: 70px; /* Adjust size as needed */
+  text-align: center; /* Center alignment - adjust as needed */
 }

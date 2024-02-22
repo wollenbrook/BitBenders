@@ -1,43 +1,43 @@
 ﻿<!DOCTYPE html>
 @{
-
     ViewData["Title"] = "Welcome to your Profile Page";
 }
 
-@if (User.Identity.IsAuthenticated)
-{
-    <h1 class="title-styling" style="text-align: center;"> Welcome, @User.Identity.Name</h1>
-    <p class="title-styling" style="text-align: center;">Thank you for choosing BitBracket. We hope to provide a great experience. </p>
-    <body class="announcement-background">
-
-        <div class="container">
-            <h1 class="title-styling">User Profile</h1>
-            <div class="profile-info">
-                <div class="title-styling">
-                        <label for="username" style="display: inline-block;">Username:</label>
-                        <p id="username" style="display: inline-block;">@ViewBag.Name</p>
-         
-                </div>
-
-                <div class="title-styling">
-                    <label for="email" style="display: inline-block;">Email:</label>
-                    <p id="email" style="display: inline-block;">@ViewBag.Email</p>
-                </div>
-                <div class="title-styling">
-                    <label for="tag" style="display: inline-block;">Tag:</label>
-                    <p id="tag" style="display: inline-block;">@ViewBag.Tag</p>
-                </div>
-
-            </div>
-        </div>
-
-    </body>
-}
-else
-{<body class="announcement-background">
+<body class="announcement-background">
+    <div class="section-gap"></div>
     <div class="ui container">
-            <h1 class="title-styling">Welcome, in order to make the most of your experience please register and/or login</h1>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <h1 class="title-styling">Welcome, @User.Identity.Name</h1>
+            <p class="text-styling">Thank you for choosing BitBracket. We hope to provide a great experience.</p>
+            
+            <div class="ui raised segment">
+                <h2 class="column center aligned">User Profile</h2>
+                <div class="ui list">
+                    <div class="item">
+                        <div class="content">
+                            <div class="header">Username</div>
+                            <div>@ViewBag.Name</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="content">
+                            <div class="header">Email</div>
+                            <div>@ViewBag.Email</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="content">
+                            <div class="header">Tag</div>
+                            <div>@ViewBag.Tag</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <h1 class="ui header center aligned">Welcome, in order to make the most of your experience please register and/or login</h1>
+        }
     </div>
 </body>
-}
-
