@@ -21,6 +21,10 @@ builder.Services.AddDbContext<BitBracket.Models.BitBracketDbContext>(options => 
 
 builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
+// Register EmailService
+var sendGridKey = builder.Configuration["SendGridKey"]; // Ensure you have this key in your appsettings.json
+builder.Services.AddScoped<IEmailService, EmailService>(_ => new EmailService(sendGridKey));
+
 builder.Services.AddControllers();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
