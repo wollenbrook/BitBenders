@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using BitBracket.ViewModels
+@model UserViewModel
+<!DOCTYPE html>
 @{
     ViewData["Title"] = "Welcome to your Profile Page";
 }
@@ -6,38 +8,52 @@
 <body class="announcement-background">
     <div class="section-gap"></div>
     <div class="ui container">
-        @if (User.Identity.IsAuthenticated)
-        {
+
             <h1 class="title-styling">Welcome, @User.Identity.Name</h1>
             <p class="text-styling">Thank you for choosing BitBracket. We hope to provide a great experience.</p>
             
             <div class="ui raised segment">
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <img id="profileImage" src="data:image/png;base64, @Model.ProfilePictureUrl" alt="Profile Picture Not Working" style="max-width: 100%; max-height: 300px;">
+                        <div class="header">Change your profile image!</div>
+                    </div>
+                    <div class="twelve wide column">
                 <h2 class="column center aligned">User Profile</h2>
                 <div class="ui list">
                     <div class="item">
                         <div class="content">
                             <div class="header">Username</div>
-                            <div>@ViewBag.Name</div>
+                            <div>@Model.Username</div>
                         </div>
                     </div>
                     <div class="item">
                         <div class="content">
                             <div class="header">Email</div>
-                            <div>@ViewBag.Email</div>
+                            <div>@Model.Email</div>
                         </div>
                     </div>
                     <div class="item">
                         <div class="content">
                             <div class="header">Tag</div>
-                            <div>@ViewBag.Tag</div>
+                            <div id="tagId">@Model.Tag</div>
+                            <button id="saveTagButtonId">Save Tag Changes</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="content">
+                            <div class="header">Bio</div>
+                            <div id="bioId">@Model.Bio</div>
+                            <button id="saveBioButtonId">Save Bio Changes</button>
                         </div>
                     </div>
                 </div>
             </div>
-        }
-        else
-        {
-            <h1 class="ui header center aligned">Welcome, in order to make the most of your experience please register and/or login</h1>
-        }
+            </div>
+        </div>
     </div>
+
 </body>
+@section Scripts {
+    <script src="~/js/profilepage.js"></script>
+}

@@ -1,9 +1,11 @@
 using System.Diagnostics;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using BitBracket.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using BitBracket.DAL.Abstract;
+using BitBracket.ViewModels;
 
 namespace BitBracket.Controllers;
 
@@ -38,22 +40,21 @@ public class HomeController : Controller
     { 
         // info from controller: non database info
         string name = User?.Identity?.Name ?? "No user found";
-   
-
         // info from identity
         string id = _userManager.GetUserId(User);
         BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
-        string tag = bitUser?.Tag ?? "No tag found";
         
-
         IdentityUser user = await _userManager.GetUserAsync(User);
-        string email = user?.Email ?? "no email";
-        string phone = user?.PhoneNumber ?? "no phone number";
-        ViewBag.Tag = tag;
-        ViewBag.Name = name;
-        ViewBag.Email = email;
-        ViewBag.Phone = phone;
-        return View();
+        UserViewModel userViewModel = new UserViewModel
+        {
+            Tag = bitUser?.Tag ?? "No tag found",
+            Username = name,
+            Email = user?.Email ?? "no email",
+            Bio = bitUser?.Bio ?? "No current bio.",
+            ProfilePictureUrl = Convert.ToBase64String(bitUser.ProfilePicture)
+        };
+
+        return View(userViewModel);
     }
 
     public IActionResult Privacy()
