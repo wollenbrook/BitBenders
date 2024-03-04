@@ -1,0 +1,152 @@
+@using BitBracket.ViewModels
+@model BasicBracketViewModel
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competition Bracket</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="card" id="card">
+            <div class="card-header, h1, text-center">
+                Create Bracket
+            </div>
+            <div class="card-body">
+                <form id="createBracketForm" asp-area="api" asp-controller="BracketApi" asp-action="Post" method="post">
+                    <div class="mb-3">
+                        <label for="Names" class="form-label">Player Names (comma-delimited):</label>
+                        <textarea input asp-for="Names" type="text" class="form-control" id="Names" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
+                        <span asp-validation-for="Names" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Format" class="form-label">Format:</label>
+                        <select id="Format" name="Format" class="form-control">
+                            <option value="Single Elimination">Single Elimination</option>
+                            <option value="Double Elimination">Double Elimination</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>
+                        <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" checked="@Model.RandomSeeding" /> Random Seeding (Seeding will be done in entered order otherwise)</label>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Generate Bracket</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+$(document).ready(function() {
+    $('#createBracketForm').on('submit', function(e) {
+        var names = $('#Names').val().split(',');
+        if (names.length < 2) {
+            alert('You must enter at least 2 names.');
+            e.preventDefault();
+            return;
+        }
+
+        var formData = {
+            Names: $('#Names').val(),
+            Format: $('#Format').val(),
+            RandomSeeding: $('#RandomSeeding').is(':checked')
+        };
+
+        $.ajax({
+            url: '/api/BracketApi',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                // Handle the response
+                console.log(response);
+
+                // Hide the form
+                $('#card').hide();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Handle the error
+                console.error(textStatus, errorThrown);
+            }
+        });
+
+        e.preventDefault();
+    });
+});
+/*
+fetch('/api/BracketApi')
+    .then(response => response.json())
+    .then(data => {
+        // Create an array of player names
+        var names = data.Names.split(',');
+        // Create a format variable
+        var format = data.Format;
+
+        function roundToPowerOfTwo(names) {
+            const numPlayers = names.length;
+            const powerOfTwo = Math.pow(2, Math.ceil(Math.log2(numPlayers)));
+            const nullsToAdd = powerOfTwo - numPlayers;
+
+            // Add nulls to the player list
+            const paddedPlayers = names.concat(Array(nullsToAdd).fill(null));
+
+            // Generate the order of the teams
+            const order = seeding(powerOfTwo);
+
+            // Initialize teams array
+            const teams = [];
+
+            // Split the players into teams (round 1 matches) based on the order
+            for (let i = 0; i < powerOfTwo / 2; i++) {
+                const team = [paddedPlayers[order[i * 2] - 1], paddedPlayers[order[i * 2 + 1] - 1]];
+                teams.push(team);
+            }
+
+            return teams;
+        }
+
+        function seeding(numPlayers){
+            var rounds = Math.log(numPlayers)/Math.log(2)-1;
+            var pls = [1,2];
+            for(var i=0;i<rounds;i++){
+                pls = nextLayer(pls);
+            }
+            return pls;
+            function nextLayer(pls){
+                var out=[];
+                var length = pls.length*2+1;
+                pls.forEach(function(d){
+                    out.push(d);
+                    out.push(length-d);
+                });
+                return out;
+            }
+        }
+
+        var teams = roundToPowerOfTwo(names);
+        console.log(teams);
+
+        if (teams.length > 0) {
+            var singleElimination = {
+                "teams": teams
+            };
+
+            $(function() {
+                $('#minimal .demo').bracket({
+                    init: singleElimination
+                });
+            });
+        } 
+        else {
+            console.error("No teams available to initialize the bracket.");
+        }
+    })
+    .catch(error => console.error('Error:', error));
+*/
+</script>
