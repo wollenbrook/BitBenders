@@ -20,6 +20,7 @@ namespace BitBracket.Controllers
         private readonly BitBracketDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IBitUserRepository _bitUserRepository;
+        
 
 
         public BitUserApiController(BitBracketDbContext context, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository)
@@ -56,10 +57,10 @@ namespace BitBracket.Controllers
         public async Task<IActionResult> UpdateBitUserBio(string bio)
         {
             string id = _userManager.GetUserId(User);
-            BitUser bitUser = _context.BitUser.Where(u => u.AspnetIdentityId == id).FirstOrDefault();
-            bitUser.Bio = bio; 
-            _context.Entry(bitUser).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
+            bitUser.Bio = bio;
+            _context.Update(bitUser);
+            _context.SaveChanges();
 
             return Ok();
         }
@@ -70,10 +71,10 @@ namespace BitBracket.Controllers
         public async Task<IActionResult> UpdateBitUserTag(string tag)
         {
             string id = _userManager.GetUserId(User);
-            BitUser bitUser = _context.BitUser.Where(u => u.AspnetIdentityId == id).FirstOrDefault();
+            BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
             bitUser.Tag = tag;
-            _context.Entry(bitUser).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _context.Update(bitUser);
+            _context.SaveChanges();
 
             return Ok();
         }
@@ -129,8 +130,9 @@ namespace BitBracket.Controllers
                 string id = _userManager.GetUserId(User);
                 BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
                 bitUser.ProfilePicture = profilePictureBytes;
-                _context.Entry(bitUser).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.Update(bitUser);
+                _context.SaveChanges();
+
                 return Ok();
 
 
