@@ -45,6 +45,10 @@ public class HomeController : Controller
         BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
         
         IdentityUser user = await _userManager.GetUserAsync(User);
+        if (bitUser.ProfilePicture == null)
+        {
+            _bitUserRepository.UpdateBitUserProfilePictureIfNull(bitUser);
+        }
         UserViewModel userViewModel = new UserViewModel
         {
             Tag = bitUser?.Tag ?? "No tag found",

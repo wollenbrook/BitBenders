@@ -20,7 +20,13 @@ namespace BitBracket.DAL.Concrete
             return _context.Set<BitUser>().FirstOrDefault(u => u.AspnetIdentityId == id);
         }
 
+        public void UpdateBitUserProfilePictureIfNull(BitUser user)
+        {
+            user.ProfilePicture = File.ReadAllBytes("Images/Blank_Profile.png");
+            _context.Update(user);
+            _context.SaveChanges();
 
+        }
     }
     
 }

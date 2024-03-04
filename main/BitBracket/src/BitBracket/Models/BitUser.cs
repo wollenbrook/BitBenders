@@ -15,5 +15,6 @@ public partial class BitUser
 
     public string Bio { get; set; } = "Bio not written";
 
-    public byte[]? ProfilePicture { get; set; } = File.ReadAllBytes("Images/Blank_Profile.png");
+    public byte[]? ProfilePicture { get; set; } = null;
+
 }
