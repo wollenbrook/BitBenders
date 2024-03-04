@@ -1,3 +1,5 @@
+//Program.cs
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BitBracket.Data;
@@ -23,6 +25,14 @@ builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
 // Register EmailService
 var sendGridKey = builder.Configuration["SendGridKey"]; // Ensure you have this key in your appsettings.json
 builder.Services.AddScoped<IEmailService, EmailService>(_ => new EmailService(sendGridKey));
+
+// Register SmsService
+var twilioSettings = builder.Configuration.GetSection("TwilioSettings");
+builder.Services.AddSingleton<ISmsService>(new SmsService(
+        twilioSettings["AccountSid"],
+        twilioSettings["AuthToken"],
+        twilioSettings["FromNumber"]
+));
 
 builder.Services.AddControllers();
 
