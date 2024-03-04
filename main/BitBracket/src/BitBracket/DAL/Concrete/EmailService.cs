@@ -24,7 +24,7 @@ namespace BitBracket.DAL.Concrete
             {
                 From = from,
                 Subject = subject, // Ensure the subject is being set here
-                TemplateId = "d-b3807854b3344976a002acc81475dc12" // Your SendGrid template ID
+                TemplateId = "d-b3807854b3344976a002acc81475dc12" // The SendGrid template ID
             };
             
             msg.AddTo(to);

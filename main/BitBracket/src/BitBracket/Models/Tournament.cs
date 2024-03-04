@@ -15,5 +15,5 @@ public partial class Tournament
 
     public string Brackets { get; set; } = null!;
 
-    public DateTime Created { get; set; }
+    public DateTime Created { get; set; } = DateTime.Now;
 }

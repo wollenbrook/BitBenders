@@ -1,3 +1,5 @@
+//Program.cs
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BitBracket.Data;
@@ -18,12 +20,19 @@ var connectionString = builder.Configuration.GetConnectionString("BitBracketConn
 builder.Services.AddDbContext<BitBracket.Models.BitBracketDbContext>(options => options
                     .UseLazyLoadingProxies()
                     .UseSqlServer(connectionString));
-
 builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
 // Register EmailService
 var sendGridKey = builder.Configuration["SendGridKey"]; // Ensure you have this key in your appsettings.json
 builder.Services.AddScoped<IEmailService, EmailService>(_ => new EmailService(sendGridKey));
+
+// Register SmsService
+var twilioSettings = builder.Configuration.GetSection("TwilioSettings");
+builder.Services.AddSingleton<ISmsService>(new SmsService(
+        twilioSettings["AccountSid"],
+        twilioSettings["AuthToken"],
+        twilioSettings["FromNumber"]
+));
 
 builder.Services.AddControllers();
 
@@ -32,6 +41,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<BitBracket.Data.ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -39,6 +49,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
@@ -47,13 +59,14 @@ else
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
