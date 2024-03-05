@@ -35,15 +35,15 @@ public class HomeController : Controller
     {
         return View();
     }
-    
+
     public async Task<IActionResult> Profile()
-    { 
+    {
         // info from controller: non database info
         string name = User?.Identity?.Name ?? "No user found";
         // info from identity
         string id = _userManager.GetUserId(User);
         BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
-        
+
         IdentityUser user = await _userManager.GetUserAsync(User);
         if (bitUser.ProfilePicture == null)
         {
@@ -56,7 +56,7 @@ public class HomeController : Controller
             Email = user?.Email ?? "no email",
             Bio = bitUser?.Bio ?? "No current bio.",
             ProfilePictureUrl = bitUser?.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png"
-            
+
         };
 
         return View(userViewModel);

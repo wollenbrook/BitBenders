@@ -8,8 +8,9 @@ namespace BitBracket.DAL.Abstract
     {
         public BitUser GetBitUserByEntityId(string id);
         public Task UpdateBitUserProfilePictureIfNull(BitUser user);
+        public Task DeleteBitUser(BitUser user);
+        public Task UpdateUserName(BitUser user);
 
 
     }
 }
-

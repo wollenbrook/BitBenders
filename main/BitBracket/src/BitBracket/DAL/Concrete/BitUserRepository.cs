@@ -16,6 +16,17 @@ namespace BitBracket.DAL.Concrete
             _context = context;
         }
 
+        public Task DeleteBitUser(BitUser user)
+        {
+            if (user == null)
+            {
+                throw new WebException("User not found");
+            }
+            _context.Remove(user);
+            _context.SaveChanges();
+            return Task.CompletedTask;
+        }
+
         public BitUser GetBitUserByEntityId(string id)
         {
             return _context.Set<BitUser>().FirstOrDefault(u => u.AspnetIdentityId == id);
@@ -32,8 +43,14 @@ namespace BitBracket.DAL.Concrete
             _context.SaveChanges();
 
         }
+
+        public Task UpdateUserName(BitUser user)
+        {
+            _context.Update(user);
+            _context.SaveChanges();
+            return Task.CompletedTask;
+            
+        }
     }
-    
+
 }
-
-
