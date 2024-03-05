@@ -55,7 +55,8 @@ public class HomeController : Controller
             Username = name,
             Email = user?.Email ?? "no email",
             Bio = bitUser?.Bio ?? "No current bio.",
-            ProfilePictureUrl = Convert.ToBase64String(bitUser.ProfilePicture)
+            ProfilePictureUrl = bitUser?.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png"
+            
         };
 
         return View(userViewModel);

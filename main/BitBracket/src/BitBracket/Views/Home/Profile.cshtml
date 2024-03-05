@@ -15,8 +15,8 @@
             <div class="ui raised segment">
                 <div class="ui grid">
                     <div class="four wide column">
-                        <img id="profileImage" src="data:image/png;base64, @Model.ProfilePictureUrl" alt="Profile Picture Not Working" style="max-width: 100%; max-height: 300px;">
-                        <div class="header">Change your profile image!</div>
+                        <img id="profileImage" src="@Model.ProfilePictureUrl" alt="Profile Picture Not Working" style="max-width: 100%; max-height: 300px;">
+                        <div class="header">Click the image to change your profile image!</div>
                     </div>
                     <div class="twelve wide column">
                 <h2 class="column center aligned">User Profile</h2>
@@ -35,14 +35,14 @@
                     </div>
                     <div class="item">
                         <div class="content">
-                            <div class="header">Tag</div>
+                            <div class="header">Tag (click to change the tag)</div>
                             <div id="tagId">@Model.Tag</div>
                             <button id="saveTagButtonId">Save Tag Changes</button>
                         </div>
                     </div>
                     <div class="item">
                         <div class="content">
-                            <div class="header">Bio</div>
+                            <div class="header">Bio (click to change the bio)</div>
                             <div id="bioId">@Model.Bio</div>
                             <button id="saveBioButtonId">Save Bio Changes</button>
                         </div>

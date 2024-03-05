@@ -3,6 +3,7 @@ using BitBracket.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace BitBracket.DAL.Concrete
 {
@@ -20,9 +21,13 @@ namespace BitBracket.DAL.Concrete
             return _context.Set<BitUser>().FirstOrDefault(u => u.AspnetIdentityId == id);
         }
 
-        public void UpdateBitUserProfilePictureIfNull(BitUser user)
+        public async Task UpdateBitUserProfilePictureIfNull(BitUser user)
         {
-            user.ProfilePicture = File.ReadAllBytes("Images/Blank_Profile.png");
+            using (var client = new HttpClient())
+            {
+                byte[] imageBytes = await client.GetByteArrayAsync("https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png");
+                user.ProfilePicture = imageBytes;
+            }
             _context.Update(user);
             _context.SaveChanges();
 
