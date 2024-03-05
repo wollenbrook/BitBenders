@@ -5,7 +5,13 @@
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
+<div class="ui container">
+    <h3 class="ui center aligned header">@ViewData["Title"]</h3>
+    <p class="ui text">You can download all the data we currently hold about your account, including personal information, participation in tournaments, and more.</p>
+    <form class="ui form" method="post">
+        <button class="ui button primary">Download Data</button>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
