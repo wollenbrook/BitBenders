@@ -15,7 +15,7 @@
                 Create Bracket
             </div>
             <div class="card-body">
-                <form id="createBracketForm" asp-area="api" asp-controller="BracketApi" asp-action="Post" method="post">
+                <form id="createBracketForm" method="post">
                     <div class="mb-3">
                         <label for="Names" class="form-label">Player Names (comma-delimited):</label>
                         <textarea input asp-for="Names" type="text" class="form-control" id="Names" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
@@ -39,16 +39,20 @@
             </div>
         </div>
     </div>
+    <div id="minimal">
+            <div class="demo"></div>
+    </div>
 </body>
 </html>
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
     $('#createBracketForm').on('submit', function(e) {
+        e.preventDefault();  // Prevent the form from being submitted in the traditional way
+        // Create an array of player names
         var names = $('#Names').val().split(',');
         if (names.length < 2) {
             alert('You must enter at least 2 names.');
-            e.preventDefault();
             return;
         }
 
@@ -58,35 +62,20 @@ $(document).ready(function() {
             RandomSeeding: $('#RandomSeeding').is(':checked')
         };
 
-        $.ajax({
-            url: '/api/BracketApi',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(formData),
-            success: function(response) {
-                // Handle the response
-                console.log(response);
+        // Process the form data...
 
-                // Hide the form
-                $('#card').hide();
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                // Handle the error
-                console.error(textStatus, errorThrown);
-            }
-        });
-
-        e.preventDefault();
-    });
-});
-/*
-fetch('/api/BracketApi')
-    .then(response => response.json())
-    .then(data => {
-        // Create an array of player names
-        var names = data.Names.split(',');
         // Create a format variable
-        var format = data.Format;
+        var format = formData.Format;
+
+        // Create a RandomSeeding variable
+        var randomSeeding = formData.RandomSeeding;
+
+        // If RandomSeeding is true, shuffle the player names
+        if (randomSeeding) {
+            names.sort(function() {
+                return 0.5 - Math.random();
+            });
+        }
 
         function roundToPowerOfTwo(names) {
             const numPlayers = names.length;
@@ -135,11 +124,24 @@ fetch('/api/BracketApi')
         if (teams.length > 0) {
             var singleElimination = {
                 "teams": teams
+                //results: [[]]  // Winners bracket
             };
+            var doubleElimination = {
+                teams: teams,
+                results: [[[[]]], [], []] // Winners bracket, Losers bracket
+            };
+
+            // Create a bracketFormat variable based on the format
+            var bracketFormat;
+            if (format === 'Single Elimination') {
+                bracketFormat = singleElimination;
+            } else if (format === 'Double Elimination') {
+                bracketFormat = doubleElimination;
+            }
 
             $(function() {
                 $('#minimal .demo').bracket({
-                    init: singleElimination
+                    init: bracketFormat
                 });
             });
         } 
@@ -147,6 +149,5 @@ fetch('/api/BracketApi')
             console.error("No teams available to initialize the bracket.");
         }
     })
-    .catch(error => console.error('Error:', error));
-*/
+});
 </script>

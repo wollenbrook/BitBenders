@@ -44,8 +44,6 @@ public class BracketController : Controller
             }
             // change this
             TempData["Players"] = System.Text.Json.JsonSerializer.Serialize(players);
-
-            return RedirectToAction("BracketDisplay");
         }
 
         return View(model);
