@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BitBracket</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/jquery-bracket/jquery.bracket.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BitBracket.styles.css" asp-append-version="true" />
 
@@ -33,6 +34,7 @@
                 <a class="header item" asp-area="" asp-controller="Home" asp-action="Index">BitBracket</a>
                 <a class="item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 <a class="item" asp-area="" asp-controller="Home" asp-action="Announcement">Announcements</a>
+                <a class="item" asp-area="" asp-controller="Bracket" asp-action="CreateBracket">Create Bracket</a>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <a class="item" asp-area="" asp-controller="Home" asp-action="Profile">Profile</a>
@@ -56,6 +58,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-bracket/jquery.bracket.min.js"></script>
     <!-- Semantic UI JS -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
