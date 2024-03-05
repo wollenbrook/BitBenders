@@ -1,5 +1,8 @@
 @using BitBracket.ViewModels
 @model BasicBracketViewModel
+@{
+    ViewData["Title"] = "Create Bracket";
+}
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -8,21 +11,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Competition Bracket</title>
 </head>
-<body>
+<body class="announcement-background">
+    <h2 class="title-styling">@ViewData["Title"]</h2>
     <div class="container mt-4">
-        <div class="card" id="card">
-            <div class="card-header, h1, text-center">
-                Create Bracket
-            </div>
-            <div class="card-body">
-                <form id="createBracketForm" method="post">
+        
+                <form id="createBracketForm" method="post" class="ui form" style="padding: 20px; background-color: #93a86d; border-radius: 10px;">
                     <div class="mb-3">
-                        <label for="Names" class="form-label">Player Names (comma-delimited):</label>
+                        <label for="Names" class="form-label ui field">Player Names (comma-delimited):</label>
                         <textarea input asp-for="Names" type="text" class="form-control" id="Names" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
                         <span asp-validation-for="Names" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="Format" class="form-label">Format:</label>
+                        <label for="Format" class="form-label ui field">Format:</label>
                         <select id="Format" name="Format" class="form-control">
                             <option value="Single Elimination">Single Elimination</option>
                             <option value="Double Elimination">Double Elimination</option>
@@ -36,12 +36,13 @@
                         <button type="submit" class="btn btn-primary">Generate Bracket</button>
                     </div>
                 </form>
-            </div>
-        </div>
+         
     </div>
-    <div id="minimal">
-            <div class="demo"></div>
+    <div class="container-fluid" style="margin-top: 20px;">
+    <div id="minimal" class="row">
+        <div class="col demo"></div>
     </div>
+</div>
 </body>
 </html>
 
