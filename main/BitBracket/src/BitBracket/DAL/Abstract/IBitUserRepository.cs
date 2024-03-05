@@ -7,9 +7,10 @@ namespace BitBracket.DAL.Abstract
     public interface IBitUserRepository
     {
         public BitUser GetBitUserByEntityId(string id);
-        public void UpdateBitUserProfilePictureIfNull(BitUser user);
+        public Task UpdateBitUserProfilePictureIfNull(BitUser user);
+        public Task DeleteBitUser(BitUser user);
+        public Task UpdateUserName(BitUser user);
 
 
     }
 }
-

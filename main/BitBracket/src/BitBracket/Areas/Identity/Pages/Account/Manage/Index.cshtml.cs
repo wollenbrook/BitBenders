@@ -6,6 +6,9 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using BitBracket.DAL.Abstract;
+using BitBracket.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,13 +19,16 @@ namespace BitBracket.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IBitUserRepository _bitUserRepository;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IBitUserRepository bitUserRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _bitUserRepository = bitUserRepository;
         }
 
         /// <summary>
@@ -116,7 +122,17 @@ namespace BitBracket.Areas.Identity.Pages.Account.Manage
             }
             if (Input.NewUserName != Username)
             {
+                var existingUser = await _userManager.FindByNameAsync(Input.NewUserName);
+                if (existingUser != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Username already exists. Please choose a different username.");
+                    await LoadAsync(user);
+                    return Page();
+                }
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.NewUserName);
+                BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(_userManager.GetUserId(User));
+                bitUser.Username = Input.NewUserName;
+                await _bitUserRepository.UpdateUserName(bitUser);
                 if (!setUserNameResult.Succeeded)
                 {
                     StatusMessage = "Unexpected error when trying to set user name.";

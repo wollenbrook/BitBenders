@@ -14,22 +14,24 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using BitBracket.DAL.Abstract;
 
 namespace BitBracket.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
-   
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserStore<IdentityUser> _userStore;
+        private readonly IBitUserRepository _bitUserRepository;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IUserStore<IdentityUser> userStore, IBitUserRepository bitUserRepository)
         {
-
             _signInManager = signInManager;
             _logger = logger;
-            _userManager = userManager;
+            _userStore = userStore;
+            _bitUserRepository = bitUserRepository;
         }
 
         /// <summary>
@@ -115,17 +117,10 @@ namespace BitBracket.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-             
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-           
-                if (user == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
-                var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
 
-                
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

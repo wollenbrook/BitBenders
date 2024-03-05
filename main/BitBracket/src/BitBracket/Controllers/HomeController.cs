@@ -14,18 +14,20 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IBitUserRepository _bitUserRepository;
+    private readonly IAnnouncementRepository _announcementRepository;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository)
+    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, IAnnouncementRepository announcementRepository)
     {
         _logger = logger;
         _userManager = userManager;
         _bitUserRepository = bitUserRepository;
+        _announcementRepository = announcementRepository;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-
-        return View();
+        var latestAnnouncement = await _announcementRepository.GetLatestAnnouncementAsync();
+        return View(latestAnnouncement);
     }
     public IActionResult Announcement()
     {
@@ -35,15 +37,15 @@ public class HomeController : Controller
     {
         return View();
     }
-    
+
     public async Task<IActionResult> Profile()
-    { 
+    {
         // info from controller: non database info
         string name = User?.Identity?.Name ?? "No user found";
         // info from identity
         string id = _userManager.GetUserId(User);
         BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
-        
+
         IdentityUser user = await _userManager.GetUserAsync(User);
         if (bitUser.ProfilePicture == null)
         {
@@ -55,7 +57,8 @@ public class HomeController : Controller
             Username = name,
             Email = user?.Email ?? "no email",
             Bio = bitUser?.Bio ?? "No current bio.",
-            ProfilePictureUrl = Convert.ToBase64String(bitUser.ProfilePicture)
+            ProfilePictureUrl = bitUser?.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png"
+
         };
 
         return View(userViewModel);
