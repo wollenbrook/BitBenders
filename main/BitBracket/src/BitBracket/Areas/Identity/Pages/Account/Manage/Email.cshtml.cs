@@ -114,6 +114,14 @@ namespace BitBracket.Areas.Identity.Pages.Account.Manage
             }
 
             var email = await _userManager.GetEmailAsync(user);
+            // Check if the new email is already in use
+            var existingUser = await _userManager.FindByEmailAsync(Input.NewEmail);
+            if (existingUser != null && existingUser.Id != user.Id)
+            {
+                ModelState.AddModelError(string.Empty, "The email is already in use.");
+                await LoadAsync(user);
+                return Page();
+            }
             if (Input.NewEmail != email)
             {
                 var userId = await _userManager.GetUserIdAsync(user);
