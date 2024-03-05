@@ -27,11 +27,14 @@ var sendGridKey = builder.Configuration["SendGridKey"]; // Ensure you have this 
 builder.Services.AddScoped<IEmailService, EmailService>(_ => new EmailService(sendGridKey));
 
 // Register SmsService
-var twilioSettings = builder.Configuration.GetSection("TwilioSettings");
+
+var accountsid = builder.Configuration["AccountSid"];
+var authToken = builder.Configuration["AuthToken"];
+var fromNumber = builder.Configuration["FromNumber"];
 builder.Services.AddSingleton<ISmsService>(new SmsService(
-        twilioSettings["AccountSid"],
-        twilioSettings["AuthToken"],
-        twilioSettings["FromNumber"]
+        accountsid,
+        authToken,
+        fromNumber
 ));
 
 builder.Services.AddControllers();

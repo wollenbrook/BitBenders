@@ -2,6 +2,7 @@ using BitBracket.DAL.Abstract;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace BitBracket.DAL.Concrete
 {
@@ -9,7 +10,7 @@ namespace BitBracket.DAL.Concrete
     {
         private readonly string _sendGridKey;
 
-        public EmailService(string sendGridKey)
+        public EmailService(string sendGridKey) 
         {
             _sendGridKey = sendGridKey;
         }
@@ -32,6 +33,25 @@ namespace BitBracket.DAL.Concrete
 
             await client.SendEmailAsync(msg); // Sends the email
         }
+        public async Task SendEmailConfirmationAsync(string toEmail, string subject, string message)
+        {
+            if (string.IsNullOrEmpty(_sendGridKey))
+            {
+                return;
+            }
+            var client = new SendGridClient(_sendGridKey);
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("BitBracketApp@gmail.com", "BitBracketApp"),
+                Subject = subject,
+                PlainTextContent = message,
+                HtmlContent = message
+            };
+            msg.AddTo(new EmailAddress(toEmail));
+            var response = await client.SendEmailAsync(msg);
+        
+        }
+
     }
 }
 
