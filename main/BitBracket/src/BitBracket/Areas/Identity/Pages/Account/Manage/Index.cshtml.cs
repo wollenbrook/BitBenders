@@ -122,6 +122,13 @@ namespace BitBracket.Areas.Identity.Pages.Account.Manage
             }
             if (Input.NewUserName != Username)
             {
+                var existingUser = await _userManager.FindByNameAsync(Input.NewUserName);
+                if (existingUser != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Username already exists. Please choose a different username.");
+                    await LoadAsync(user);
+                    return Page();
+                }
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.NewUserName);
                 BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(_userManager.GetUserId(User));
                 bitUser.Username = Input.NewUserName;
