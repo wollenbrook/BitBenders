@@ -25,5 +25,11 @@ namespace BitBracket.DAL.Concrete
             _context.Announcements.Add(announcement);
             await _context.SaveChangesAsync();
         }
+        public async Task<Announcement> GetLatestAnnouncementAsync()
+        {
+            return await _context.Announcements
+                                 .OrderByDescending(a => a.CreationDate)
+                                 .FirstOrDefaultAsync();
+        }
     }
 }

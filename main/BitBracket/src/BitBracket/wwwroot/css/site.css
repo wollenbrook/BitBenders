@@ -82,14 +82,14 @@ h1 {
 }
 
 .announcement-background {
-  background-color: #00363f;
+  background: linear-gradient(to right, #7f9a8d, #00535f);
   min-height: 100vh;
   width: 100%;
 }
 
 .text-styling {
   color: white;
-  font-size: 24px;
+  font-size: 16px;
   text-align: center;
   padding: 20px 0;
   font-weight: bold; /* Make the font bolder */
@@ -101,13 +101,19 @@ h1 {
 }
 
 .title-styling {
+  font-family: 'Copperplate', 'Copperplate Gothic Light', sans-serif;
   color: #f4886d; /* Primary color for text */
   font-weight: bold; /* Makes the text bold */
   text-shadow: 
-      -1px -1px 0 #f8d291,  
-       1px -1px 0 #f8d291,
-      -1px  1px 0 #f8d291,
-       1px  1px 0 #f8d291; /* Secondary color as text shadow for stroke effect */
+    -1px -1px 0 #f8d291,  
+     1px -1px 0 #f8d291,
+    -1px  1px 0 #f8d291,
+     1px  1px 0 #f8d291; /* Secondary color as text shadow for stroke effect */
   font-size: 70px; /* Adjust size as needed */
   text-align: center; /* Center alignment - adjust as needed */
+}
+
+.announcement-container {
+  max-width: 900px; /* Adjust the width as needed */
+  margin: auto; /* This centers the container */
 }
