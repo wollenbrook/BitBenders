@@ -71,8 +71,6 @@ function displayAnnouncements(data) {
 
 
 
-
-
 // Initializing function to setup event listeners once DOM content is fully loaded
 function initialize() {
     fetchAnnouncements(); // Initial fetch of announcements

@@ -14,18 +14,20 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IBitUserRepository _bitUserRepository;
+    private readonly IAnnouncementRepository _announcementRepository;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository)
+    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, IAnnouncementRepository announcementRepository)
     {
         _logger = logger;
         _userManager = userManager;
         _bitUserRepository = bitUserRepository;
+        _announcementRepository = announcementRepository;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-
-        return View();
+        var latestAnnouncement = await _announcementRepository.GetLatestAnnouncementAsync();
+        return View(latestAnnouncement);
     }
     public IActionResult Announcement()
     {

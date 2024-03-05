@@ -8,5 +8,6 @@ namespace BitBracket.DAL.Abstract
     {
         Task<IEnumerable<Announcement>> GetAllAsync();
         Task AddAsync(Announcement announcement);
+        Task<Announcement> GetLatestAnnouncementAsync();
     }
 }

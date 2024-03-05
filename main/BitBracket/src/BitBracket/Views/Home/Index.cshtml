@@ -1,12 +1,83 @@
-﻿@{
+﻿@model BitBracket.Models.Announcement
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<div class="section-gap"></div>
+<div class="section-gap"></div>
 <body class="announcement-background">
-    <div class="section-gap"></div>
-<div class="announcement-background">
-    <div class="ui container">
-        <h1 class="title-styling">BitBracket</h1>
-        <p class="text-styling"> Welcome to BitBracket, your ultimate platform for organizing and participating in tournaments.</p>
+    <div class="ui container center aligned">
+        <h1 class="title-styling">Welcome to BitBracket</h1>
+        <p class="text-styling">Your ultimate platform for organizing and participating in tournaments.</p>
+        
+        <div class="ui center aligned segment">
+            <button class="ui animated button" tabindex="0">
+                <div class="visible content">Got an idea for a tournament?</div>
+                <div class="hidden content">Create a Basic Bracket.
+                </div>
+            </button>
+            <a href="@Url.Action("Announcement", "Home")" class="ui animated button" tabindex="0">
+                <div class="visible content">What have you missed?</div>
+                <div class="hidden content">Check Announcements Page</div>
+            </a>
+            <a href="@Url.Action("Privacy", "Home")" class="ui animated button" tabindex="0">
+                <div class="visible content">What is BitBracket?</div>
+                <div class="hidden content">Check About Page</div>
+            </a>
+
+        </div>
+
+<div class="section-gap"></div>
+        <div class="ui hidden divider"></div>
+
+        <h2 class="ui header">Latest Announcement</h2>
+        @if (Model != null)
+        {
+            <div class="ui card centered">
+                <div class="content">
+                    <div class="header">@Model.Title</div>
+                    <div class="description">
+                        @Model.Description
+                    </div>
+                    <div class="meta">@Model.CreationDate.ToString("MMMM dd, yyyy")</div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div>No announcements to display.</div>
+        }
+
+        <div class="section-gap"></div>
+        <div class="ui hidden divider"></div>
+        <div class="ui hidden divider"></div>
+
+        <h2 class="ui header">Why Choose BitBracket?</h2>
+        <div class="section-gap"></div>
+        <div class="section-gap"></div>
+        <div class="section-gap"></div>
+        <div class="ui three column very relaxed grid">
+            <div class="column">
+                <div class="ui icon header">
+                    <i class="world icon" style="color: #f4886d;"></i> <!-- Color applied here -->
+                    Global Community
+                </div>
+                <p>Connect with players from all over the world.</p>
+            </div>
+            <div class="column">
+                <div class="ui icon header">
+                    <i class="trophy icon" style="color: #f4886d;"></i> <!-- And here -->
+                    Competitive Tournaments
+                </div>
+                <p>Compete in high-stakes tournaments across various games.</p>
+            </div>
+            <div class="column">
+                <div class="ui icon header">
+                    <i class="users icon" style="color: #f4886d;"></i> <!-- And also here -->
+                    Friendly Environment
+                </div>
+                <p>Enjoy a welcoming community regardless of your skill level.</p>
+            </div>
+        </div>
     </div>
-</div>
 </body>
