@@ -1,51 +1,37 @@
 ﻿@using BitBracket.ViewModels
 @model UserViewModel
 <!DOCTYPE html>
-@{
-    ViewData["Title"] = "Welcome to your Profile Page";
-}
-
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+</head>
 <body class="announcement-background">
-    <div class="section-gap"></div>
     <div class="ui container">
-
-        <h1 class="title-styling">Welcome, @User.Identity.Name</h1>
+        <h1 class="title-styling">Welcome, @Model.Username</h1>
         <p class="text-styling">Thank you for choosing BitBracket. We hope to provide a great experience.</p>
 
-        <div class="ui raised segment">
-            <div class="ui grid">
-                <div class="four wide column">
-                    <img id="profileImage" src="@Model.ProfilePictureUrl" alt="Profile Picture Not Working" style="max-width: 100%; max-height: 300px;">
-                    <div class="header">Click the image to change your profile image!</div>
-                </div>
-                <div class="twelve wide column">
-                    <h2 class="column center aligned">User Profile</h2>
-                    <div class="ui list">
-                        <div class="item">
-                            <div class="content">
-                                <div class="header">Username</div>
-                                <div>@Model.Username</div>
-                            </div>
+        <div class="ui very padded segment">
+            <div class="ui divided items">
+                <div class="item">
+                    <div class="image">
+                        <img id="profileImage" src="@Model.ProfilePictureUrl" alt="Profile Picture" class="ui medium rounded image">
+                        <input type="file" id="profileImageInput" style="display: none;" accept="image/*">
+                        <a class="ui teal ribbon label clickable">Profile Picture</a>
+                    </div>
+                    <div class="content">
+                        <a class="header">@Model.Username</a>
+                        <div class="meta">
+                            <span>@Model.Email</span>
                         </div>
-                        <div class="item">
-                            <div class="content">
-                                <div class="header">Email</div>
-                                <div>@Model.Email</div>
-                            </div>
+                        <div class="description">
+                            <p><strong>Tag:</strong> <div id="tagId" class="ui label">@Model.Tag</div></p>
+                            <p><strong>Bio:</strong> <div id="bioId" class="ui small fluid input">@Model.Bio</div></p>
                         </div>
-                        <div class="item">
-                            <div class="content">
-                                <div class="header">Tag (click to change the tag)</div>
-                                <div id="tagId">@Model.Tag</div>
-                                <button id="saveTagButtonId">Save Tag Changes</button>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="content">
-                                <div class="header">Bio (click to change the bio)</div>
-                                <div id="bioId">@Model.Bio</div>
-                                <button id="saveBioButtonId">Save Bio Changes</button>
-                            </div>
+                        <div class="extra">
+                            <button id="saveTagButtonId" class="ui small primary button">Save Tag</button>
+                            <button id="saveBioButtonId" class="ui small secondary button">Save Bio</button>
                         </div>
                     </div>
                 </div>
@@ -53,7 +39,6 @@
         </div>
     </div>
 
-</body>
-@section Scripts {
     <script src="~/js/profilepage.js"></script>
-}
+</body>
+</html>
