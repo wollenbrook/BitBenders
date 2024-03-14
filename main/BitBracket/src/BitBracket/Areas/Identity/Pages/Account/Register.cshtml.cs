@@ -82,6 +82,7 @@ namespace BitBracket.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            [Required]
             [Display(Name = "Tag")]
             public string Tag { get; set; }
 
@@ -126,7 +127,21 @@ namespace BitBracket.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                
+                var existingUserByEmail = await _userManager.FindByEmailAsync(Input.Email);
+                if (existingUserByEmail != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Email already exists.");
+                    return Page();
+                }
+
+                var existingUserByUsername = await _userManager.FindByNameAsync(Input.UserName);
+                if (existingUserByUsername != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Username already exists.");
+                    return Page();
+                }
+
+
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
