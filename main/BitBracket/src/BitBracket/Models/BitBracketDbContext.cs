@@ -17,6 +17,7 @@ public partial class BitBracketDbContext : DbContext
     }
     public DbSet<Tournament> Tournaments { get; set; }
     public DbSet<Announcement> Announcements { get; set; }
+   
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

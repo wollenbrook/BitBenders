@@ -7,6 +7,7 @@ using BitBracket.Models;
 using BitBracket.DAL.Abstract;
 using BitBracket.DAL.Concrete;
 using MyApplication.Data;
+using HW6.DAL.Concrete;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ builder.Services.AddDbContext<BitBracket.Models.BitBracketDbContext>(options => 
                     .UseSqlServer(connectionString));
 builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
 // Register EmailService
 var sendGridKey = builder.Configuration["SendGridKey"]; // Ensure you have this key in your appsettings.json
 builder.Services.AddScoped<IEmailService, EmailService>(_ => new EmailService(sendGridKey));
@@ -74,6 +77,14 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "SearchProfiles",
+        pattern: "/SearchProfiles/{bitUserId}",
+        defaults: new { controller = "Home", action = "SearchProfile" }
+    );
+});
 app.MapRazorPages();
 
 app.Run();
