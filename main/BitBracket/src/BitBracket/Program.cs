@@ -81,7 +81,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "SearchProfiles",
-        pattern: "/SearchProfiles/{bitUserId}",
+        pattern: "/SearchProfiles/{username}",
         defaults: new { controller = "Home", action = "SearchProfile" }
     );
 });
