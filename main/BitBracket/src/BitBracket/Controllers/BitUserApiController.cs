@@ -17,15 +17,13 @@ namespace BitBracket.Controllers
     [ApiController]
     public class BitUserApiController : ControllerBase
     {
-        private readonly BitBracketDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IBitUserRepository _bitUserRepository;
-        
 
 
-        public BitUserApiController(BitBracketDbContext context, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository)
+        public BitUserApiController(UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository)
         {
-            _context = context;
+           
             _userManager = userManager;
             _bitUserRepository = bitUserRepository;
         }
@@ -34,14 +32,14 @@ namespace BitBracket.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BitUser>>> GetBitUser()
         {
-            return await _context.BitUser.ToListAsync();
+            return await _bitUserRepository.GetAll().ToListAsync();
         }
 
         // GET: api/BitUserApi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BitUser>> GetBitUser(int id)
         {
-            var bitUser = await _context.BitUser.FindAsync(id);
+            var bitUser = _bitUserRepository.FindById(id);
 
             if (bitUser == null)
             {
@@ -59,9 +57,7 @@ namespace BitBracket.Controllers
             string id = _userManager.GetUserId(User);
             BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
             bitUser.Bio = bio;
-            _context.Update(bitUser);
-            _context.SaveChanges();
-
+            _bitUserRepository.AddOrUpdate(bitUser);
             return Ok();
         }
 
@@ -73,8 +69,7 @@ namespace BitBracket.Controllers
             string id = _userManager.GetUserId(User);
             BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
             bitUser.Tag = tag;
-            _context.Update(bitUser);
-            _context.SaveChanges();
+            _bitUserRepository.AddOrUpdate(bitUser);
 
             return Ok();
         }
@@ -130,9 +125,7 @@ namespace BitBracket.Controllers
                 string id = _userManager.GetUserId(User);
                 BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
                 bitUser.ProfilePicture = profilePictureBytes;
-                _context.Update(bitUser);
-                _context.SaveChanges();
-
+                _bitUserRepository.AddOrUpdate(bitUser);
                 return Ok();
 
 
@@ -153,10 +146,10 @@ namespace BitBracket.Controllers
         */
 
         // DELETE: api/BitUserApi/5
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBitUser(int id)
         {
-            var bitUser = await _context.BitUser.FindAsync(id);
+            var bitUser = await _bitUserRepository.FindAsync(id);
             if (bitUser == null)
             {
                 return NotFound();
@@ -167,10 +160,7 @@ namespace BitBracket.Controllers
 
             return NoContent();
         }
+        */
 
-        private bool BitUserExists(int id)
-        {
-            return _context.BitUser.Any(e => e.Id == id);
-        }
     }
 }

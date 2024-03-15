@@ -1,0 +1,2 @@
+We meet after class upstairs in the tutor room. We usually have a plan regarding what we will discuss and what we need from each other and when. 
+We also communicate pretty actively through discord, especially now that some features and aspects are starting to intersect so we make sure that we are on the same page when potentially affecting each others work. 

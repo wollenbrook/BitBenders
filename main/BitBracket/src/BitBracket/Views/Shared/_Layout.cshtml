@@ -42,6 +42,10 @@
                 <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="Privacy">About</a>
                 
                 <div class="right menu">
+                    <a class="item" asp-area="" asp-controller="Home" asp-action="Search">
+                        <i class="search icon"></i>
+                    </a>
+
                     <div class="ui dropdown item navbar-text">
                         Theme <i class="dropdown icon navbar-text"></i>
                         <div class="menu">
@@ -49,6 +53,8 @@
                             <div class="item" id="dark-theme">Dark Theme</div>
                         </div>
                     </div>
+
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -61,7 +67,7 @@
     </div>
 
 
-
+ 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

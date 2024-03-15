@@ -4,17 +4,23 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using EllipticCurve.Utils;
+using BitBracket.DAL.Concrete;
+using HW6.DAL.Concrete;
+
 
 namespace BitBracket.DAL.Concrete
 {
-    public class BitUserRepository : IBitUserRepository
+    public class BitUserRepository : Repository<BitUser>, IBitUserRepository
     {
-        private readonly BitBracketDbContext _context;
-
-        public BitUserRepository(BitBracketDbContext context)
+        private DbSet<BitUser> _bitUsers;
+        public BitUserRepository(BitBracketDbContext context) : base(context)
         {
-            _context = context;
+            _bitUsers = context.BitUser;
         }
+
+        
 
         public Task DeleteBitUser(BitUser user)
         {
@@ -22,15 +28,26 @@ namespace BitBracket.DAL.Concrete
             {
                 throw new WebException("User not found");
             }
-            _context.Remove(user);
-            _context.SaveChanges();
+            
+            
+            _bitUsers.Remove(user);
             return Task.CompletedTask;
         }
 
         public BitUser GetBitUserByEntityId(string id)
         {
-            return _context.Set<BitUser>().FirstOrDefault(u => u.AspnetIdentityId == id);
+            return _bitUsers.FirstOrDefault(u => u.AspnetIdentityId == id);
         }
+
+        public BitUser GetBitUserByRegularId(int id)
+        {
+            return _bitUsers.FirstOrDefault(u => u.Id == id);
+        }
+        public List<BitUser> GetBitUserByName(string username)
+        {
+            return _bitUsers.Where(u => u.Username.Contains(username)).ToList();
+        }
+        
 
         public async Task UpdateBitUserProfilePictureIfNull(BitUser user)
         {
@@ -39,19 +56,17 @@ namespace BitBracket.DAL.Concrete
                 byte[] imageBytes = await client.GetByteArrayAsync("https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png");
                 user.ProfilePicture = imageBytes;
             }
-            _context.Update(user);
-            _context.SaveChanges();
+            _bitUsers.Update(user);
 
         }
 
         public Task UpdateUserName(BitUser user)
         {
-            _context.Update(user);
-            _context.SaveChanges();
+            _bitUsers.Update(user);
             return Task.CompletedTask;
             
         }
-        
+
     }
 
 }

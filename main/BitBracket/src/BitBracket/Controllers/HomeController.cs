@@ -69,11 +69,42 @@ public class HomeController : Controller
 
         return View(userViewModel);
     }
+    public IActionResult Search()
+    {
+        return View();
+    }
+    public async Task<IActionResult> SearchProfiles(int id)
+    {
+        BitUser bitUser = _bitUserRepository.GetBitUserByRegularId(id);
+        var user = await _userManager.FindByIdAsync(bitUser.AspnetIdentityId);
+        var userEmail = _userManager.GetEmailAsync(user);
+        if (bitUser == null)
+        {
+            UserViewModel userViewModelfail = new UserViewModel
+            {
+                Username = "Not found"
+            };
+            return View(userViewModelfail);
+        }
+        else
+        {
+            UserViewModel userViewModel = new UserViewModel
+            {
+                Username = bitUser.Username,
+                Email = userEmail.Result,
+                Bio = bitUser.Bio,
+                Tag = bitUser.Tag,
+                ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png"
+            };
+            return View(userViewModel);
+        }
+    }
 
     public IActionResult Privacy()
     {
         return View();
     }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
