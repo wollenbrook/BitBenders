@@ -1,11 +1,13 @@
-﻿@model BitBracket.Models.Announcement
+﻿@* Home/Index.cshtml *@
+
+@model BitBracket.Models.Announcement
 
 @{
     ViewData["Title"] = "Home Page";
 }
 <div class="section-gap"></div>
 <div class="section-gap"></div>
-<body class="announcement-background">
+<body class="announcement-background"></body>
     <div class="ui container center aligned">
         <h1 class="title-styling">Welcome to BitBracket</h1>
         <p class="text-styling">Your ultimate platform for organizing and participating in tournaments.</p>
@@ -54,30 +56,27 @@
 
         <h2 class="ui header">Why Choose BitBracket?</h2>
         <div class="section-gap"></div>
-        <div class="section-gap"></div>
-        <div class="section-gap"></div>
         <div class="ui three column very relaxed grid">
             <div class="column">
                 <div class="ui icon header">
-                    <i class="world icon" style="color: #f4886d;"></i> <!-- Color applied here -->
+                    <i class="world icon icon-color"></i> 
                     Global Community
                 </div>
-                <p>Connect with players from all over the world.</p>
+                <p class="medium-text">Connect with players from all over the world.</p>
             </div>
             <div class="column">
                 <div class="ui icon header">
-                    <i class="trophy icon" style="color: #f4886d;"></i> <!-- And here -->
+                    <i class="trophy icon icon-color"></i> 
                     Competitive Tournaments
                 </div>
-                <p>Compete in high-stakes tournaments across various games.</p>
+                <p class="medium-text">Compete in high-stakes tournaments across various games.</p>
             </div>
             <div class="column">
                 <div class="ui icon header">
-                    <i class="users icon" style="color: #f4886d;"></i> <!-- And also here -->
+                    <i class="users icon icon-color"></i> 
                     Friendly Environment
                 </div>
-                <p>Enjoy a welcoming community regardless of your skill level.</p>
+                <p class="medium-text">Enjoy a welcoming community regardless of your skill level.</p>
             </div>
         </div>
     </div>
-</body>

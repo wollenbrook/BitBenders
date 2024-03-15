@@ -1,4 +1,11 @@
-// Function to fetch and display announcements
+//wwwroot/js/announcementForm.js
+
+// Ensure DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    fetchAnnouncements(); // Initial fetch of announcements
+    listenForThemeChanges();
+});
+
 function fetchAnnouncements() {
     fetch('/api/AnnouncementsApi')
         .then(response => {
@@ -14,66 +21,79 @@ function fetchAnnouncements() {
         });
 }
 
-// Function to display announcements
 function displayAnnouncements(data) {
     const announcementsList = document.getElementById('announcementsList');
-
     if (!announcementsList) {
         console.warn('The announcements list element does not exist on this page.');
-        return; // Exit the function early if the element is not found
+        return;
     }
 
     announcementsList.innerHTML = ''; // Clear existing content
+    data.forEach(announcement => {
+        announcementsList.appendChild(createAnnouncementCard(announcement));
+    });
+}
 
-    // Specific color arrays for each category
-    const backgroundColors = ['#131c6a', '#2e1467', '#4b1358', '#601736', '#6f1f1a'];
-    const titleColors = ['#b6aabb', '#e4dbe7', '#a8b4aa', '#a4807f', '#8c7a93'];
-    const descriptionColor = '#c5c0ac'; // Single color for descriptions
-    const authorColor = '#a3b2b6'; // Single color for authors
-    const whenColor = '#b6aabb'; // Single color for 'when'
-    const strokeColors = ['#e4dbe7', '#b6aabb', '#8c7a93', '#9a7c85'];
+function createAnnouncementCard(announcement) {
+    // Check for theme
+    const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+    
+    // Define color schemes for themes
+    const colorSchemes = {
+        light: {
+            backgroundColors: ['#ff6761', '#ff9a20', '#ffe00e', '#97db24', '#49d271'],
+            titleColors: ['#3243cf', '#8f2db1', '#0c91a7', '#19bcd2', '#cb54eb'],
+            descriptionColor: '#1b5372',
+            authorColor: '#4c5c16',
+            whenColor: '#4c5c16',
+            strokeColors: ['#fff2b7', '#ffec95', '#e7c209', '#d0a604']
+        },
+        dark: {
+            backgroundColors: ['#131c6a', '#2e1467', '#4b1358', '#601736', '#6f1f1a'],
+            titleColors: ['#b6aabb', '#e4dbe7', '#a8b4aa', '#a4807f', '#8c7a93'],
+            descriptionColor: '#c5c0ac',
+            authorColor: '#a3b2b6',
+            whenColor: '#b6aabb',
+            strokeColors: ['#e4dbe7', '#b6aabb', '#8c7a93', '#9a7c85']
+        }
+    };
+
+    // Get colors based on the current theme
+    const { backgroundColors, titleColors, descriptionColor, authorColor, whenColor, strokeColors } = colorSchemes[theme];
 
     // Function to randomly select colors from arrays
     const getRandomColor = (colors) => colors[Math.floor(Math.random() * colors.length)];
 
-    // Sort the announcements by CreationDate in descending order (newest first)
-    const sortedAnnouncements = data.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+    // Construct the announcement card
+    const card = document.createElement('div');
+    card.className = 'ui raised card';
+    card.style.backgroundColor = getRandomColor(backgroundColors);
+    card.style.borderColor = getRandomColor(strokeColors);
+    card.style.borderWidth = '4px';
+    card.style.borderStyle = 'solid';
+    card.style.boxShadow = '0 4px 8px 0 rgba(0, 0, 0, 0.2)';
 
-    sortedAnnouncements.forEach(a => {
-        // Randomly selecting colors for background and stroke; fixed colors for other categories
-        const bgColor = getRandomColor(backgroundColors);
-        const strokeColor = getRandomColor(strokeColors);
-        const titleColor = getRandomColor(titleColors);
+    const titleColor = getRandomColor(titleColors);
 
-        const card = document.createElement('div');
-        card.className = 'ui raised card';
-        card.style.backgroundColor = bgColor;
-        card.style.borderColor = strokeColor;
-        card.style.borderWidth = '4px'; 
-        card.style.borderStyle = 'solid';
-        card.style.boxShadow = '0 4px 8px 0 rgba(0, 0, 0, 0.2)'; // Add some shadow for depth
-        card.innerHTML = `
-            <div class="content">
-                <div class="header" style="color: ${titleColor};">${a.title}</div>
-                <div class="description" style="margin-top: 10px; color: ${descriptionColor};">
-                    ${a.description}
-                </div>
+    card.innerHTML = `
+        <div class="content">
+            <div class="header" style="color: ${titleColor};">${announcement.title}</div>
+            <div class="description" style="color: ${descriptionColor};">
+                ${announcement.description}
             </div>
-            <div class="extra content" style="padding-top: 10px;">
-                <div style="color: ${authorColor};"><strong>Author:</strong> ${a.author}</div>
-                <div style="margin-top: 5px; color: ${whenColor};"><strong>When:</strong> ${new Date(a.creationDate).toLocaleDateString()} ${new Date(a.creationDate).toLocaleTimeString()}</div>
-            </div>
-        `;
-        announcementsList.appendChild(card);
+        </div>
+        <div class="extra content" style="color: ${authorColor};">
+            <strong>Author:</strong> ${announcement.author}<br>
+            <strong>When:</strong> ${new Date(announcement.creationDate).toLocaleDateString()} ${new Date(announcement.creationDate).toLocaleTimeString()}
+        </div>
+    `;
+
+    return card;
+}
+
+function listenForThemeChanges() {
+    // Listen for theme change event triggered in themeSwitcher.js
+    document.addEventListener('themeChanged', function() {
+        fetchAnnouncements(); // Re-fetch and display announcements with new theme colors
     });
 }
-
-
-
-
-// Initializing function to setup event listeners once DOM content is fully loaded
-function initialize() {
-    fetchAnnouncements(); // Initial fetch of announcements
-}
-
-document.addEventListener('DOMContentLoaded', initialize);

@@ -1,0 +1,27 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Use your layout file if you have one
+    ViewData["Title"] = "Test Speech to Text Input";
+}
+
+@model BitBracket.ViewModels.SpeechToTextViewModel
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Text box for displaying transcribed text -->
+<div class="ui form">
+    <div class="field">
+        <label for="transcribedText">Transcribed Text:</label>
+        <input type="text" id="transcribedText" placeholder="Your speech will appear here...">
+    </div>
+</div>
+
+<!-- Include the Speech to Text Partial View -->
+@Html.Partial("_SpeechToTextPartial", Model)
+
+@section Scripts {
+    <script src="~/js/speechToText.js"></script>
+    <script>
+        // Update the targetInputId to the ID of the input where the text should be inserted
+        document.getElementById('transcribedText').value = 'Your desired default text or leave it empty';
+    </script>
+}

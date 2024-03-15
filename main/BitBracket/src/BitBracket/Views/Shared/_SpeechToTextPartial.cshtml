@@ -1,0 +1,13 @@
+@model BitBracket.ViewModels.SpeechToTextViewModel
+
+<div id="speechToTextInput">
+    <label for="languageSelector">Select Language:</label>
+    <select id="languageSelector" class="ui dropdown">
+        @foreach (var language in Model.SupportedLanguages)
+        {
+            <option value="@language.Code">@language.Name</option>
+        }
+    </select>
+    <button id="startRecording" class="ui button">Start Recording</button>
+    <button id="stopRecording" class="ui button" disabled>Stop Recording</button>
+</div>
