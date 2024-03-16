@@ -1,17 +1,10 @@
-﻿@* Home/Profile *@
-
-@using BitBracket.ViewModels
+﻿@using BitBracket.ViewModels
 @model UserViewModel
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-</head>
 <body class="announcement-background">
     <div class="ui container">
-        <h1 class="title-styling">Welcome, @Model.Username</h1>
+        <h1 class="title-styling">Welcome to @Model.Username's profile page!</h1>
         <p class="text-styling">Thank you for choosing BitBracket. We hope to provide a great experience.</p>
 
         <div class="ui very padded segment">
@@ -19,28 +12,19 @@
                 <div class="item">
                     <div class="image">
                         <img id="profileImage" src="@Model.ProfilePictureUrl" alt="Profile Picture" class="ui medium rounded image">
-                        <input type="file" id="profileImageInput" style="display: none;" accept="image/*">
-                        <a class="ui teal ribbon label clickable">Profile Picture</a>
+                    
                     </div>
                     <div class="content">
                         <a class="header">@Model.Username</a>
                         <div class="meta">
                             <span>@Model.Email</span>
-                        </div>
-                        <div class="description">
                             <p><strong>Tag:</strong> <div id="tagId" class="ui label">@Model.Tag</div></p>
                             <p><strong>Bio:</strong> <div id="bioId" class="ui small fluid input">@Model.Bio</div></p>
                         </div>
-                        <div class="extra">
-                            <button id="saveTagButtonId" class="ui small primary button">Save Tag</button>
-                            <button id="saveBioButtonId" class="ui small secondary button">Save Bio</button>
-                        </div>
+    
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="~/js/profilepage.js"></script>
 </body>
-</html>

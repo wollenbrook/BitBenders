@@ -60,7 +60,7 @@ public class AnnouncementsApiController : ControllerBase
                 // Send Email
                 if (!string.IsNullOrEmpty(user.Email))
                 {
-                    await _emailService.SendEmailAsync(user.Email, "New Announcement published on the BitBracketApp", templateData);
+                    await _emailService.SendEmailAsync(user.Email, "New Announcement published on the BitBracketApp!", templateData);
                 }
 
                 // Send SMS
