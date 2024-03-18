@@ -69,8 +69,10 @@ public class HomeController : Controller
     }
     public async Task<IActionResult> SearchProfiles(int id)
     {
+        //BitUser bitUser = _bitUserRepository.GetBitUserByName(name);
         BitUser bitUser = _bitUserRepository.GetBitUserByRegularId(id);
-        var user = await _userManager.FindByIdAsync(bitUser.AspnetIdentityId);
+        BitUser bitUser1 = _bitUserRepository.GetBitUserByName(bitUser.Username);
+        var user = await _userManager.FindByIdAsync(bitUser1.AspnetIdentityId);
         var userEmail = _userManager.GetEmailAsync(user);
         if (bitUser == null)
         {

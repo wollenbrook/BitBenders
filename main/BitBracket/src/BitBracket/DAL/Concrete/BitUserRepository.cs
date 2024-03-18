@@ -43,11 +43,11 @@ namespace BitBracket.DAL.Concrete
         {
             return _bitUsers.FirstOrDefault(u => u.Id == id);
         }
-        public List<BitUser> GetBitUserByName(string username)
+        public BitUser GetBitUserByName(string username)
         {
-            return _bitUsers.Where(u => u.Username.Contains(username)).ToList();
+            return _bitUsers.FirstOrDefault(u => u.Username == username);
         }
-        
+
 
         public async Task UpdateBitUserProfilePictureIfNull(BitUser user)
         {

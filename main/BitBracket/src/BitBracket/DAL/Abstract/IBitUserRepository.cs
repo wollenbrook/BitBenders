@@ -11,7 +11,7 @@ namespace BitBracket.DAL.Abstract
         public Task DeleteBitUser(BitUser user);
         public Task UpdateUserName(BitUser user);
         public BitUser GetBitUserByRegularId(int id);
-        public List<BitUser> GetBitUserByName(string username);
+        public BitUser GetBitUserByName(string username);
 
     }
 }

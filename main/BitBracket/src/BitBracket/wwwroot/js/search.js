@@ -35,7 +35,7 @@ function displayBitUsers(bitUsers) {
         userDiv.appendChild(tagname);
 
         userDiv.addEventListener("click", () => {
-
+            console.log("Clicked on user: " + bitUser.username);
             window.location.href = `/Home/SearchProfiles/${bitUser.id}`;
         });
         container.appendChild(userDiv);
