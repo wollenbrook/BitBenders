@@ -1,3 +1,5 @@
+//announcementCreateForm.js
+
 // Function to handle form submission with validation
 function handleFormSubmission() {
     const form = document.getElementById('createAnnouncementForm');
@@ -71,3 +73,4 @@ function initialize() {
 }
 
 document.addEventListener('DOMContentLoaded', initialize);
+//export { initialize };

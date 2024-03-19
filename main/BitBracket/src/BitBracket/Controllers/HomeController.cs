@@ -37,7 +37,13 @@ public class HomeController : Controller
     {
         return View();
     }
-
+    public IActionResult TestInput()
+    {
+        var viewModel = new SpeechToTextViewModel();
+        // Populate viewModel.SupportedLanguages as necessary
+        return View(viewModel);
+    }
+    
     public async Task<IActionResult> Profile()
     {
         // info from controller: non database info
