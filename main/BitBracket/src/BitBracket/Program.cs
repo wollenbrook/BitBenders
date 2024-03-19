@@ -1,5 +1,3 @@
-//Program.cs
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BitBracket.Data;
@@ -8,6 +6,8 @@ using BitBracket.DAL.Abstract;
 using BitBracket.DAL.Concrete;
 using MyApplication.Data;
 using HW6.DAL.Concrete;
+using Microsoft.Extensions.DependencyInjection;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,9 +24,11 @@ builder.Services.AddDbContext<BitBracket.Models.BitBracketDbContext>(options => 
 builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddHttpClient<IWhisperService, WhisperService>();
+
 
 // Register EmailService
-var sendGridKey = builder.Configuration["SendGridKey"]; // Ensure you have this key in your appsettings.json
+var sendGridKey = builder.Configuration["SendGridKey"];
 builder.Services.AddScoped<IEmailService, EmailService>(_ => new EmailService(sendGridKey));
 
 // Register SmsService

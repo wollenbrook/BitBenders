@@ -113,39 +113,103 @@ h1 {
   margin-bottom: 20px;
 }
 
-.announcement-background {
-  background: linear-gradient(to right, #7f9a8d, #00535f);
-  min-height: 100vh;
-  width: 100%;
+:root {
+  /* Define light theme colors */
+  --background-color-light: #7f9a8d, #00535f;
+  --text-color-light: white;
+  --navbar-background-light: #f8d291;
+  --title-color-light: #f4886d;
+  --icon-color-light: #f4886d;
+  --medium-text-light: #555;
+  --small-text-light: #777;
+  --navbar-text-light: #000;
+
+  /* Define dark theme colors */
+  --background-color-dark: #131c6a, #712e5c; 
+  --text-color-dark: #b6aabb; 
+  --navbar-background-dark: #2e1467; 
+  --title-color-dark: #4b1358; 
+  --icon-color-dark: #89CFF0;
+  --medium-text-dark: #CCCCCC;
+  --small-text-dark: #AAAAAA;
+  --navbar-text-dark: #fff;
 }
 
-.text-styling {
-  color: white;
+body.light-theme {
+  /* Apply light theme colors to corresponding CSS variables */
+  --background-color: var(--background-color-light);
+  --text-color: var(--text-color-light);
+  --navbar-background: var(--navbar-background-light);
+  --title-color: var(--title-color-light);
+  --icon-color: var(--icon-color-light);
+  --medium-text: var(--medium-text-light);
+  --small-text: var(--small-text-light);
+  --navbar-text-color: var(--navbar-text-light);
+}
+
+body.dark-theme {
+  /* Apply dark theme colors to corresponding CSS variables */
+  --background-color: var(--background-color-dark);
+  --text-color: var(--text-color-dark);
+  --navbar-background: var(--navbar-background-dark);
+  --title-color: var(--title-color-dark);
+  --icon-color: var(--icon-color-dark);
+  --medium-text: var(--medium-text-dark);
+  --small-text: var(--small-text-dark);
+  --navbar-text-color: var(--navbar-text-dark);
+}
+
+.announcement-background {
+  /* Set the background gradient using the theme's background color */
+  background: linear-gradient(to right, var(--background-color));
+}
+
+.text-styling, .navbar-background, .title-styling {
+  /* Common text styling for multiple elements */
+  color: var(--text-color);
   font-size: 16px;
   text-align: center;
-  padding: 20px 0;
-  font-weight: bold; /* Make the font bolder */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle shadow for depth */
+  font-weight: bold; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
 
 .navbar-background {
-  background-color: #f8d291 !important;
+  /* Set the background color for the navbar */
+  background-color: var(--navbar-background) !important;
+}
+
+.navbar-text {
+  /* Set the text color for the navbar */
+  color: var(--navbar-text-color) !important;
 }
 
 .title-styling {
+  /* Specific styling for titles */
   font-family: 'Copperplate', 'Copperplate Gothic Light', sans-serif;
-  color: #f4886d; /* Primary color for text */
-  font-weight: bold; /* Makes the text bold */
-  text-shadow: 
-    -1px -1px 0 #f8d291,  
-     1px -1px 0 #f8d291,
-    -1px  1px 0 #f8d291,
-     1px  1px 0 #f8d291; /* Secondary color as text shadow for stroke effect */
-  font-size: 70px; /* Adjust size as needed */
-  text-align: center; /* Center alignment - adjust as needed */
+  color: var(--title-color);
+  font-weight: bold; 
+  font-size: 70px; 
+  text-align: center; 
 }
 
-.announcement-container {
-  max-width: 900px; /* Adjust the width as needed */
-  margin: auto; /* This centers the container */
+.icon-color i {
+  /* Set the color for icons */
+  color: var(--icon-color);
 }
+
+.medium-text {
+  /* Set the color for medium-sized text */
+  color: var(--medium-text);
+}
+
+.small-text {
+  /* Set the color for small-sized text */
+  color: var(--small-text);
+}
+
+
+.announcement-container {
+  max-width: 900px; 
+  margin: auto; 
+}
+

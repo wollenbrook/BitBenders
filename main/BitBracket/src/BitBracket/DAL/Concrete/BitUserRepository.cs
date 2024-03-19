@@ -20,16 +20,12 @@ namespace BitBracket.DAL.Concrete
             _bitUsers = context.BitUser;
         }
 
-        
-
         public Task DeleteBitUser(BitUser user)
         {
             if (user == null)
             {
                 throw new WebException("User not found");
             }
-            
-            
             _bitUsers.Remove(user);
             return Task.CompletedTask;
         }
