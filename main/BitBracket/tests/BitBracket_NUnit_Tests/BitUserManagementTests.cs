@@ -26,6 +26,7 @@ namespace BitBracket_NUnit_Tests
         [SetUp]
         public void Setup()
         {
+
             _mockBitUserRepo = new Mock<IBitUserRepository>();
             var store = new Mock<IUserStore<IdentityUser>>();
             BitUser testBitUser = new BitUser { AspnetIdentityId = "randomid", Tag = "test", Bio = "test" };
@@ -44,7 +45,7 @@ namespace BitBracket_NUnit_Tests
             mockDbSet.As<IQueryable<BitUser>>().Setup(m => m.ElementType).Returns(bitUsers.ElementType);
             mockDbSet.As<IQueryable<BitUser>>().Setup(m => m.GetEnumerator()).Returns(() => bitUsers.GetEnumerator());
 
-            _controller = new BitUserApiController(_mockContext.Object, _mockUserManager.Object, _mockBitUserRepo.Object);
+            _controller = new BitUserApiController(_mockUserManager.Object, _mockBitUserRepo.Object);
 
         }
         [Test]

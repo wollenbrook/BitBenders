@@ -79,14 +79,12 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "SearchProfiles",
-        pattern: "/SearchProfiles/{bitUserId}",
-        defaults: new { controller = "Home", action = "SearchProfile" }
-    );
-});
+
+app.MapControllerRoute(
+    name: "SearchProfiles",
+    pattern: "/SearchProfiles/{bitUserId}",
+    defaults: new { controller = "Home", action = "SearchProfile" });
+
 app.MapRazorPages();
 
 app.Run();

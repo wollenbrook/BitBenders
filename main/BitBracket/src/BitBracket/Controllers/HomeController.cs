@@ -72,11 +72,13 @@ public class HomeController : Controller
     public IActionResult Search()
     {
         return View();
-    }
-    public async Task<IActionResult> SearchProfiles(int id)
+    } 
+    public async Task<IActionResult> SearchProfiles(string username)
     {
+        //BitUser bitUser = _bitUserRepository.GetBitUserByName(name);
         BitUser bitUser = _bitUserRepository.GetBitUserByRegularId(id);
-        var user = await _userManager.FindByIdAsync(bitUser.AspnetIdentityId);
+        BitUser bitUser1 = _bitUserRepository.GetBitUserByName(bitUser.Username);
+        var user = await _userManager.FindByIdAsync(bitUser1.AspnetIdentityId);
         var userEmail = _userManager.GetEmailAsync(user);
         if (bitUser == null)
         {
@@ -85,19 +87,25 @@ public class HomeController : Controller
                 Username = "Not found"
             };
             return View(userViewModelfail);
-        }
-        else
+        }*/
+        //var user = await _userManager.FindByIdAsync(bitUser.AspnetIdentityId);
+        //var userEmail = _userManager.GetEmailAsync(user);
+
+       
+        /*UserViewModel userViewModel = new UserViewModel
         {
-            UserViewModel userViewModel = new UserViewModel
-            {
-                Username = bitUser.Username,
-                Email = userEmail.Result,
-                Bio = bitUser.Bio,
-                Tag = bitUser.Tag,
-                ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png"
-            };
-            return View(userViewModel);
-        }
+            Username = bitUser.Username,
+            Email = userEmail.Result,
+            Bio = bitUser.Bio,
+            Tag = bitUser.Tag,
+            ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png"
+        };*/
+        UserViewModel userViewModel = new UserViewModel
+        {
+            Username = username
+        };
+        return View(userViewModel);
+        
     }
 
     public IActionResult Privacy()

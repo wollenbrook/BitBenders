@@ -35,6 +35,20 @@ namespace BitBracket.Controllers
             return await _bitUserRepository.GetAll().ToListAsync();
         }
 
+        // GET: api/BitUserApi/Search/{username}
+        [HttpGet("Search/{username}")]
+        public async Task<ActionResult<IEnumerable<BitUser>>> GetBitUserByUsername(string username)
+        {
+            var bitUsers = await _bitUserRepository.GetAll()
+                .Where(u => u.Username.Contains(username))
+                .ToListAsync();
+            if (bitUsers == null)
+            {
+                return NotFound();
+            }
+
+            return bitUsers;
+        }
         // GET: api/BitUserApi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BitUser>> GetBitUser(int id)
