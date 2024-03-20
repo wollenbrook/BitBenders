@@ -52,7 +52,7 @@ namespace BitBracket.DAL.Concrete
 
         public async Task<IEnumerable<Bracket>> GetAllByTournamentId(int tournamentId)
         {
-            return await _context.Brackets.Where(b => b.TournamentId == tournamentId).ToListAsync();
+            return await _context.Brackets.Where(b => b.TournamentID == tournamentId).ToListAsync();
         }
 
         public async Task Update(Bracket bracket)

@@ -13,7 +13,7 @@ public partial class BitUser
 
     public string Tag { get; set; } = null!;
 
-    public string Bio { get; set; } = null!;
+    public string Bio { get; set; } = "Bio not written";
 
     public byte[]? ProfilePicture { get; set; }
 

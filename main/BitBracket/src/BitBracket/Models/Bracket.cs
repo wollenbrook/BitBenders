@@ -5,7 +5,7 @@ namespace BitBracket.Models;
 
 public partial class Bracket
 {
-    public int Id { get; set; }
+    public int ID { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -13,7 +13,7 @@ public partial class Bracket
 
     public string BracketData { get; set; } = null!;
 
-    public int? TournamentId { get; set; }
+    public int? TournamentID { get; set; }
 
     public virtual Tournament1? Tournament { get; set; }
 }
