@@ -13,9 +13,11 @@ public partial class BitUser
 
     public string Tag { get; set; } = null!;
 
-    public string Bio { get; set; } = "bio not set";
+    public string Bio { get; set; } = null!;
 
-    public byte[]? ProfilePicture { get; set; } = null;
+    public byte[]? ProfilePicture { get; set; } = null!;
 
-    public bool EmailConfirmedStatus { get; set; } = false;
+    public bool EmailConfirmedStatus { get; set; }
+
+    public virtual ICollection<Tournament> Tournaments { get; set; } = new List<Tournament>();
 }
