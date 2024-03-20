@@ -55,7 +55,39 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 } */
+.user {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.user h3 {
+        margin: 0;
+}
 
+.user p {
+    margin: 0;
+}
+.tooltip {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    position: relative;
+}
+
+.user-card:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
 h1 {
     text-align: center;
     color: #333;
