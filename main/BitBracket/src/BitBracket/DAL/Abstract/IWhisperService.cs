@@ -1,11 +1,10 @@
-//DAL/Abstract/IWhisperService.CS
-
-using System.Threading.Tasks;
-
 namespace BitBracket.DAL.Abstract
 {
+    using System.IO;
+    using System.Threading.Tasks;
+
     public interface IWhisperService
     {
-        Task<string> ConvertSpeechToTextAsync(byte[] audioData, string language);
+        Task<string> TranscribeAudioAsync(Stream audioStream, string languageCode);
     }
 }
