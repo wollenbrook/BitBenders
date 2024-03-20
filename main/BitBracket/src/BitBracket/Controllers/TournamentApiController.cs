@@ -158,7 +158,7 @@ public class TournamentAPIController : ControllerBase
                 Name = model.BracketName,
                 Status = "In-Progress",
                 BracketData = model.BracketData,
-                TournamentID = model.TournamentId
+                TournamentId = model.TournamentId
             };
 
             // Your code to save the bracket...

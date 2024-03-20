@@ -13,7 +13,7 @@ public partial class Bracket
 
     public string BracketData { get; set; } = null!;
 
-    public int? TournamentID { get; set; }
+    public int? TournamentId { get; set; }
 
-    public virtual Tournament? Tournament { get; set; }
+    public virtual Tournament1? Tournament { get; set; }
 }
