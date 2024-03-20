@@ -141,7 +141,7 @@ h1 {
   --navbar-background-light: #f8d291;
   --title-color-light: #f4886d;
   --icon-color-light: #f4886d;
-  --medium-text-light: #555;
+  --medium-text-light: #323232;
   --small-text-light: #777;
   --navbar-text-light: #000;
 
@@ -149,7 +149,7 @@ h1 {
   --background-color-dark: #131c6a, #712e5c; 
   --text-color-dark: #b6aabb; 
   --navbar-background-dark: #2e1467; 
-  --title-color-dark: #4b1358; 
+  --title-color-dark: #79268c; 
   --icon-color-dark: #89CFF0;
   --medium-text-dark: #CCCCCC;
   --small-text-dark: #AAAAAA;

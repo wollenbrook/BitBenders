@@ -39,9 +39,8 @@ public class HomeController : Controller
     }
     public IActionResult TestInput()
     {
-        var viewModel = new SpeechToTextViewModel();
-        // Populate viewModel.SupportedLanguages as necessary
-        return View(viewModel);
+        var model = new SpeechToTextViewModel();
+        return View(model);
     }
     
     public async Task<IActionResult> Profile()

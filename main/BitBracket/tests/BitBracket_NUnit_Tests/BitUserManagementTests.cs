@@ -1,4 +1,4 @@
-﻿using BitBracket.Controllers;
+using BitBracket.Controllers;
 using BitBracket.DAL.Abstract;
 using BitBracket.Models;
 using Microsoft.AspNetCore.Http;
