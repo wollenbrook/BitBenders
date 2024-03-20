@@ -135,12 +135,13 @@ $(document).ready(function() {
             } else if (format === 'Double Elimination') {
                 bracketFormat = doubleElimination;
             }
+            console.log(bracketFormat);
 
             // Save function
             function saveFn(data) {
                 var json = JSON.stringify(data);
                 localStorage.setItem('bracketData', json);
-                //console.log(data);
+                console.log(data);
             }
 
             $(function() {
