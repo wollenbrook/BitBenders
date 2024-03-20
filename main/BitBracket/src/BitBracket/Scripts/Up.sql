@@ -22,5 +22,6 @@ CREATE TABLE [BitUser] (
 	[Username] NVARCHAR(50) NOT NULL,
     [Tag] NVARCHAR(50) NOT NULL,
     [Bio] NVARCHAR(500) NOT NULL,
-    [ProfilePicture] VARBINARY(MAX) NULL
+    [ProfilePicture] VARBINARY(MAX) NULL,
+    [EmailConfirmedStatus] BIT NULL
 );

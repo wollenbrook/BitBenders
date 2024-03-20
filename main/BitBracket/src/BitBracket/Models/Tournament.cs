@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 namespace BitBracket.Models;
 
 public partial class Tournament

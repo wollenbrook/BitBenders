@@ -6,21 +6,26 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BitBracket.DAL.Abstract;
+using BitBracket.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
+
 namespace BitBracket.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IBitUserRepository _bitUserRepository;
 
-        public ConfirmEmailModel(UserManager<IdentityUser> userManager)
+        public ConfirmEmailModel(UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository)
         {
             _userManager = userManager;
+            _bitUserRepository = bitUserRepository;
         }
 
         /// <summary>
@@ -45,6 +50,9 @@ namespace BitBracket.Areas.Identity.Pages.Account
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+            bitUser.EmailConfirmedStatus = true;
+            _bitUserRepository.AddOrUpdate(bitUser);
             return Page();
         }
     }

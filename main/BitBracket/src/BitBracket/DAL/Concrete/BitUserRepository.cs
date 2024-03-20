@@ -37,6 +37,7 @@ namespace BitBracket.DAL.Concrete
 
         public BitUser GetBitUserByRegularId(int id)
         {
+
             return _bitUsers.FirstOrDefault(u => u.Id == id);
         }
         public BitUser GetBitUserByName(string username)
