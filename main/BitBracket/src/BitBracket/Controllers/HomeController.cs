@@ -72,7 +72,7 @@ public class HomeController : Controller
     {
         return View();
     } 
-    public async Task<IActionResult> SearchProfiles(string username)
+    public async Task<IActionResult> SearchProfiles(int id)
     {
         //BitUser bitUser = _bitUserRepository.GetBitUserByName(name);
         BitUser bitUser = _bitUserRepository.GetBitUserByRegularId(id);
@@ -86,25 +86,19 @@ public class HomeController : Controller
                 Username = "Not found"
             };
             return View(userViewModelfail);
-        }*/
-        //var user = await _userManager.FindByIdAsync(bitUser.AspnetIdentityId);
-        //var userEmail = _userManager.GetEmailAsync(user);
-
-       
-        /*UserViewModel userViewModel = new UserViewModel
+        }
+        else
         {
-            Username = bitUser.Username,
-            Email = userEmail.Result,
-            Bio = bitUser.Bio,
-            Tag = bitUser.Tag,
-            ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png"
-        };*/
-        UserViewModel userViewModel = new UserViewModel
-        {
-            Username = username
-        };
-        return View(userViewModel);
-        
+            UserViewModel userViewModel = new UserViewModel
+            {
+                Username = bitUser.Username,
+                Email = userEmail.Result,
+                Bio = bitUser.Bio,
+                Tag = bitUser.Tag,
+                ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png"
+            };
+            return View(userViewModel);
+        }
     }
 
     public IActionResult Privacy()

@@ -47,14 +47,18 @@ body {
     padding: 0;
 }
 
-/* .container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
+
+.user-card {
+    height: 120px;
+    width: calc(33% - 20px);
+    display: inline-block;
+    background-color: white;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-} */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    cursor: pointer;
+    margin: 10px;
+}
 .user {
     border: 1px solid #ccc;
     padding: 10px;
@@ -111,6 +115,23 @@ h1 {
 
 .section-gap {
   margin-bottom: 20px;
+}
+.name {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.form-info {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+.no-bitusers-found {
+    font-size: 20px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
 }
 
 :root {
