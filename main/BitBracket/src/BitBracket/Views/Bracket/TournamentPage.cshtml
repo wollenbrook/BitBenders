@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tournament Page</title>
+</head>
+<body class="announcement-background">
+    <div class="ui container mb-3">
+        <div class="ui segment">
+            <h1 class="ui sub header" id="tournamentName">Tournament Name</h1>
+            <p class="ui sub header">Organizer: <span id="userTag">User Tag</span></p>
+            <p class="ui sub header">Location: <span id="tournamentLocation">Tournament Location</span></p>
+            <p class="ui sub header">Status: <span id="tournamentStatus">Tournament Status</span></p>
+        </div>
+    </div>
+
+        <!-- Button to open the bracket creation form -->
+    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#bracketModal">
+        Create Bracket
+    </button>
+
+    <!-- Bracket creation form (modal dialog) -->
+   <div class="modal fade" id="bracketModal" tabindex="-1" role="dialog" aria-labelledby="bracketModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bracketModalLabel">Create a New Bracket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="createBracketForm" method="post" class="ui form">
+                    <div class="modal-body">
+                        <div class="field">
+                            <label for="BracketName">Bracket Name:</label>
+                            <input type="text" id="BracketName" name="BracketName" placeholder="Enter Bracket Name" required>
+                        </div>
+                        <div class="field">
+                            <label for="Names">Player Names (comma-delimited):</label>
+                            <textarea id="playerNames" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
+                        </div>
+                        <div class="field">
+                            <label for="Format">Format:</label>
+                            <select id="Format" name="Format">
+                                <option value="Single Elimination">Single Elimination</option>
+                                <option value="Double Elimination">Double Elimination</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" />
+                                <label for="RandomSeeding">Random Seeding (Seeding will be done in entered order otherwise)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Create Bracket">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2>Created Brackets</h2>
+    </div>
+
+    <!-- Bracket display -->
+    <div id="bracketsList">
+    </div>
+
+</body>
+</html>
+
+ <script src="~/js/tournament.js"></script>

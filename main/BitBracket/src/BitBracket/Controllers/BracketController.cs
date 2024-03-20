@@ -11,6 +11,21 @@ public class BracketController : Controller
         return View(model);
     }
 
+    public IActionResult TournamentDashboard()
+    {
+        return View();
+    }
+
+    public IActionResult TournamentPage(int id)
+    {
+        return View((object)id);
+    }
+
+    public IActionResult BracketPage(int id)
+    {
+        return View((object)id);
+    }
+
     [HttpPost]
     public IActionResult CreateBracket(BasicBracketViewModel model)
     {

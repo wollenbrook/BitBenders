@@ -38,6 +38,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="Profile">Profile</a>
+                    <a class="item navbar-text" asp-area="" asp-controller="Bracket" asp-action="TournamentDashboard">Tournament Dashboard</a>
                 }
                 <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="Privacy">About</a>
                 
