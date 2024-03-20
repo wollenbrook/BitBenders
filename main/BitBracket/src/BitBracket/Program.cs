@@ -24,7 +24,9 @@ builder.Services.AddDbContext<BitBracket.Models.BitBracketDbContext>(options => 
 builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddHttpClient<IWhisperService, WhisperService>();
+// Register IWhisperService with HttpClientFactory
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IWhisperService, WhisperService>();
 
 
 // Register EmailService

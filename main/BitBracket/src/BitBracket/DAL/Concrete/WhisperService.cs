@@ -1,51 +1,69 @@
+using BitBracket.DAL.Abstract;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
-using BitBracket.DAL.Abstract;
-using Newtonsoft.Json;
 
 namespace BitBracket.DAL.Concrete
 {
     public class WhisperService : IWhisperService
     {
         private readonly HttpClient _httpClient;
-        private const string ApiKey = "BitBracketOpenAI"; // Ensure this is securely stored and accessed
-        private const string WhisperApiUrl = "https://api.openai.com/v1/whisper"; // Confirm the correct API URL
+        private readonly ILogger<WhisperService> _logger;
+        private readonly string _apiKey;
 
-        public WhisperService(IHttpClientFactory httpClientFactory)
+        public WhisperService(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<WhisperService> logger)
         {
             _httpClient = httpClientFactory.CreateClient();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApiKey);
+            _logger = logger;
+            _apiKey = configuration["BitBracketOpenAI"];
+
+            // Set up the HttpClient instance with the OpenAI API base URL and authentication headers.
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
         }
 
-        public async Task<string> ConvertSpeechToTextAsync(byte[] audioData, string language)
+        public async Task<string> TranscribeAudioAsync(Stream audioStream, string languageCode)
         {
             try
             {
-                using (var content = new MultipartFormDataContent())
-                {
-                    content.Add(new ByteArrayContent(audioData), "audio", "audio.wav");
-                    content.Add(new StringContent(language), "language"); // Confirm if the API supports this parameter
+                // OpenAI API endpoint.
+                var requestUri = "https://api.openai.com/v1/whisper/transcriptions"; 
 
-                    var response = await _httpClient.PostAsync(WhisperApiUrl, content);
-                    response.EnsureSuccessStatusCode();
+                using var content = new MultipartFormDataContent();
+                var streamContent = new StreamContent(audioStream);
+                streamContent.Headers.ContentType = new MediaTypeHeaderValue("audio/wav");
+                content.Add(streamContent, "file", "audio.wav");
 
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    var result = JsonConvert.DeserializeObject<WhisperResponse>(responseContent);
+                // Include language code if the API supports or requires it.
+                // This may vary based on the actual API's capabilities and your requirements.
+                content.Add(new StringContent(languageCode), "language");
 
-                    return result.Text;
-                }
+                var response = await _httpClient.PostAsync(requestUri, content);
+                response.EnsureSuccessStatusCode();
+
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(jsonResponse);
+
+                // The JSON parsing path here is hypothetical; adjust it based on the actual response structure.
+                var transcript = json["transcription"].Value<string>();
+
+                return transcript;
             }
-            catch (Exception ex)
+            catch (HttpRequestException e)
             {
-                throw new InvalidOperationException("Error processing speech to text", ex);
+                _logger.LogError($"HTTP request error: {e.Message}", e);
+                throw new ApplicationException("An error occurred when calling the OpenAI transcription service.", e);
             }
-        }
-
-        private class WhisperResponse
-        {
-            public string Text { get; set; }
+            catch (Exception e)
+            {
+                _logger.LogError($"An unexpected error occurred: {e.Message}", e);
+                throw new ApplicationException("An unexpected error occurred in WhisperService.", e);
+            }
         }
     }
 }
