@@ -23,7 +23,7 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
             "teams": teams,
             "results": [results]  // Winners bracket
         };
-
+        // needs fixing
         // Save function
         function saveFn(data) {
             var json = JSON.stringify(data);
