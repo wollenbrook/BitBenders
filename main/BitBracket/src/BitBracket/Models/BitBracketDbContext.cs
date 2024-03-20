@@ -37,4 +37,5 @@ public partial class BitBracketDbContext : DbContext
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
 public DbSet<BitBracket.Models.BitUser> BitUser { get; set; } = default!;
+    public DbSet<Bracket>? Brackets { get; internal set; }
 }

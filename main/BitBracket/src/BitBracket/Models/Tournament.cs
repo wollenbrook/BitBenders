@@ -13,7 +13,7 @@ public partial class Tournament
 
     public string Status { get; set; } = null!;
 
-    public string Brackets { get; set; } = null!;
-
     public DateTime Created { get; set; } = DateTime.Now;
+
+    public int Owner { get; set; }
 }

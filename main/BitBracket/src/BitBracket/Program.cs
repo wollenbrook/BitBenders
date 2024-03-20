@@ -23,6 +23,8 @@ builder.Services.AddDbContext<BitBracket.Models.BitBracketDbContext>(options => 
                     .UseSqlServer(connectionString));
 builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
+builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
+builder.Services.AddScoped<IBracketRepository, BracketRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddHttpClient<IWhisperService, WhisperService>();
 

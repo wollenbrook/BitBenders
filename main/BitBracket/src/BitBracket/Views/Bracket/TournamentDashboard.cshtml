@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tournament Dashboard</title>
+</head>
+<body class="announcement-background">
+    <h1 class="title-styling">Tournament Dashboard</h1>
+
+    <!-- Button to open the tournament creation form -->
+    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#tournamentModal">
+        Create Tournament
+    </button>
+
+    <!-- Tournament creation form (modal dialog) -->
+    <div class="modal fade" id="tournamentModal" tabindex="-1" role="dialog" aria-labelledby="tournamentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tournamentModalLabel">Create a New Tournament</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="tournamentForm">
+                    <div class="modal-body">
+                        <!-- Tournament Name field -->
+                        <label for="tournamentName">Tournament Name:</label>
+                        <input type="text" id="tournamentName" name="tournamentName" class="form-control">
+
+                        <!-- Tournament Location field -->
+                        <label for="tournamentLocation">Tournament Location:</label>
+                        <input type="text" id="tournamentLocation" name="tournamentLocation" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" data-dismiss="modal" value="Create Tournament">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location for displaying created tournaments -->
+    <div id="tournamentsList">
+        <h2>Created Tournaments</h2>
+        <!-- Tournaments will be added here -->
+    </div>
+
+</body>
+</html>
+
+<script src="~/js/TournamentDashboard.js"></script> 
