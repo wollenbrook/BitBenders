@@ -20,16 +20,12 @@ namespace BitBracket.DAL.Concrete
             _bitUsers = context.BitUser;
         }
 
-        
-
         public Task DeleteBitUser(BitUser user)
         {
             if (user == null)
             {
                 throw new WebException("User not found");
             }
-            
-            
             _bitUsers.Remove(user);
             return Task.CompletedTask;
         }
@@ -41,13 +37,14 @@ namespace BitBracket.DAL.Concrete
 
         public BitUser GetBitUserByRegularId(int id)
         {
+
             return _bitUsers.FirstOrDefault(u => u.Id == id);
         }
-        public List<BitUser> GetBitUserByName(string username)
+        public BitUser GetBitUserByName(string username)
         {
-            return _bitUsers.Where(u => u.Username.Contains(username)).ToList();
+            return _bitUsers.FirstOrDefault(u => u.Username == username);
         }
-        
+
 
         public async Task UpdateBitUserProfilePictureIfNull(BitUser user)
         {

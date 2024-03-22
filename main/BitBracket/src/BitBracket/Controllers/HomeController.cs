@@ -39,9 +39,8 @@ public class HomeController : Controller
     }
     public IActionResult TestInput()
     {
-        var viewModel = new SpeechToTextViewModel();
-        // Populate viewModel.SupportedLanguages as necessary
-        return View(viewModel);
+        var model = new SpeechToTextViewModel();
+        return View(model);
     }
     
     public async Task<IActionResult> Profile()
@@ -72,11 +71,13 @@ public class HomeController : Controller
     public IActionResult Search()
     {
         return View();
-    }
+    } 
     public async Task<IActionResult> SearchProfiles(int id)
     {
+        //BitUser bitUser = _bitUserRepository.GetBitUserByName(name);
         BitUser bitUser = _bitUserRepository.GetBitUserByRegularId(id);
-        var user = await _userManager.FindByIdAsync(bitUser.AspnetIdentityId);
+        BitUser bitUser1 = _bitUserRepository.GetBitUserByName(bitUser.Username);
+        var user = await _userManager.FindByIdAsync(bitUser1.AspnetIdentityId);
         var userEmail = _userManager.GetEmailAsync(user);
         if (bitUser == null)
         {

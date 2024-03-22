@@ -2,16 +2,14 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-
-<body class="announcement-background"></body>
-<div class="ui vertical menu">
-    <a class="@ManageNavPages.IndexNavClass(ViewContext) item" id="profile" asp-page="./Index">Profile</a>
-    <a class="@ManageNavPages.EmailNavClass(ViewContext) item" id="email" asp-page="./Email">Email</a>
-    <a class="@ManageNavPages.ChangePasswordNavClass(ViewContext) item" id="change-password" asp-page="./ChangePassword">Password</a>
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></li>
     @if (hasExternalLogins)
     {
-        <a class="@ManageNavPages.ExternalLoginsNavClass(ViewContext) item" id="external-login" asp-page="./ExternalLogins">External logins</a>
+        <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
     }
-    <a class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) item" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
-    <a class="@ManageNavPages.PersonalDataNavClass(ViewContext) item" id="personal-data" asp-page="./PersonalData">Personal data</a>
-</div>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
+</ul>

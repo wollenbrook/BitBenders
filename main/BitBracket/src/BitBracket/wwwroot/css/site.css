@@ -47,15 +47,51 @@ body {
     padding: 0;
 }
 
-/* .container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-} */
 
+.user-card {
+    height: 120px;
+    width: calc(33% - 20px);
+    display: inline-block;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    cursor: pointer;
+    margin: 10px;
+}
+.user {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.user h3 {
+        margin: 0;
+}
+
+.user p {
+    margin: 0;
+}
+.tooltip {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    position: relative;
+}
+
+.user-card:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
 h1 {
     text-align: center;
     color: #333;
@@ -80,6 +116,23 @@ h1 {
 .section-gap {
   margin-bottom: 20px;
 }
+.name {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.form-info {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+.no-bitusers-found {
+    font-size: 20px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
 
 :root {
   /* Define light theme colors */
@@ -88,7 +141,7 @@ h1 {
   --navbar-background-light: #f8d291;
   --title-color-light: #f4886d;
   --icon-color-light: #f4886d;
-  --medium-text-light: #555;
+  --medium-text-light: #323232;
   --small-text-light: #777;
   --navbar-text-light: #000;
 
@@ -96,7 +149,7 @@ h1 {
   --background-color-dark: #131c6a, #712e5c; 
   --text-color-dark: #b6aabb; 
   --navbar-background-dark: #2e1467; 
-  --title-color-dark: #4b1358; 
+  --title-color-dark: #79268c; 
   --icon-color-dark: #89CFF0;
   --medium-text-dark: #CCCCCC;
   --small-text-dark: #AAAAAA;

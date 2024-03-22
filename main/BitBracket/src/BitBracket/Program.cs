@@ -26,7 +26,9 @@ builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
 builder.Services.AddScoped<IBracketRepository, BracketRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddHttpClient<IWhisperService, WhisperService>();
+// Register IWhisperService with HttpClientFactory
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IWhisperService, WhisperService>();
 
 
 // Register EmailService
@@ -81,14 +83,12 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "SearchProfiles",
-        pattern: "/SearchProfiles/{bitUserId}",
-        defaults: new { controller = "Home", action = "SearchProfile" }
-    );
-});
+
+app.MapControllerRoute(
+    name: "SearchProfiles",
+    pattern: "/SearchProfiles/{bitUserId}",
+    defaults: new { controller = "Home", action = "SearchProfile" });
+
 app.MapRazorPages();
 
 app.Run();

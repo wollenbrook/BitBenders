@@ -17,7 +17,7 @@ public partial class BitBracketDbContext : DbContext
     }
     public DbSet<Tournament> Tournaments { get; set; }
     public DbSet<Announcement> Announcements { get; set; }
-   
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -36,6 +36,6 @@ public partial class BitBracketDbContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-public DbSet<BitBracket.Models.BitUser> BitUser { get; set; } = default!;
+    public DbSet<BitBracket.Models.BitUser> BitUser { get; set; } = default!;
     public DbSet<Bracket>? Brackets { get; internal set; }
 }
