@@ -8,7 +8,7 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
         // Display bracket details
         document.getElementById('bracketName').textContent = bracket.name;
         document.getElementById('bracketStatus').textContent = bracket.status;
-        console.log(bracket);
+        //console.log(bracket);
 
 
         // Parse bracket.BracketData from JSON string to object
