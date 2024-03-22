@@ -9,8 +9,6 @@ using BitBracket.Models;
 using Microsoft.AspNetCore.Identity;
 using BitBracket.DAL.Abstract;
 using BitBracket.DAL.Concrete;
-using BitBracket.ExtensionMethods;
-using BitBracket.DTO;
 
 
 namespace BitBracket.Controllers
@@ -32,33 +30,11 @@ namespace BitBracket.Controllers
 
         // GET: api/BitUserApi
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BitUserDTO>>> GetBitUser()
+        public async Task<ActionResult<IEnumerable<BitUser>>> GetBitUser()
         {
-            var bitUsers = await _bitUserRepository.GetAll()
-                .Where(u => u.EmailConfirmedStatus)
-                .ToListAsync();
-            if (bitUsers == null)
-            {
-                return NotFound();
-            }
-            var DtoBitUsers = bitUsers.Select(u => u.ReturnBitUserSearchDTO()).ToList();
-            return DtoBitUsers;
+            return await _bitUserRepository.GetAll().ToListAsync();
         }
-        // GET: api/BitUserApi/Search/{username}
-        [HttpGet("Search/{username}")]
-        public async Task<ActionResult<IEnumerable<BitUser>>> GetBitUserByUsername(string username)
-        {
-            var bitUsers = await _bitUserRepository.GetAll()
-                .Where(u => (u.Username.Contains(username) && u.EmailConfirmedStatus))
-                .ToListAsync();
-            if (bitUsers == null)
-            {
-                return NotFound();
-            }
 
-            var DtoBitUsers = bitUsers.Select(u => u.ReturnBitUserSearchDTO()).ToList();
-            return bitUsers;
-        }
         // GET: api/BitUserApi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BitUser>> GetBitUser(int id)

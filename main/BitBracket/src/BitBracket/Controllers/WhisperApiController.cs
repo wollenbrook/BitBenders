@@ -1,32 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using BitBracket.DAL.Abstract;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
-namespace BitBracket.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class WhisperApiController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class WhisperApiController : ControllerBase
+    private readonly IWhisperService _whisperService;
+
+    public WhisperApiController(IWhisperService whisperService)
     {
-        private readonly IWhisperService _whisperService;
+        _whisperService = whisperService;
+    }
 
-        public WhisperApiController(IWhisperService whisperService)
+    [HttpPost("ConvertSpeechToText")]
+    public async Task<IActionResult> ConvertSpeechToText([FromForm] IFormFile audioData, [FromForm] string language)
+    {
+        if (audioData == null) return BadRequest("No audio data provided.");
+
+        using (var memoryStream = new MemoryStream())
         {
-            _whisperService = whisperService;
-        }
-
-        [HttpPost("transcribe")]
-        public async Task<IActionResult> TranscribeAudio(IFormFile audioFile, [FromForm] string language)
-        {
-            if (audioFile == null || audioFile.Length == 0)
-            {
-                return BadRequest("No audio file uploaded.");
-            }
-
-            using var audioStream = audioFile.OpenReadStream();
-            var transcription = await _whisperService.TranscribeAudioAsync(audioStream, language);
-            return Ok(transcription);
+            await audioData.CopyToAsync(memoryStream);
+            var audioBytes = memoryStream.ToArray();
+            var text = await _whisperService.ConvertSpeechToTextAsync(audioBytes, language);
+            return Ok(text);
         }
     }
 }

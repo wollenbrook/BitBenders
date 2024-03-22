@@ -15,9 +15,6 @@ public partial class BitUser
 
     public string Bio { get; set; } = "Bio not written";
 
-    public byte[]? ProfilePicture { get; set; }
+    public byte[]? ProfilePicture { get; set; } = null;
 
-    public bool EmailConfirmedStatus { get; set; }
-
-    public virtual ICollection<Tournament1> Tournament1s { get; set; } = new List<Tournament1>();
 }

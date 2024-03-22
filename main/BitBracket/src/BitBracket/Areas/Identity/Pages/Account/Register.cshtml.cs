@@ -153,8 +153,7 @@ namespace BitBracket.Areas.Identity.Pages.Account
                     {
                         AspnetIdentityId = user.Id,
                         Username = Input.UserName,
-                        Tag = Input.Tag,
-                        EmailConfirmedStatus = false
+                        Tag = Input.Tag
                     };
                     //save to database
                     _BitBracketDbContext.Add(bitUser);
