@@ -192,7 +192,7 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                 success: function(data) {
                     // Handle success - you might want to add the new bracket to the #bracketsList
                     alert("Bracket Created");
-                   // fetchBrackets(); // Fetch brackets again after a new one is created
+                   fetchBrackets(); // Fetch brackets again after a new one is created
                 },
                 error: function(error) {
                     // Handle error - you might want to display an error message

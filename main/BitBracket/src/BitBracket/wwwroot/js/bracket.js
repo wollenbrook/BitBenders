@@ -23,51 +23,80 @@ $(document).ready(function() {
         var randomSeeding = formData.RandomSeeding;
 
         // If RandomSeeding is true, shuffle the player names
-        if (randomSeeding) {
-            names.sort(function() {
-                // This function returns a random number between -0.5 and 0.5.
-                // When used in the sort function, it results in a random order of the array elements.
-                return 0.5 - Math.random();
-            });
-        }
+        names = randomSeedNames(randomSeeding, names);
 
-        function roundToPowerOfTwo(names) {
-            // Get the number of players
-            const numPlayers = names.length;
+        // Balance the number of players to a power of two
+        // This also does seeding order for the players with the seeding function seeding(numPlayers)
+        var teams = roundToPowerOfTwo(names);
+        
+        //console.log(teams);
 
-            // Calculate the next power of two greater than or equal to numPlayers
-            // This is the number of players we need for a balanced bracket
-            const powerOfTwo = Math.pow(2, Math.ceil(Math.log2(numPlayers)));
+        if (teams.length > 0) {
+              // Create a results array with the same structure as the teams array, but filled with zeroes
+            var results = createResultsArray(teams);
 
-            // Calculate how many null players we need to add to reach a power of two
-            const nullsToAdd = powerOfTwo - numPlayers;
+            var singleElimination = {
+                "teams": teams,
+                "results": [results]  // Winners bracket
+            };
+            var doubleElimination = {
+                teams: teams,
+                results: [[results], [], []] // Winners bracket, Losers bracket
+            };
 
-            // Add null players to the end of the player list
-            const paddedPlayers = names.concat(Array(nullsToAdd).fill(null));
 
-            // Generate the order of the teams for a balanced bracket
-            const order = seeding(powerOfTwo);
+            // Create a bracketFormat variable based on the format
+            var bracketFormat;
+            if (format === 'Single Elimination') {
+                bracketFormat = singleElimination;
+            } else if (format === 'Double Elimination') {
+                bracketFormat = doubleElimination;
+            }
+            //console.log(bracketFormat);
 
-            // Initialize an empty array to hold the teams
-            const teams = [];
-
-            // Split the players into teams for the first round of matches
-            // Each team consists of two players, and the order of the teams is determined by the order array
-            for (let i = 0; i < powerOfTwo / 2; i++) {
-                // Get the two players for this team from the paddedPlayers array
-                // The indices of the players are determined by the order array
-                const team = [paddedPlayers[order[i * 2] - 1], paddedPlayers[order[i * 2 + 1] - 1]];
-
-                // Add the team to the teams array
-                teams.push(team);
+            // Save function
+            function saveFn(data) {
+                var json = JSON.stringify(data);
+                localStorage.setItem('bracketData', json);
+                console.log(data);
             }
 
-            // Return the array of teams
-            return teams;
-        }
+            $(function() {
+                $('#minimal .demo').bracket({
+                    init: bracketFormat,
+                    save: saveFn,
+                    disableToolbar: true,  // Not allowing resizing the bracket and changing its type
+                    disableTeamEdit: true  // Not allowing editing teams
+                });
+            });
 
-        function seeding(numPlayers){
-            // Calculate the number of rounds needed for the given number of players
+        } 
+        else {
+            console.error("No teams available to initialize the bracket.");
+        }
+    })
+});
+
+// needs to be turned into a function for proper testing
+function randomSeedNames(randomSeeding, names) {
+    if (randomSeeding) {
+        names.sort(function() {
+            return 0.5 - Math.random();
+        });
+    }
+    return names;
+}
+
+function createResultsArray(teams) {
+    return teams.map(team => {
+        return team.map(player => {
+            return player === null ? null : 0;
+        });
+    });
+}
+
+function seeding(numPlayers) {
+    // Calculate the number of rounds needed for the given number of players
             // This is done by taking the base-2 logarithm of the number of players and subtracting 1
             var rounds = Math.log(numPlayers)/Math.log(2)-1;
 
@@ -102,60 +131,48 @@ $(document).ready(function() {
                 // Return the next layer of seedings
                 return out;
             }
-        }
+}
 
-        // Create a results array with the same structure as the teams array, but filled with zeroes
-        function createResultsArray(teams) {
-            return teams.map(team => {
-                return team.map(player => {
-                    return player === null ? null : 0;
-                });
-            });
-        }
+function roundToPowerOfTwo(names) {
+     // Get the number of players
+     const numPlayers = names.length;
 
-        var teams = roundToPowerOfTwo(names);
-        //console.log(teams);
+     // Calculate the next power of two greater than or equal to numPlayers
+     // This is the number of players we need for a balanced bracket
+     const powerOfTwo = Math.pow(2, Math.ceil(Math.log2(numPlayers)));
 
-        if (teams.length > 0) {
-            var results = createResultsArray(teams);
+     // Calculate how many null players we need to add to reach a power of two
+     const nullsToAdd = powerOfTwo - numPlayers;
 
-            var singleElimination = {
-                "teams": teams,
-                "results": [results]  // Winners bracket
-            };
-            var doubleElimination = {
-                teams: teams,
-                results: [[results], [], []] // Winners bracket, Losers bracket
-            };
+     // Add null players to the end of the player list
+     const paddedPlayers = names.concat(Array(nullsToAdd).fill(null));
 
-            // Create a bracketFormat variable based on the format
-            var bracketFormat;
-            if (format === 'Single Elimination') {
-                bracketFormat = singleElimination;
-            } else if (format === 'Double Elimination') {
-                bracketFormat = doubleElimination;
-            }
-            console.log(bracketFormat);
+     // Generate the order of the teams for a balanced bracket
+     const order = seeding(powerOfTwo);
 
-            // Save function
-            function saveFn(data) {
-                var json = JSON.stringify(data);
-                localStorage.setItem('bracketData', json);
-                console.log(data);
-            }
+     // Initialize an empty array to hold the teams
+     const teams = [];
 
-            $(function() {
-                $('#minimal .demo').bracket({
-                    init: bracketFormat,
-                    save: saveFn,
-                    disableToolbar: true,  // Not allowing resizing the bracket and changing its type
-                    disableTeamEdit: true  // Not allowing editing teams
-                });
-            });
+     // Split the players into teams for the first round of matches
+     // Each team consists of two players, and the order of the teams is determined by the order array
+     for (let i = 0; i < powerOfTwo / 2; i++) {
+         // Get the two players for this team from the paddedPlayers array
+         // The indices of the players are determined by the order array
+         const team = [paddedPlayers[order[i * 2] - 1], paddedPlayers[order[i * 2 + 1] - 1]];
 
-        } 
-        else {
-            console.error("No teams available to initialize the bracket.");
-        }
-    })
-});
+         // Add the team to the teams array
+         teams.push(team);
+     }
+
+     // Return the array of teams
+     return teams;
+}
+
+// Exported functions for testing
+
+module.exports = {
+    createResultsArray,
+    roundToPowerOfTwo,
+    seeding,
+    randomSeedNames
+};
