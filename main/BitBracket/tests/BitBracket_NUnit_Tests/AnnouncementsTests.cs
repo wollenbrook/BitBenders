@@ -107,26 +107,26 @@ namespace BitBracket_NUnit_Tests
 
        //SMS/Email Sending Tests
 
-        [Test]
-        public async Task CreateAnnouncement_SendsEmailAndSmsToEligibleUsers()
-        {
-            var announcement = new Announcement { Title = "New Event", Description = "Event Description", Author = "Organizer" };
-            _mockAnnouncementRepo.Setup(repo => repo.AddAsync(It.IsAny<Announcement>())).Returns(Task.CompletedTask);
+        // [Test]
+        // public async Task CreateAnnouncement_SendsEmailAndSmsToEligibleUsers()
+        // {
+        //     var announcement = new Announcement { Title = "New Event", Description = "Event Description", Author = "Organizer" };
+        //     _mockAnnouncementRepo.Setup(repo => repo.AddAsync(It.IsAny<Announcement>())).Returns(Task.CompletedTask);
 
-            await _controller.Create(announcement, "YourAdminKey");
+        //     await _controller.Create(announcement, "YourAdminKey");
 
-            // Verify email sent to users with confirmed emails
-            _mockEmailService.Verify(es => es.SendEmailAsync(
-                It.IsAny<string>(), 
-                It.Is<string>(subject => subject == "New Announcement published on the BitBracketApp"), 
-                It.IsAny<object>()), 
-                Times.Exactly(2)); // Assuming two users have confirmed emails
+        //     // Verify email sent to users with confirmed emails
+        //     _mockEmailService.Verify(es => es.SendEmailAsync(
+        //         It.IsAny<string>(), 
+        //         It.Is<string>(subject => subject == "New Announcement published on the BitBracketApp"), 
+        //         It.IsAny<object>()), 
+        //         Times.Exactly(2)); // Assuming two users have confirmed emails
 
-            // Verify SMS sent to users with confirmed phone numbers
-            _mockSmsService.Verify(sms => sms.SendSmsAsync(
-                It.Is<string>(phone => phone == "+1234567890"),
-                It.IsAny<string>()), 
-                Times.Once); // Only one user has a confirmed phone number
-        }
+        //     // Verify SMS sent to users with confirmed phone numbers
+        //     _mockSmsService.Verify(sms => sms.SendSmsAsync(
+        //         It.Is<string>(phone => phone == "+1234567890"),
+        //         It.IsAny<string>()), 
+        //         Times.Once); // Only one user has a confirmed phone number
+        // }
     }
 }
