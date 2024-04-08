@@ -51,7 +51,7 @@ namespace BitBracket.DAL.Concrete
 
         public async Task<IEnumerable<Tournament>> GetAllByOwnerId(int ownerId)
         {
-            return await _context.Tournaments.Where(t => t.Owner == ownerId).ToListAsync();
+            return await _context.Tournaments.Where(t => t.OwnerID == ownerId).ToListAsync();
         }
 
         public async Task Update(Tournament tournament)

@@ -43,7 +43,7 @@ public class TournamentAPIController : ControllerBase
             return NotFound("User not found");
         }
 
-        var tournaments = await _tournamentRepository.GetAllByOwnerId(owner.Id);
+        var tournaments = await _tournamentRepository.GetAllByOwnerId(owner.Id );
 
         if (tournaments == null)
         {
@@ -134,7 +134,7 @@ public class TournamentAPIController : ControllerBase
                 Location = model.Location,
                 Status = "In-Progress",
                 Created = DateTime.UtcNow,
-                Owner = owner.Id
+                OwnerID = owner.Id
             };
 
             await _tournamentRepository.Add(tournament);
