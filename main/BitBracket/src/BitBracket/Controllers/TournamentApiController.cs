@@ -134,7 +134,7 @@ public class TournamentAPIController : ControllerBase
                 Location = model.Location,
                 Status = "In-Progress",
                 Created = DateTime.UtcNow,
-                OwnerID = owner.Id
+                Owner = owner.Id
             };
 
             await _tournamentRepository.Add(tournament);

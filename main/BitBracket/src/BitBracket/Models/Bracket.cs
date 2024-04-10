@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace BitBracket.Models;
@@ -24,7 +25,8 @@ public partial class Bracket
     [Column("TournamentID")]
     public int? TournamentID { get; set; }
 
-    [ForeignKey("TournamentId")]
+
     [InverseProperty("Brackets")]
+    [JsonIgnore]
     public virtual Tournament? Tournament { get; set; }
 }

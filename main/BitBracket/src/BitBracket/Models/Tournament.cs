@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace BitBracket.Models;
@@ -24,12 +25,13 @@ public partial class Tournament
     [Column(TypeName = "datetime")]
     public DateTime Created { get; set; }
 
-    public int? OwnerID { get; set; }
+    public int? Owner { get; set; }
 
     [InverseProperty("Tournament")]
     public virtual ICollection<Bracket> Brackets { get; set; } = new List<Bracket>();
 
     [ForeignKey("Owner")]
+    [JsonIgnore]
     [InverseProperty("Tournaments")]
     public virtual BitUser? OwnerNavigation { get; set; }
 }

@@ -21,14 +21,14 @@ public partial class BitUser
     public string Username { get; set; } = null!;
 
     [StringLength(50)]
-    public string Tag { get; set; } = null!;
+    public string? Tag { get; set; } = "tag not set";
 
     [StringLength(500)]
-    public string Bio { get; set; } = null!;
+    public string? Bio { get; set; } = "bio not set";
 
-    public byte[]? ProfilePicture { get; set; }
+    public byte[]? ProfilePicture { get; set; } = null;
 
-    public bool EmailConfirmedStatus { get; set; }
+    public bool EmailConfirmedStatus { get; set; } = false;
 
     [InverseProperty("FriendNavigation")]
     public virtual ICollection<Friend> FriendFriendNavigations { get; set; } = new List<Friend>();
