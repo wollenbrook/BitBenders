@@ -43,7 +43,7 @@ public class Tests
     {
 
         var mockRepository = new Mock<IBitUserRepository>();
-        string identityId = "randomid1";
+        string identityId = "randomid3";
         BitUser expectedUser1 = new BitUser { Username = "test", AspnetIdentityId = "randomid1" };
         BitUser expectedUser2 = new BitUser { Username = "test", AspnetIdentityId = "randomid2" };
 

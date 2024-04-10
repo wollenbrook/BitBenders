@@ -98,37 +98,6 @@ namespace BitBracket.Controllers
             return Ok();
         }
 
-        // PUT: api/BitUserApi/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        /*[HttpPut("{id}")]
-        public async Task<IActionResult> PutBitUser(int id, BitUser bitUser)
-        {
-            if (id != bitUser.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(bitUser).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BitUserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-        */
 
         // POST: api/BitUserApi/Image/{file}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -158,33 +127,107 @@ namespace BitBracket.Controllers
             // Handle the case when no file is uploaded
             return BadRequest();
         }
-
-        /*[HttpPost]
-        public async Task<ActionResult<BitUser>> PostBitUser(BitUser bitUser)
+        [HttpPut("SendFriendRequest/{id}")]
+        public async Task<IActionResult> SendFriendRequest(int id)
         {
-            _context.BitUser.Add(bitUser);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBitUser", new { id = bitUser.Id }, bitUser);
-        }
-        */
-
-        // DELETE: api/BitUserApi/5
-        /*[HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBitUser(int id)
-        {
-            var bitUser = await _bitUserRepository.FindAsync(id);
-            if (bitUser == null)
+            string senderId = _userManager.GetUserId(User);
+            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser reciver = _bitUserRepository.GetBitUserByRegularId(id);
+            if (sender == null || reciver == null)
             {
                 return NotFound();
             }
+            _bitUserRepository.SendFriendRequest(sender.Id, reciver.Id);
 
-            _context.BitUser.Remove(bitUser);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok();
         }
-        */
+        [HttpPut("AcceptFriendRequest/{id}")]
+        public async Task<IActionResult> AcceptFriendRequest(int id)
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser reciver = _bitUserRepository.GetBitUserByRegularId(id);
+            if (sender == null || reciver == null)
+            {
+                return NotFound();
+            }
+            _bitUserRepository.AcceptFriendRequest(sender.Id, reciver.Id);
+
+            return Ok();
+        }
+        [HttpPut("DeclineFriendRequest/{id}")]
+        public async Task<IActionResult> DeclineFriendRequest(int id)
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser reciver = _bitUserRepository.GetBitUserByRegularId(id);
+            if (sender == null || reciver == null)
+            {
+                return NotFound();
+            }
+            _bitUserRepository.DeclineFriendRequest(sender.Id, reciver.Id);
+
+            return Ok();
+        }
+        [HttpPut("RemoveFriend/{id}")]
+        public async Task<IActionResult> RemoveFriend(int id)
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser reciver = _bitUserRepository.GetBitUserByRegularId(id);
+            if (sender == null || reciver == null)
+            {
+                return NotFound();
+            }
+            _bitUserRepository.RemoveFriend(sender.Id, reciver.Id);
+
+            return Ok();
+        }
+        [HttpGet("CheckIfFriends/{id}")]
+        public async Task<ActionResult<bool>> CheckIfFriends(int id)
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser reciver = _bitUserRepository.GetBitUserByRegularId(id);
+            if (sender == null || reciver == null)
+            {
+                return NotFound();
+            }
+            return _bitUserRepository.CheckIfFriends(sender.Id, reciver.Id);
+        }
+        [HttpGet("GetFriends")]
+        public async Task<ActionResult<IEnumerable<BitUserDTO>>> GetFriends()
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
+            if (sender == null)
+            {
+                return NotFound();
+            }
+            var friends = await _bitUserRepository.GetFriends(sender.Id);
+            if (friends == null)
+            {
+                return NotFound();
+            }
+            var DtoBitUsers = friends.Select(u => u.ReturnBitUserSearchDTO()).ToList();
+            return DtoBitUsers;
+        }
+        [HttpGet("GetFriendRequests")]
+        public async Task<ActionResult<IEnumerable<RecievedFriendRequest>>> GetFriendRequests()
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
+            if (sender == null)
+            {
+                return NotFound();
+            }
+            var friendRequests = await _bitUserRepository.GetFriendRequests(sender.Id);
+            if (friendRequests == null)
+            {
+                return NotFound();
+            }
+            return Ok(friendRequests);
+        }
 
     }
 }
