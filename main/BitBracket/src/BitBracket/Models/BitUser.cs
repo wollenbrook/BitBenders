@@ -28,7 +28,10 @@ public partial class BitUser
 
     public byte[]? ProfilePicture { get; set; } = null;
 
-    public bool EmailConfirmedStatus { get; set; } = false;
+    public bool EmailConfirmedStatus { get; set; }
+    public bool OptInConfirmation { get; set; } = true;
+
+    public virtual ICollection<Announcement> Announcements { get; set; } = new List<Announcement>();
 
     [InverseProperty("FriendNavigation")]
     public virtual ICollection<Friend> FriendFriendNavigations { get; set; } = new List<Friend>();
