@@ -37,6 +37,14 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult UserAnnouncementForm()
+    {
+        return View();
+    }
+    public IActionResult UserAnnouncementCreate()
+    {
+        return View();
+    }
     public IActionResult TestInput()
     {
         var model = new SpeechToTextViewModel();

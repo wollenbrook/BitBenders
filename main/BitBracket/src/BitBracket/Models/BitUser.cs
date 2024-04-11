@@ -18,6 +18,8 @@ public partial class BitUser
     public byte[]? ProfilePicture { get; set; }
 
     public bool EmailConfirmedStatus { get; set; }
+    public bool OptInConfirmation { get; set; } = true;
 
     public virtual ICollection<Tournament1> Tournament1s { get; set; } = new List<Tournament1>();
+    public virtual ICollection<Announcement> Announcements { get; set; } = new List<Announcement>();
 }
