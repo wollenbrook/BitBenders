@@ -23,9 +23,7 @@ public partial class BitBracketDbContext : DbContext
 
     public virtual DbSet<Friend> Friends { get; set; }
 
-    public virtual DbSet<RecievedFriendRequest> RecievedFriendRequests { get; set; }
-
-    public virtual DbSet<SentFriendRequest> SentFriendRequests { get; set; }
+    public virtual DbSet<FriendRequest> FriendRequests { get; set; }
 
     public virtual DbSet<Tournament> Tournaments { get; set; }
 
@@ -60,20 +58,13 @@ public partial class BitBracketDbContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.FriendUsers).HasConstraintName("FK__Friends__UserID__4C6B5938");
         });
 
-        modelBuilder.Entity<RecievedFriendRequest>(entity =>
+        modelBuilder.Entity<FriendRequest>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Recieved__3214EC27F7AE0BA5");
+            entity.HasKey(e => e.Id).HasName("PK__FriendRe__3214EC27340430CC");
 
-            entity.HasOne(d => d.Sender).WithMany(p => p.RecievedFriendRequests).HasConstraintName("FK__RecievedF__Sende__498EEC8D");
-        });
+            entity.HasOne(d => d.Receiver).WithMany(p => p.FriendRequestReceivers).HasConstraintName("FK__FriendReq__Recei__51300E55");
 
-        modelBuilder.Entity<SentFriendRequest>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__SentFrie__3214EC277401AB5E");
-
-            entity.HasOne(d => d.Receiver).WithMany(p => p.SentFriendRequestReceivers).HasConstraintName("FK__SentFrien__Recei__46B27FE2");
-
-            entity.HasOne(d => d.Sender).WithMany(p => p.SentFriendRequestSenders).HasConstraintName("FK__SentFrien__Sende__45BE5BA9");
+            entity.HasOne(d => d.Sender).WithMany(p => p.FriendRequestSenders).HasConstraintName("FK__FriendReq__Sende__503BEA1C");
         });
 
         modelBuilder.Entity<Tournament>(entity =>

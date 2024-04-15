@@ -13,12 +13,13 @@ namespace BitBracket.DAL.Abstract
         public BitUser GetBitUserByRegularId(int id);
         public BitUser GetBitUserByName(string username);
 
-        public Task SendFriendRequest(int sender, int reciver);
-        public Task AcceptFriendRequest(int sender, int reciver);
-        public Task DeclineFriendRequest(int sender, int reciver);
-        public Task RemoveFriend(int sender, int reciver);
-        public bool CheckIfFriends(int sender, int reciver);
+        public Task SendFriendRequest(BitUser sender, BitUser reciver);
+        public Task AcceptFriendRequest(BitUser sender, BitUser reciver);
+        public Task DeclineFriendRequest(BitUser sender, BitUser reciver);
+        public Task RemoveFriend(BitUser sender, BitUser reciver);
+        public bool CheckIfFriends(BitUser sender, BitUser reciver);
+        public bool CheckIfRequestSent(BitUser sender, BitUser reciver);
         public Task<IEnumerable<BitUser>> GetFriends(int id);
-        public Task<IEnumerable<RecievedFriendRequest>> GetFriendRequests(int id);
+        public Task<IEnumerable<FriendRequest>> GetFriendRequests(int id);
     }
 }

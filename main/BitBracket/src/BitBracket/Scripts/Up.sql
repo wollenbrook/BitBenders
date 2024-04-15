@@ -31,18 +31,13 @@ CREATE TABLE [Announcements] (
     [Author] NVARCHAR(50) NOT NULL 
 );
 
-CREATE TABLE [SentFriendRequests] (
+CREATE TABLE [FriendRequests] (
 	[ID] INT IDENTITY(1,1) PRIMARY KEY,
 	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
 	[ReceiverID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
 	[Status] NVARCHAR(50) NOT NULL
 );
 
-CREATE TABLE [RecievedFriendRequests] (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY,
-	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[Status] NVARCHAR(50) NOT NULL
-);
 
 CREATE TABLE [Friends] (
 	[ID] INT IDENTITY(1,1) PRIMARY KEY,

@@ -9,7 +9,9 @@ namespace BitBracket.ViewModels
         public string Email { get; set; } = null!;
         public string Tag { get; set; } = null!;
         public string? ProfilePictureUrl { get; set; } = null;
-
+        public bool Friends { get; set; } = false;
+        public bool FriendRequestSent { get; set; } = false;
+        public int? ProfileID { get; set; } = null;
 
     }
 }

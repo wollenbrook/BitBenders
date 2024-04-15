@@ -8,16 +8,24 @@ using Microsoft.AspNetCore.Mvc;
 using EllipticCurve.Utils;
 using BitBracket.DAL.Concrete;
 using HW6.DAL.Concrete;
+using NuGet.Protocol.Plugins;
+using System.Reflection;
+using Twilio.TwiML.Fax;
 
 
 namespace BitBracket.DAL.Concrete
 {
     public class BitUserRepository : Repository<BitUser>, IBitUserRepository
     {
-        private DbSet<BitUser> _bitUsers;
+        private readonly DbSet<BitUser> _bitUsers;
+        private readonly DbSet<FriendRequest> _friendRequests;
+        private readonly BitBracketDbContext _context;
+
         public BitUserRepository(BitBracketDbContext context) : base(context)
         {
             _bitUsers = context.BitUsers;
+            _friendRequests = context.FriendRequests;
+            _context = context;
         }
 
         public Task DeleteBitUser(BitUser user)
@@ -64,109 +72,130 @@ namespace BitBracket.DAL.Concrete
             
         }
 
-        public Task SendFriendRequest(int sender, int reciver)
+        public Task SendFriendRequest(BitUser sender, BitUser reciver)
         {
-            BitUser Sender = _bitUsers.FirstOrDefault(u => u.Id == sender);
-            BitUser Reciver = _bitUsers.FirstOrDefault(u => u.Id == reciver);
-            if (Sender == null || Reciver == null)
+
+            if (sender == null || reciver == null)
             {
                 throw new WebException("User not found");
             }
-            Sender.SentFriendRequestReceivers.Add(new SentFriendRequest { SenderId = Sender.Id, ReceiverId = Reciver.Id, Status = "Pending"});
-            Reciver.RecievedFriendRequests.Add(new RecievedFriendRequest { SenderId = Sender.Id, Status = "Pending" });
-            _bitUsers.Update(Sender);
-            _bitUsers.Update(Reciver);
+
+            FriendRequest friendRequest = new FriendRequest { SenderId = sender.Id, ReceiverId = reciver.Id, Status = "Pending" };
+
+            sender.FriendRequestSenders.Add(friendRequest);
+            reciver.FriendRequestReceivers.Add(friendRequest);
+            _bitUsers.Update(sender);
+            _bitUsers.Update(reciver);
+
+            _friendRequests.Add(friendRequest);
+            _context.SaveChanges();
             return Task.CompletedTask;
         }
 
-        public Task AcceptFriendRequest(int sender, int reciver)
+        public Task AcceptFriendRequest(BitUser sender, BitUser reciever)
         {
-            BitUser Sender = _bitUsers.FirstOrDefault(u => u.Id == sender);
-            BitUser Reciver = _bitUsers.FirstOrDefault(u => u.Id == reciver);
-            if (Sender == null || Reciver == null)
+
+            if (sender == null || reciever == null)
             {
                 throw new WebException("User not found");
             }
-            RecievedFriendRequest request = Reciver.RecievedFriendRequests.FirstOrDefault(r => r.SenderId == sender);
-            if (request == null)
-            {
-                throw new WebException("Request not found");
-            }
-            request.Status = "Accepted";
-            SentFriendRequest sentRequest = Sender.SentFriendRequestSenders.FirstOrDefault(r => r.ReceiverId == reciver);
-            if (sentRequest == null)
-            {
-                throw new WebException("Request not found");
-            }
-            sentRequest.Status = "Accepted";
-            Sender.FriendUsers.Add(new Friend { FriendId = Reciver.Id });
-            Reciver.FriendUsers.Add(new Friend { FriendId = Sender.Id });
-            _bitUsers.Update(Sender);
-            _bitUsers.Update(Reciver);
+            reciever.FriendRequestReceivers.FirstOrDefault(r => r.SenderId == sender.Id && r.ReceiverId == reciever.Id).Status = "Accepted";
+            
+            sender.FriendRequestSenders.FirstOrDefault(r => r.Sender.Id == sender.Id && r.ReceiverId == reciever.Id).Status = "Accepted";
+
+            sender.FriendUsers.Add(new Friend {UserId = sender.Id, FriendId = reciever.Id });
+            reciever.FriendUsers.Add(new Friend { UserId = reciever.Id, FriendId = sender.Id });
+            _bitUsers.Update(sender);
+            _bitUsers.Update(reciever);
+            _context.SaveChanges();
             return Task.CompletedTask;
         }
 
-        public Task DeclineFriendRequest(int sender, int reciver)
+        public Task DeclineFriendRequest(BitUser Sender, BitUser Reciver)
         {
-            BitUser Sender = _bitUsers.FirstOrDefault(u => u.Id == sender);
-            BitUser Reciver = _bitUsers.FirstOrDefault(u => u.Id == reciver);
+
             if (Sender == null || Reciver == null)
             {
                 throw new WebException("User not found");
             }
-            RecievedFriendRequest request = Reciver.RecievedFriendRequests.FirstOrDefault(r => r.SenderId == sender);
-            if (request == null)
+
+            FriendRequest friendRequest = _friendRequests.FirstOrDefault(fr => fr.SenderId == Sender.Id && fr.ReceiverId == Reciver.Id && fr.Status == "Pending");
+
+            if (friendRequest != null)
             {
-                throw new WebException("Request not found");
+                Reciver.FriendRequestReceivers.Remove(friendRequest);
             }
-            request.Status = "Declined";
-            SentFriendRequest sentRequest = Sender.SentFriendRequestSenders.FirstOrDefault(r => r.ReceiverId == reciver);
-            if (sentRequest == null)
+            if (friendRequest != null)
             {
-                throw new WebException("Request not found");
+                Sender.FriendRequestSenders.Remove(friendRequest);
             }
-            sentRequest.Status = "Declined";
+            _friendRequests.Remove(friendRequest);
             _bitUsers.Update(Sender);
             _bitUsers.Update(Reciver);
+            _context.SaveChanges();
             return Task.CompletedTask;
         }
 
-        public Task RemoveFriend(int sender, int reciver)
+        public Task RemoveFriend(BitUser UserPerson, BitUser Removed)
         {
-            BitUser Sender = _bitUsers.FirstOrDefault(u => u.Id == sender);
-            BitUser Reciver = _bitUsers.FirstOrDefault(u => u.Id == reciver);
-            if (Sender == null || Reciver == null)
+
+            if (UserPerson == null || Removed == null)
             {
                 throw new WebException("User not found");
             }
-            Friend friend = Sender.FriendUsers.FirstOrDefault(f => f.FriendId == reciver);
+            Friend friend = UserPerson.FriendUsers.FirstOrDefault(f => f.FriendId == Removed.Id);
             if (friend == null)
             {
                 throw new WebException("Friend not found");
             }
-            Sender.FriendUsers.Remove(friend);
-            friend = Reciver.FriendUsers.FirstOrDefault(f => f.FriendId == sender);
+            UserPerson.FriendUsers.Remove(friend);
+            friend = Removed.FriendUsers.FirstOrDefault(f => f.FriendId == UserPerson.Id);
             if (friend == null)
             {
                 throw new WebException("Friend not found");
             }
-            Reciver.FriendUsers.Remove(friend);
+            Removed.FriendUsers.Remove(friend);
 
-            _bitUsers.Update(Sender);
-            _bitUsers.Update(Reciver);
+            FriendRequest request = _friendRequests.FirstOrDefault(fr => fr.SenderId == UserPerson.Id && fr.ReceiverId == Removed.Id && fr.Status == "Accepted");
+            if (request != null)
+            {
+                UserPerson.FriendRequestSenders.Remove(request);
+                Removed.FriendRequestReceivers.Remove(request);
+                _friendRequests.Remove(request);
+
+            }
+            else
+            {
+                request = _friendRequests.FirstOrDefault(fr => fr.SenderId == Removed.Id && fr.ReceiverId == UserPerson.Id && fr.Status == "Accepted");
+                if (request != null)
+                {
+                    UserPerson.FriendRequestReceivers.Remove(request);
+                    Removed.FriendRequestSenders.Remove(request);
+                    _friendRequests.Remove(request);
+                }
+            }
+            _bitUsers.Update(UserPerson);
+            _bitUsers.Update(Removed);
+            _context.SaveChanges();
             return Task.CompletedTask;
         }
 
-        public bool CheckIfFriends(int sender, int reciver)
+        public bool CheckIfFriends(BitUser Sender, BitUser Reciver)
         {
-            BitUser Sender = _bitUsers.FirstOrDefault(u => u.Id == sender);
-            BitUser Reciver = _bitUsers.FirstOrDefault(u => u.Id == reciver);
             if (Sender == null || Reciver == null)
             {
                 throw new WebException("User not found");
             }
-            return Sender.FriendUsers.Any(f => f.FriendId == reciver);
+            return Sender.FriendUsers.Any(f => f.FriendId == Reciver.Id);
 
+        }
+        public bool CheckIfRequestSent(BitUser Sender, BitUser Reciever)
+        {
+            if (Sender == null || Reciever == null)
+            {
+                throw new WebException("User not found");
+            }
+            return Sender.FriendRequestSenders.Any(fr => fr.ReceiverId == Reciever.Id && fr.Status == "Pending");
         }
 
         public Task<IEnumerable<BitUser>> GetFriends(int id)
@@ -184,14 +213,14 @@ namespace BitBracket.DAL.Concrete
             return Task.FromResult(friends.AsEnumerable());
         }
 
-        public Task<IEnumerable<RecievedFriendRequest>> GetFriendRequests(int id)
+        public Task<IEnumerable<FriendRequest>> GetFriendRequests(int id)
         {
             BitUser user = _bitUsers.FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
                 throw new WebException("User not found");
             }
-            return Task.FromResult(user.RecievedFriendRequests.AsEnumerable());
+            return Task.FromResult(user.FriendRequestReceivers.AsEnumerable());
         }
     }
 
