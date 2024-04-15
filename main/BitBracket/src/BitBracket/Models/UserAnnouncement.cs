@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BitBracket.Models;
 
-[Table("Announcements")]
-public partial class Announcement
+[Table("UserAnnouncements")]
+public partial class UserAnnouncement
 {
     [Key]
     [Column("ID")]
@@ -22,10 +23,22 @@ public partial class Announcement
     [StringLength(500)]
     public string? Description { get; set; }
 
-    public bool IsActive { get; set; }
-
     [Required]
     [StringLength(50)]
     public string? Author { get; set; }
 
+    public bool IsDraft { get; set; } = true;  // Default is true for drafts
+
+    public int? Owner { get; set; }
+    public int? TournamentId { get; set; }
+
+    [ForeignKey("Owner")]
+    [JsonIgnore]
+    [InverseProperty("UserAnnouncements")]
+    public virtual BitUser? BitUser { get; set; }
+
+    [ForeignKey("TournamentId")]
+    [JsonIgnore]
+    [InverseProperty("TournamentID")]
+    public virtual Tournament? Tournament { get; set; }
 }

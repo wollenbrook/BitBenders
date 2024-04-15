@@ -1,3 +1,5 @@
+//themeSwitcher.js
+
 // Check and apply the user's preferred theme on initial load
 document.addEventListener('DOMContentLoaded', function() {
     const preferredTheme = getCookie('preferredTheme'); // Retrieve the preferred theme from cookies

@@ -29,7 +29,8 @@ public partial class BitUser
 
     public byte[]? ProfilePicture { get; set; } = null;
 
-    public bool EmailConfirmedStatus { get; set; } = false;
+    public bool EmailConfirmedStatus { get; set; }
+    public bool OptInConfirmation { get; set; } = true;
 
     [InverseProperty("FriendNavigation")]
     [JsonIgnore]
@@ -49,4 +50,7 @@ public partial class BitUser
 
     [InverseProperty("OwnerNavigation")]
     public virtual ICollection<Tournament> Tournaments { get; set; } = new List<Tournament>();
+    
+    [InverseProperty("BitUser")]
+    public virtual ICollection<UserAnnouncement> UserAnnouncements { get; set; } = new List<UserAnnouncement>();
 }

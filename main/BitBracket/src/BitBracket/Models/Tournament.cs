@@ -34,4 +34,7 @@ public partial class Tournament
     [JsonIgnore]
     [InverseProperty("Tournaments")]
     public virtual BitUser? OwnerNavigation { get; set; }
+
+    [InverseProperty("Tournament")]
+    public virtual ICollection<UserAnnouncement> TournamentID { get; set; } = new List<UserAnnouncement>();  // Navigation property for Announcements
 }

@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Notification Settings";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="ui segment">
+    <div class="ui form">
+        <div class="field">
+            <div class="ui toggle checkbox">
+                <input type="checkbox" id="optInConfirmation" name="optInConfirmation" onchange="updateOptInConfirmation()">
+                <label id="optInLabel"></label>
+            </div>
+        </div>
+        <div id="statusContainer" class="ui message">
+            <p id="statusText"></p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/optInConfirmation.js"></script>
+}

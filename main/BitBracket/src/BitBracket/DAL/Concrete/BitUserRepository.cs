@@ -222,6 +222,10 @@ namespace BitBracket.DAL.Concrete
             }
             return Task.FromResult(user.FriendRequestReceivers.AsEnumerable());
         }
+        public IEnumerable<BitUser> GetOptedInUsers()
+        {
+            return _bitUsers.Where(u => u.OptInConfirmation).ToList();
+        }
     }
 
 }
