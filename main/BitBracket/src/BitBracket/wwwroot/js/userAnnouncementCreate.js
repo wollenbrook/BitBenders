@@ -1,34 +1,59 @@
-// Located at wwwroot/js/userAnnouncementCreate.js
-
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('userAnnouncementCreateForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+    fetchTournaments(); // Load tournaments when the document is ready
 
-        const announcement = {
-            title: document.getElementById('title').value,
-            description: document.getElementById('description').value,
-            tournamentId: document.getElementById('tournament').value,
-            creationDate: document.getElementById('date').value,
-            isDraft: document.getElementById('isDraft').checked
-        };
-
-        fetch('/api/UserAnnouncementsApi', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(announcement)
-        }).then(response => {
-            if (response.ok) {
-                alert('Announcement saved successfully.');
-                window.location.reload();
-            } else {
-                alert('Failed to save the announcement.');
-            }
-        }).catch(error => {
-            console.error('Error:', error);
-        });
+    const form = document.getElementById('createAnnouncementForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        createAnnouncement();
     });
-
-    // Populate the tournament dropdown (implementation depends on your API)
 });
+
+function fetchTournaments() {
+    fetch('/api/UserAnnouncementsApi/Tournaments')
+        .then(response => response.json())
+        .then(tournaments => {
+            const dropdown = document.getElementById('tournamentDropdown');
+            tournaments.forEach(tournament => {
+                const option = new Option(tournament.name, tournament.id);
+                dropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error loading tournaments:', error));
+}
+
+function createAnnouncement() {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const author = document.getElementById('author').value;
+    const tournamentId = document.getElementById('tournamentDropdown').value;
+    const isDraft = document.getElementById('statusDropdown').value === "true"; // Convert string to boolean
+
+    const announcement = {
+        title,
+        description,
+        author,
+        tournamentId,
+        isDraft
+    };
+
+    console.log(announcement); // Debugging to see the final object
+
+    fetch('/api/UserAnnouncementsApi/Create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(announcement)
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Failed to create the announcement');
+        return response.json();
+    })
+    .then(data => {
+        console.log(data); // Check server response
+        alert('Announcement created successfully!');
+    })
+    .catch(error => {
+        console.error('Error creating announcement:', error);
+        alert('Error creating announcement. Please try again.');
+    });
+}
+

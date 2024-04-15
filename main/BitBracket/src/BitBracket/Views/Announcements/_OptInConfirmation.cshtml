@@ -1,10 +1,23 @@
-@* Views/Shared/_OptInConfirmation.cshtml *@
+@{
+    ViewData["Title"] = "Notification Settings";
+}
 
-<div class="opt-in-confirmation">
-    <label>Receive Announcements:</label>
-    <select id="optInConfirmation" class="form-control">
-        <option value="true">Yes</option>
-        <option value="false">No</option>
-    </select>
-    <button id="saveOptInConfirmation" class="btn btn-primary">Save</button>
+<h2>@ViewData["Title"]</h2>
+
+<div class="ui segment">
+    <div class="ui form">
+        <div class="field">
+            <div class="ui toggle checkbox">
+                <input type="checkbox" id="optInConfirmation" name="optInConfirmation" onchange="updateOptInConfirmation()">
+                <label id="optInLabel"></label>
+            </div>
+        </div>
+        <div id="statusContainer" class="ui message">
+            <p id="statusText"></p>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/optInConfirmation.js"></script>
+}

@@ -228,6 +228,5 @@ namespace BitBracket.Controllers
             }
             return Ok(friendRequests);
         }
-
     }
 }

@@ -16,35 +16,52 @@ namespace BitBracket.DAL.Concrete
             _context = context;
         }
 
-        public async Task AddAsync(Announcement announcement)
+        public async Task AddAsync(UserAnnouncement announcement)
         {
-            _context.Announcements.Add(announcement);
+            _context.UserAnnouncements.Add(announcement);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Announcement>> GetAllAsync()
+        public async Task DeleteAsync(int id)
         {
-            return await _context.Announcements
+            var announcement = await _context.UserAnnouncements.FindAsync(id);
+            if (announcement != null)
+            {
+                _context.UserAnnouncements.Remove(announcement);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<UserAnnouncement> GetByIdAsync(int id)
+        {
+            return await _context.UserAnnouncements
                                  .Include(a => a.BitUser)
+                                 .Include(a => a.TournamentId)
+                                 .FirstOrDefaultAsync(a => a.Id == id);
+        }
+
+        public async Task<IEnumerable<UserAnnouncement>> GetByUserIdAndStatus(string userId, bool isDraft)
+        {
+            return await _context.UserAnnouncements
+                                 .Include(a => a.Tournament)
+                                 .Where(a => a.Owner == int.Parse(userId) && a.IsDraft == isDraft)
                                  .ToListAsync();
         }
 
-        public async Task<IEnumerable<Announcement>> GetByUserIdAndStatus(int bitUserId, bool isDraft)
+        public async Task UpdateAsync(UserAnnouncement announcement)
         {
-            return await _context.Announcements
-                                 .Where(a => a.BitUserId == bitUserId && a.IsDraft == isDraft)
-                                 .Include(a => a.BitUser)
-                                 .ToListAsync();
+            _context.UserAnnouncements.Update(announcement);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<Announcement> GetLatestAnnouncementAsync(int bitUserId)
+        public async Task<IEnumerable<UserAnnouncement>> GetPublishedAnnouncementsAsync()
         {
-            return await _context.Announcements
-                                 .Where(a => a.BitUserId == bitUserId)
-                                 .OrderByDescending(a => a.CreationDate)
-                                 .FirstOrDefaultAsync();
+            return await _context.UserAnnouncements
+                .Include(ua => ua.Tournament) // Include the Tournament entity
+                .Where(ua => !ua.IsDraft)
+                .ToListAsync();
         }
+
     }
 }
-
 

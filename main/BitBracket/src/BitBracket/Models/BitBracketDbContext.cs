@@ -16,6 +16,7 @@ public partial class BitBracketDbContext : DbContext
     }
 
     public virtual DbSet<Announcement> Announcements { get; set; }
+    public virtual DbSet<UserAnnouncement> UserAnnouncements { get; set; }
 
     public virtual DbSet<BitUser> BitUsers { get; set; }
 
@@ -37,6 +38,14 @@ public partial class BitBracketDbContext : DbContext
         modelBuilder.Entity<Announcement>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Announce__3214EC27C14FE9B2");
+        });
+
+        modelBuilder.Entity<UserAnnouncement>(entity =>
+        {
+            //entity.ToTable("UserAnnouncements");
+            entity.HasKey(e => e.Id).HasName("PK__UserAnno__3214EC27BF062C3D");
+            entity.HasOne(d => d.BitUser).WithMany(p => p.UserAnnouncements).HasForeignKey(d => d.Owner).HasConstraintName("FK__UserAnnou__Owner__40058253").OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(d => d.Tournament).WithMany(p => p.TournamentID).HasForeignKey(d => d.TournamentId).HasConstraintName("FK__UserAnnou__Tourn__40F9A68C").OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<BitUser>(entity =>
