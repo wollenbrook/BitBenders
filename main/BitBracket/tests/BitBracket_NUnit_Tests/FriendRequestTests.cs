@@ -34,7 +34,7 @@ public class FriendRequestTests
             ProfilePicture = null
         };
     }
-
+    
     [Test]
     public void TestThatAUserCanSendAFriendRequest()
     {
@@ -190,7 +190,6 @@ public class FriendRequestTests
         AssertNull(sender.Friends[0]);
 
     }
-
 }
 
 
