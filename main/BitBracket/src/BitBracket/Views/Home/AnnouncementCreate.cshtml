@@ -1,3 +1,5 @@
+@* Views/Home/AnnouncementCreate.cshtml *@
+
 @{
     ViewData["Title"] = "Create a new Announcement";
 }
@@ -13,7 +15,8 @@
             @await Html.PartialAsync("~/Views/Announcements/_CreateAnnouncementPartial.cshtml")
         </section>
 
-        <a href="@Url.Action("Announcement", "Home")" class="ui button secondary">Return to Announcement Page</a>
+        <a href="@Url.Action("UserAnnouncementForm", "Home")" class="ui button secondary">Return to Announcement Page</a>
+        <a href="@Url.Action("Announcement", "Home")" class="ui button primary">Previous Admin Announcements!</a>
     </div>
 </body>
 @section Scripts {

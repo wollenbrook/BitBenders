@@ -1,0 +1,42 @@
+@model BitBracket.Models.UserAnnouncement
+
+@{
+    ViewData["Title"] = "Create User Announcement";
+}
+
+<div class="ui segment">
+    <h2 class="ui header">@ViewData["Title"]</h2>
+
+    <form id="createAnnouncementForm" class="ui form">
+        <div class="field">
+            <label>Title</label>
+            <input type="text" id="title" name="title" placeholder="Announcement Title" required>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea id="description" name="description" placeholder="Detailed Description" required></textarea>
+        </div>
+        <div class="field">
+            <label>Author</label>
+            <input type="text" id="author" name="author" value="@User.Identity.Name" readonly>
+        </div>
+        <div class="field">
+            <label>Tournament</label>
+            <select id="tournamentDropdown" class="ui fluid dropdown">
+                <!-- Tournament options will be dynamically loaded here -->
+            </select>
+        </div>
+        <div class="field">
+            <label>Status</label>
+            <select id="statusDropdown" class="ui fluid dropdown">
+                <option value="false">Publish</option>
+                <option value="true">Draft</option>
+            </select>
+        </div>
+        <button type="submit" class="ui button primary">Create Announcement</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/userAnnouncementCreate.js"></script>
+}

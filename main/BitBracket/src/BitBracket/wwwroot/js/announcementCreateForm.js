@@ -1,3 +1,5 @@
+//wwwroot/js/announcementCreate.js
+
 // Function to handle form submission with validation
 function handleFormSubmission() {
     const form = document.getElementById('createAnnouncementForm');

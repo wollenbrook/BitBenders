@@ -1,3 +1,5 @@
+@* Views/Home/Announcement.cshtml *@
+
 @{
     ViewData["Title"] = "Announcements and Notifications";
 }
@@ -9,13 +11,13 @@
 
             <div class="section-gap"></div>
 
-            <a href="@Url.Action("AnnouncementCreate", "Home")" class="ui button primary">Create a New Announcement</a>
 
             <div class="section-gap"></div>
 
             <section>
                 @await Html.PartialAsync("~/Views/Announcements/_AnnouncementsPartial.cshtml")
             </section>
+            
         </div>
     </div>
 </body>
