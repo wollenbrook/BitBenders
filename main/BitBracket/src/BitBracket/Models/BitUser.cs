@@ -31,8 +31,6 @@ public partial class BitUser
     public bool EmailConfirmedStatus { get; set; }
     public bool OptInConfirmation { get; set; } = true;
 
-    public virtual ICollection<Announcement> Announcements { get; set; } = new List<Announcement>();
-
     [InverseProperty("FriendNavigation")]
     public virtual ICollection<Friend> FriendFriendNavigations { get; set; } = new List<Friend>();
 
@@ -50,4 +48,7 @@ public partial class BitUser
 
     [InverseProperty("OwnerNavigation")]
     public virtual ICollection<Tournament> Tournaments { get; set; } = new List<Tournament>();
+    
+    [InverseProperty("BitUser")]
+    public virtual ICollection<UserAnnouncement> UserAnnouncements { get; set; } = new List<UserAnnouncement>();
 }

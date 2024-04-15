@@ -6,11 +6,11 @@ namespace BitBracket.DAL.Abstract
 {
     public interface IUserAnnouncementRepository
     {
-        Task AddAsync(Announcement announcement);
-        Task<IEnumerable<Announcement>> GetByUserIdAndStatus(int bitUserId, bool isDraft);
-        Task<IEnumerable<Announcement>> GetAllAsync();
-        Task<Announcement> GetLatestAnnouncementAsync(int bitUserId);
+        Task<IEnumerable<UserAnnouncement>> GetByUserIdAndStatus(string userId, bool isDraft);
+        Task AddAsync(UserAnnouncement announcement);
+        Task UpdateAsync(UserAnnouncement announcement);
+        Task DeleteAsync(int id);
+        Task<UserAnnouncement> GetByIdAsync(int id);
+        Task<IEnumerable<UserAnnouncement>> GetPublishedAnnouncementsAsync();
     }
 }
-
-

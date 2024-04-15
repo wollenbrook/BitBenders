@@ -1,20 +1,20 @@
-@* Located at Views/Home/UserAnnouncementForm.cshtml *@
-
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "My Announcements";
 }
-
-<h2>@ViewData["Title"]</h2>
+<body class="announcement-background"></body>
+<h1 class="title-styling">@ViewData["Title"]</h1>
 
 <div class="section-gap"></div>
-
-<a href="@Url.Action("UserAnnouncementCreate", "Home")" class="ui button primary">Create User Announcement</a>
+@if (User.Identity.IsAuthenticated)
+{
+    <a href="@Url.Action("UserAnnouncementCreate", "Home")" class="ui button primary">Create User Announcement</a>
+}
+<a href="@Url.Action("AnnouncementCreate", "Home")" class="ui button primary">Create an admin Announcement</a>
+<a href="@Url.Action("optInConfirmation", "Home")" class="ui button secondary">OptIn/Out</a>
 
 <div class="section-gap"></div>
 
 @Html.Partial("~/Views/Announcements/_UserAnnouncementForm.cshtml")
-@Html.Partial("~/Views/Announcements/_OptInConfirmation.cshtml")
 
 @section Scripts {
     <script src="~/js/userAnnouncementForm.js"></script>
