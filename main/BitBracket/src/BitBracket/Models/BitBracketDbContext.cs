@@ -24,6 +24,12 @@ public partial class BitBracketDbContext : DbContext
 
     public virtual DbSet<Friend> Friends { get; set; }
 
+    public virtual DbSet<GuidBracket> GuidBrackets { get; set; }
+
+    public virtual DbSet<RecievedFriendRequest> RecievedFriendRequests { get; set; }
+
+    public virtual DbSet<SentFriendRequest> SentFriendRequests { get; set; }
+
     public virtual DbSet<FriendRequest> FriendRequests { get; set; }
 
     public virtual DbSet<Tournament> Tournaments { get; set; }
@@ -35,7 +41,7 @@ public partial class BitBracketDbContext : DbContext
     {
         modelBuilder.Entity<Announcement>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Announce__3214EC27C14FE9B2");
+            entity.HasKey(e => e.Id).HasName("PK__Announce__3214EC27DBB7EADA");
         });
 
         modelBuilder.Entity<UserAnnouncement>(entity =>
@@ -48,24 +54,30 @@ public partial class BitBracketDbContext : DbContext
 
         modelBuilder.Entity<BitUser>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BitUser__3214EC272B3CF94F");
+            entity.HasKey(e => e.Id).HasName("PK__BitUser__3214EC27D98320F7");
         });
 
         modelBuilder.Entity<Bracket>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Brackets__3214EC2711A7EB6A");
+            entity.HasKey(e => e.Id).HasName("PK__Brackets__3214EC27B117FB09");
 
-            entity.HasOne(d => d.Tournament).WithMany(p => p.Brackets).HasConstraintName("FK__Brackets__Tourna__40F9A68C");
+            entity.HasOne(d => d.Tournament).WithMany(p => p.Brackets).HasConstraintName("FK__Brackets__Tourna__74AE54BC");
         });
 
         modelBuilder.Entity<Friend>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Friends__3214EC2776878A28");
+            entity.HasKey(e => e.Id).HasName("PK__Friends__3214EC271CEE40C2");
 
-            entity.HasOne(d => d.FriendNavigation).WithMany(p => p.FriendFriendNavigations).HasConstraintName("FK__Friends__FriendI__4D5F7D71");
+            entity.HasOne(d => d.FriendNavigation).WithMany(p => p.FriendFriendNavigations).HasConstraintName("FK__Friends__FriendI__01142BA1");
 
-            entity.HasOne(d => d.User).WithMany(p => p.FriendUsers).HasConstraintName("FK__Friends__UserID__4C6B5938");
+            entity.HasOne(d => d.User).WithMany(p => p.FriendUsers).HasConstraintName("FK__Friends__UserID__00200768");
         });
+
+        modelBuilder.Entity<GuidBracket>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__GuidBrac__3214EC27673B9F11");
+        });
+
 
         modelBuilder.Entity<FriendRequest>(entity =>
         {
@@ -78,9 +90,9 @@ public partial class BitBracketDbContext : DbContext
 
         modelBuilder.Entity<Tournament>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Tourname__3214EC273F8628D7");
+            entity.HasKey(e => e.Id).HasName("PK__Tourname__3214EC274F52B401");
 
-            entity.HasOne(d => d.OwnerNavigation).WithMany(p => p.Tournaments).HasConstraintName("FK__Tournamen__Owner__3E1D39E1");
+            entity.HasOne(d => d.OwnerNavigation).WithMany(p => p.Tournaments).HasConstraintName("FK__Tournamen__Owner__71D1E811");
         });
 
         OnModelCreatingPartial(modelBuilder);

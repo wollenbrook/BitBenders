@@ -45,6 +45,13 @@ CREATE TABLE [Friends] (
 	[FriendID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
 );
 
+
+CREATE TABLE [GuidBracket] (
+    [ID] INT PRIMARY KEY IDENTITY(1, 1),
+    [Guid] UNIQUEIDENTIFIER NOT NULL,
+    [BracketData] VARCHAR(4000) NOT NULL
+);
+
 CREATE TABLE [UserAnnouncements] (
     [ID] INT IDENTITY(1,1) PRIMARY KEY,
     [Title] NVARCHAR(50) NOT NULL,
