@@ -234,3 +234,11 @@ body.dark-theme {
   margin: auto; 
 }
 
+#generateButton {
+  display: none;
+}
+
+.large-text {
+  font-size: 2em;
+}
+

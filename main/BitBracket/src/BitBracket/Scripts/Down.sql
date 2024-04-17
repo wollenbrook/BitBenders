@@ -39,3 +39,5 @@ IF OBJECT_ID('BitUser', 'U') IS NOT NULL
 BEGIN
     DROP TABLE [BitUser];
 END
+
+DROP TABLE [GuidBracket];

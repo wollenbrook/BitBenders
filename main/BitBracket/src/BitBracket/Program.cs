@@ -25,6 +25,7 @@ builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
 builder.Services.AddScoped<IBracketRepository, BracketRepository>();
+builder.Services.AddScoped<IGuidBracketRepository, GuidBracketRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 // Register IWhisperService with HttpClientFactory
 builder.Services.AddHttpClient();
