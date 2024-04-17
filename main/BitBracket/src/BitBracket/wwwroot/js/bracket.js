@@ -8,6 +8,9 @@ $(document).ready(function() {
             return;
         }
 
+        // Show the #generateButton
+        $('#generateButton').show();
+
         var formData = {
             Names: $('#Names').val(), // Comma-delimited list of player names string
             Format: $('#Format').val(), // Single or Double Elimination string
@@ -53,6 +56,15 @@ $(document).ready(function() {
                 bracketFormat = doubleElimination;
             }
             //console.log(bracketFormat);
+
+            // Get the button element
+            var button = document.getElementById('generateButton');
+
+            // Attach a click event listener to the button
+            button.addEventListener('click', function() {
+                generateBracketLink(bracketFormat);
+            }, {once: true});
+
 
             // Save function
             function saveFn(data) {
@@ -168,11 +180,77 @@ function roundToPowerOfTwo(names) {
      return teams;
 }
 
+function generateBracketLink(bracketFormat) {
+    var button = document.getElementById('generateButton');
+    
+    // Create a new JSON object that contains both the teams and results
+    var bracketData = {
+        teams: bracketFormat.teams,
+        results: bracketFormat.results
+    };
+    
+    var dataToSend = {
+        bracketData: JSON.stringify(bracketData)
+    };
+
+    console.log(dataToSend);
+
+    // Send the bracketFormat to the server
+    $.ajax({
+        url: '/api/GuidAPI',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(dataToSend),
+        success: function(data) {
+            console.log(data);
+            // Handle success
+            // Retrieve the GUID link
+            var guidLink = data.guid;
+            // Create the full URL
+            var baseUrl = window.location.origin;
+            var fullUrl = baseUrl + '/bracket/guestbracketview?id=' + guidLink;
+            button.innerHTML = fullUrl;
+            navigator.clipboard.writeText(fullUrl);
+            $.ajax({
+                url: '/api/GuidAPI',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(dataToSend),
+                success: function(data) {
+                    console.log(data);
+                    // Handle success
+                    // Retrieve the GUID link
+                    var guidLink = data.guid;
+                    // Create the full URL
+                    var baseUrl = window.location.origin;
+                    var fullUrl = baseUrl + '/bracket/guestbracketview?id=' + guidLink;
+                    button.innerHTML = fullUrl;
+                    navigator.clipboard.writeText(fullUrl);
+                    // Add an event listener to the button
+                    button.addEventListener('click', function() {
+                        window.open(fullUrl, '_blank');
+                    });
+                },
+                error: function(error) {
+                    // Handle error 
+                    alert("Failed to create Link, try again later");
+                }
+            });
+        },
+        error: function(error) {
+            // Handle error 
+            alert("Failed to create Link, try again later");
+        }
+    });
+}
+
 // Exported functions for testing
 
-module.exports = {
-    createResultsArray,
-    roundToPowerOfTwo,
-    seeding,
-    randomSeedNames
-};
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        createResultsArray,
+        roundToPowerOfTwo,
+        seeding,
+        randomSeedNames
+    };
+}

@@ -64,19 +64,8 @@ public class BracketController : Controller
         return View(model);
     }
 
-    public IActionResult BracketDisplay()
+    public IActionResult GuestBracketView(Guid id)
     {
-        List<Player> players;
-
-        if (TempData["Players"] != null)
-        {
-            players = System.Text.Json.JsonSerializer.Deserialize<List<Player>>(TempData["Players"].ToString());
-        }
-        else
-        {
-            return RedirectToAction("CreateBracket");
-        }
-
-        return View(players);
+        return View((object)id); 
     }
 }
