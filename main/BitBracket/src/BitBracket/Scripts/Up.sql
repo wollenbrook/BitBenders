@@ -31,6 +31,20 @@ CREATE TABLE [Announcements] (
     [Author] NVARCHAR(50) NOT NULL 
 );
 
+CREATE TABLE [FriendRequests] (
+	[ID] INT IDENTITY(1,1) PRIMARY KEY,
+	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
+	[ReceiverID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
+	[Status] NVARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE [Friends] (
+	[ID] INT IDENTITY(1,1) PRIMARY KEY,
+	[UserID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
+	[FriendID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
+);
+
 CREATE TABLE [UserAnnouncements] (
     [ID] INT IDENTITY(1,1) PRIMARY KEY,
     [Title] NVARCHAR(50) NOT NULL,
@@ -40,23 +54,4 @@ CREATE TABLE [UserAnnouncements] (
     [Author] NVARCHAR(50) NOT NULL,
     [Owner] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
     [TournamentID] INT NULL FOREIGN KEY REFERENCES [Tournaments]([ID])
-);
-
-CREATE TABLE [SentFriendRequests] (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY,
-	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[ReceiverID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[Status] NVARCHAR(50) NOT NULL
-);
-
-CREATE TABLE [RecievedFriendRequests] (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY,
-	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[Status] NVARCHAR(50) NOT NULL
-);
-
-CREATE TABLE [Friends] (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY,
-	[UserID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[FriendID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
 );
