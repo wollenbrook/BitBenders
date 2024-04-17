@@ -20,6 +20,8 @@ namespace BitBracket.DAL.Abstract
         public bool CheckIfFriends(BitUser sender, BitUser reciver);
         public bool CheckIfRequestSent(BitUser sender, BitUser reciver);
         public Task<IEnumerable<BitUser>> GetFriends(int id);
+        IEnumerable<BitUser> GetOptedInUsers();
+
         public Task<IEnumerable<FriendRequest>> GetFriendRequests(int id);
     }
 }

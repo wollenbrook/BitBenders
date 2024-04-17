@@ -42,7 +42,6 @@ async function getFriendRequest() {
         const acceptButton = document.createElement("button");
         acceptButton.textContent = "Accept";
         acceptButton.classList.add("accept-button");
-        console.log(item.id);
         acceptButton.addEventListener("click", () => AcceptFriendRequest(item.sender.id)); // Call AcceptFriendRequest function on button click
 
         const declineButton = document.createElement("button");
@@ -70,6 +69,7 @@ async function DeclineFriendRequest(id) {
     });
     const data = await response.json();
     getFriendsList();
+    getFriendRequest();
 }
 function MovePage(item) {
     window.location.href = `/Home/SearchProfiles/${item.id}`;

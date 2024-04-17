@@ -29,7 +29,7 @@ public partial class BitUser
 
     public byte[]? ProfilePicture { get; set; } = null;
 
-    public bool EmailConfirmedStatus { get; set; }
+    public bool EmailConfirmedStatus { get; set; } = false;
     public bool OptInConfirmation { get; set; } = true;
 
     [InverseProperty("FriendNavigation")]
