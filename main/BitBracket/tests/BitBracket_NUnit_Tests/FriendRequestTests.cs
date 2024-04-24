@@ -147,7 +147,7 @@ public class FriendRequestTests
         //This method would accept a friend request, changing the status of the friend request object to 'Accepted' and adding the sender to the receiver's friends list and vice versa
         _userRepositoryMock.Object.AcceptFriendRequest(sender, receiver);
 
-        Assert.That("Accepted", Is.EqualTo(receiver.FriendRequestReceivers.First(r => r.SenderId == sender.Id).Status));
+        Assert.That("Accepted", Is.EqualTo(receiver.FriendRequestReceivers.First(r => r.Id == sender.Id).Status));
           
     }
     [Test]
