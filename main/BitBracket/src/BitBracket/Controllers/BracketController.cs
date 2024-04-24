@@ -2,6 +2,8 @@ using BitBracket.Models;
 using BitBracket.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
+namespace BitBracket.Controllers;
+
 public class BracketController : Controller
 {
     [HttpGet]
