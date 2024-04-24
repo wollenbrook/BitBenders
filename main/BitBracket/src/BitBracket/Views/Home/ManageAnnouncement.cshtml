@@ -1,0 +1,13 @@
+@{
+    ViewData["Title"] = "Manage Announcement";
+}
+
+<body class="announcement-background"></body>
+<div class="section-gap"></div>
+<h1 class="title-styling">@ViewData["Title"]</h1>
+
+@Html.Partial("~/Views/Announcements/_ManageAnnouncement.cshtml")
+
+@section Scripts {
+    <script src="~/js/manageAnnouncement.js"></script>
+}

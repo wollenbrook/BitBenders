@@ -127,6 +127,7 @@ namespace BitBracket.Controllers
             // Handle the case when no file is uploaded
             return BadRequest();
         }
+        // PUT: api/SendFriendRequest/5
         [HttpPut("SendFriendRequest/{id}")]
         public async Task<IActionResult> SendFriendRequest(int id)
         {
@@ -137,21 +138,22 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
-            _bitUserRepository.SendFriendRequest(sender.Id, reciver.Id);
+            _bitUserRepository.SendFriendRequest(sender, reciver);
 
             return Ok();
         }
+        // PUT: /api/BitUserApi/AcceptFriendRequest/5
         [HttpPut("AcceptFriendRequest/{id}")]
         public async Task<IActionResult> AcceptFriendRequest(int id)
         {
             string senderId = _userManager.GetUserId(User);
-            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
-            BitUser reciver = _bitUserRepository.GetBitUserByRegularId(id);
+            BitUser reciver = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser sender = _bitUserRepository.GetBitUserByRegularId(id);
             if (sender == null || reciver == null)
             {
                 return NotFound();
             }
-            _bitUserRepository.AcceptFriendRequest(sender.Id, reciver.Id);
+            _bitUserRepository.AcceptFriendRequest(sender, reciver);
 
             return Ok();
         }
@@ -159,16 +161,19 @@ namespace BitBracket.Controllers
         public async Task<IActionResult> DeclineFriendRequest(int id)
         {
             string senderId = _userManager.GetUserId(User);
-            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
-            BitUser reciver = _bitUserRepository.GetBitUserByRegularId(id);
+            BitUser reciver = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser sender = _bitUserRepository.GetBitUserByRegularId(id);
             if (sender == null || reciver == null)
             {
                 return NotFound();
             }
-            _bitUserRepository.DeclineFriendRequest(sender.Id, reciver.Id);
+            _bitUserRepository.DeclineFriendRequest(sender, reciver);
 
             return Ok();
         }
+
+
+        // PUT: api/BitUserApi/RemoveFriend/5
         [HttpPut("RemoveFriend/{id}")]
         public async Task<IActionResult> RemoveFriend(int id)
         {
@@ -179,10 +184,11 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
-            _bitUserRepository.RemoveFriend(sender.Id, reciver.Id);
+            await _bitUserRepository.RemoveFriend(sender, reciver);
 
             return Ok();
         }
+        // GET: api/BitUserApi/CheckIfFriends/5
         [HttpGet("CheckIfFriends/{id}")]
         public async Task<ActionResult<bool>> CheckIfFriends(int id)
         {
@@ -193,8 +199,22 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
-            return _bitUserRepository.CheckIfFriends(sender.Id, reciver.Id);
+            return _bitUserRepository.CheckIfFriends(sender, reciver);
         }
+        // GET: api/BitUserApi/CheckIfRequestSent/5
+        [HttpGet("CheckIfRequestSent/{id}")]
+        public async Task<ActionResult<bool>> CheckIfRequestSent(int id)
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser reciver = _bitUserRepository.GetBitUserByRegularId(id);
+            if (sender == null || reciver == null)
+            {
+                return NotFound();
+            }
+            return _bitUserRepository.CheckIfRequestSent(sender, reciver);
+        }
+        // GET: api/BitUserApi/GetFriends
         [HttpGet("GetFriends")]
         public async Task<ActionResult<IEnumerable<BitUserDTO>>> GetFriends()
         {
@@ -212,8 +232,9 @@ namespace BitBracket.Controllers
             var DtoBitUsers = friends.Select(u => u.ReturnBitUserSearchDTO()).ToList();
             return DtoBitUsers;
         }
+        // GET: api/BitUserApi/GetFriendRequests
         [HttpGet("GetFriendRequests")]
-        public async Task<ActionResult<IEnumerable<RecievedFriendRequest>>> GetFriendRequests()
+        public async Task<ActionResult<IEnumerable<FriendRequest>>> GetFriendRequests()
         {
             string senderId = _userManager.GetUserId(User);
             BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
@@ -221,13 +242,14 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
-            var friendRequests = await _bitUserRepository.GetFriendRequests(sender.Id);
+            IEnumerable<FriendRequest> friendRequests = await _bitUserRepository.GetFriendRequests(sender.Id);
             if (friendRequests == null)
             {
                 return NotFound();
             }
+            friendRequests = friendRequests.Where(fr => fr.Status == "Pending");
+
             return Ok(friendRequests);
         }
-
     }
 }

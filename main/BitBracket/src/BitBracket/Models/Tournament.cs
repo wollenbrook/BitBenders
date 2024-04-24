@@ -23,7 +23,7 @@ public partial class Tournament
     public string Status { get; set; } = null!;
 
     [Column(TypeName = "datetime")]
-    public DateTime Created { get; set; }
+    public DateTime Created { get; set; } = DateTime.Now;
 
     public int? Owner { get; set; }
 
@@ -34,4 +34,7 @@ public partial class Tournament
     [JsonIgnore]
     [InverseProperty("Tournaments")]
     public virtual BitUser? OwnerNavigation { get; set; }
+
+    [InverseProperty("Tournament")]
+    public virtual ICollection<UserAnnouncement> TournamentID { get; set; } = new List<UserAnnouncement>();  // Navigation property for Announcements
 }

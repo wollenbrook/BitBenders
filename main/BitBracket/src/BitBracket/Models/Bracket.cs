@@ -23,7 +23,7 @@ public partial class Bracket
     public string BracketData { get; set; } = null!;
 
     [Column("TournamentID")]
-    public int? TournamentID { get; set; }
+    public int? TournamentID { get; set; } = null;
 
 
     [InverseProperty("Brackets")]
