@@ -12,6 +12,7 @@ using BitBracket.DAL.Abstract;
 using BitBracket.DAL.Concrete;
 using Newtonsoft.Json.Linq;
 
+namespace BitBracket.Controllers;
 
 //  /api/TournamentAPI
 [Route("api/[controller]")]
