@@ -91,7 +91,10 @@ app.MapControllerRoute(
     name: "SearchProfiles",
     pattern: "/SearchProfiles/{bitUserId}",
     defaults: new { controller = "Home", action = "SearchProfile" });
-
+app.MapControllerRoute(
+    name: "Tournaments",
+    pattern: "/Tournaments/{tournamentId}",
+    defaults: new { controller = "Home", action = "Tournaments" });
 app.MapRazorPages();
 
 app.Run();

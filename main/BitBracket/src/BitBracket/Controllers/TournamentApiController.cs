@@ -32,8 +32,9 @@ public class TournamentAPIController : ControllerBase
         _bracketRepository = bracketRepository;
     }
 
+    // /api/TournamentAPI/All/
     [HttpGet]
-    [Route("All/")]
+    [Route("All")]
 
     public async Task<IActionResult> GetAllTournaments()
     {

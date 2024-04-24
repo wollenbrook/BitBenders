@@ -24,12 +24,48 @@ async function getAllBitUsers() {
     try {
         const response = await fetch("/api/BitUserApi");
         const data = await response.json();
+        const tournamentResponse = await fetch("/api/TournamentAPI/All");
+        const tournamentdata = await tournamentResponse.json();
+        console.log(tournamentdata);
         displayBitUsers(data);
+        displayTournaments(tournamentdata);
     } catch (error) {
         console.error(error);
     }
 }
+function displayTournaments(tournamentdata) {
+    const container = document.getElementById("bitUsersContainer");
+    // check if tournaments are empty
+    //if (tournamentdata.length === 0) {
+    //    const
+    //}
+    tournamentdata.forEach(tournament => {
+        const tournamentCard = document.createElement("div");
+        tournamentCard.classList.add("user-card");
+        const name = document.createElement("h3");
+        name.textContent = tournament.name;
+        name.classList.add("name");
+        tournamentCard.appendChild(name);
 
+        const location = document.createElement("p");
+        location.textContent = tournament.location;
+        location.classList.add("form-info");
+        tournamentCard.appendChild(location);
+
+        const status = document.createElement("p");
+        status.textContent = tournament.status;
+        status.classList.add("form-info");
+        tournamentCard.appendChild(status);
+
+        tournamentCard.addEventListener("click", () => {
+            //console.log("Clicked on user: " + bitUser.username);
+            window.location.href = `/Home/Tournaments/${tournament.id}`;
+        });
+        container.appendChild(tournamentCard);
+
+
+    })
+}
 function displayBitUsers(bitUsers) {
 
     const container = document.getElementById("bitUsersContainer");
@@ -47,18 +83,19 @@ function displayBitUsers(bitUsers) {
 
             const name = document.createElement("h3");
             name.textContent = bitUser.username;
-            name.classList.add("name")
+            name.classList.add("name");
             userCard.appendChild(name);
 
             const tagname = document.createElement("p");
             tagname.textContent = bitUser.tag;
-            tagname.classList.add("form-info")
+            tagname.classList.add("form-info");
             userCard.appendChild(tagname);
 
             const bio = document.createElement("p");
             bio.textContent = bitUser.bio;
-            bio.classList.add("form-info")
+            bio.classList.add("form-info");
             userCard.appendChild(bio);
+
             const tooltip = document.createElement("span");
             tooltip.classList.add("tooltip");
             tooltip.textContent = `Username: ${bitUser.username}\nTag: ${bitUser.tag}\nBio: ${bitUser.bio}`;

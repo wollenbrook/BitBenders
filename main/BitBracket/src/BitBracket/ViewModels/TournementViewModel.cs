@@ -11,5 +11,7 @@ namespace BitBracket.ViewModels
         [Required(ErrorMessage = "Location is required.")]
         [StringLength(255, ErrorMessage = "Location cannot be longer than 255 characters.")]
         public string Location { get; set; } = null!;
+        public string Owner { get; set; } = "test";
+        public string? Status { get; set; }
     }
 }

@@ -5,7 +5,9 @@ CREATE TABLE [BitUser] (
     [Tag] NVARCHAR(50) NOT NULL,
     [Bio] NVARCHAR(500) NOT NULL,
     [ProfilePicture] VARBINARY(MAX) NULL,
-    [EmailConfirmedStatus] BIT NULL
+    [EmailConfirmedStatus] BIT NULL,
+    [OptInConfirmation] BIT NULL
+
 );
 CREATE TABLE [Tournaments] (
     [ID] int PRIMARY KEY IDENTITY(1, 1),

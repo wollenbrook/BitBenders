@@ -15,13 +15,15 @@ public class HomeController : Controller
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IBitUserRepository _bitUserRepository;
     private readonly IAnnouncementRepository _announcementRepository;
+    private readonly ITournamentRepository _tournamentRespository;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, IAnnouncementRepository announcementRepository)
+    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, IAnnouncementRepository announcementRepository, ITournamentRepository tournamentRespository)
     {
         _logger = logger;
         _userManager = userManager;
         _bitUserRepository = bitUserRepository;
         _announcementRepository = announcementRepository;
+        _tournamentRespository = tournamentRespository;
     }
 
     public async Task<IActionResult> Index()
@@ -88,8 +90,21 @@ public class HomeController : Controller
     {
         return View();
     } 
-    public async Task<IActionResult> SearchProfiles(int id)
+    public async Task<IActionResult> Tournaments(int id)
     {
+        Tournament tournament = await _tournamentRespository.Get(id);
+        BitUser Owner = _bitUserRepository.GetBitUserByRegularId(tournament.Owner);
+        TournamentViewModel tournamentView = new TournamentViewModel
+        {
+            Name = tournament.Name,
+            Location = tournament.Location,
+            Owner = Owner.Username,
+            Status = tournament.Status
+        };
+        return View(tournamentView);
+    }
+    public async Task<IActionResult> SearchProfiles(int id)
+    { 
         string senderId = _userManager.GetUserId(User);
         BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
         //BitUser bitUser = _bitUserRepository.GetBitUserByName(name);
