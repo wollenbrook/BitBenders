@@ -12,7 +12,6 @@ using NuGet.Protocol.Plugins;
 using System.Reflection;
 using Twilio.TwiML.Fax;
 
-
 namespace BitBracket.DAL.Concrete
 {
     public class BitUserRepository : Repository<BitUser>, IBitUserRepository

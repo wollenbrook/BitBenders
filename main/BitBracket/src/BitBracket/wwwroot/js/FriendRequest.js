@@ -1,26 +1,22 @@
 ﻿function initialize() {
     getFriendRequest();
     getFriendsList();
-    console.log("Initialized friend request js");
 
     function startTimer() {
-        setInterval(getFriendRequest, 30000);    
-        setInterval(getFriendsList, 30000);
+        setInterval(getFriendRequest, 60000);    
+        setInterval(getFriendsList, 60000);
     }
 
     startTimer();
 
-    console.log("On click listeners added");
 }
 async function getFriendsList() {
-    console.log("getFriendsList called");
     const response =  await fetch("/api/BitUserApi/GetFriends"); 
     const data = await response.json();
     const friendList = document.getElementById("Friends");
     friendList.innerHTML = "";
 
 
-    console.log(data);
     data.forEach(item => {
         const row = document.createElement("div");
         row.textContent = item.username; // Replace "name" with the actual property name from your JSON
@@ -32,7 +28,6 @@ async function getFriendsList() {
 async function getFriendRequest() {
     const response = await fetch("/api/BitUserApi/GetFriendRequests"); 
     const data = await response.json();
-    console.log(data);
     const friendRequestList = document.getElementById("FriendRequest"); 
     friendRequestList.innerHTML = "";
     data.forEach(item => {

@@ -246,11 +246,12 @@ function generateBracketLink(bracketFormat) {
 
 // Exported functions for testing
 
-if (typeof module !== 'undefined' && module.exports) {
+/*if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         createResultsArray,
         roundToPowerOfTwo,
         seeding,
         randomSeedNames
     };
-}
+    }
+*/

@@ -36,6 +36,7 @@ public partial class BitUser
     [JsonIgnore]
     public virtual ICollection<Friend> FriendFriendNavigations { get; set; } = new List<Friend>();
 
+
     [InverseProperty("Receiver")]
     [JsonIgnore]
     public virtual ICollection<FriendRequest> FriendRequestReceivers { get; set; } = new List<FriendRequest>();

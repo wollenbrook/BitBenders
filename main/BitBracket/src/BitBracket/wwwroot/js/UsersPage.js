@@ -1,7 +1,7 @@
 function initialize() {
     const id = document.getElementById('hiddenElement').textContent;
     CheckStatus(id);
-       
+    
     
 }
 async function CheckStatus(id) {

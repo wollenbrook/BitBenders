@@ -26,10 +26,6 @@ public partial class BitBracketDbContext : DbContext
 
     public virtual DbSet<GuidBracket> GuidBrackets { get; set; }
 
-    public virtual DbSet<RecievedFriendRequest> RecievedFriendRequests { get; set; }
-
-    public virtual DbSet<SentFriendRequest> SentFriendRequests { get; set; }
-
     public virtual DbSet<FriendRequest> FriendRequests { get; set; }
 
     public virtual DbSet<Tournament> Tournaments { get; set; }
