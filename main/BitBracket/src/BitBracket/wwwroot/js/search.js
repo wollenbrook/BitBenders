@@ -1,3 +1,5 @@
+
+
 function initialize() {
     const searchAllButton = document.getElementById("searchAllButtonId");
     const searchButton = document.getElementById("searchButtonId");
@@ -6,7 +8,7 @@ function initialize() {
 }
 
 async function getSearchUsers() {
-    console.log("Getting specific bit users");
+    //console.log("Getting specific bit users");
     const searchInput = document.getElementById("searchInputId");
     const searchValue = searchInput.value;
     try {
@@ -18,7 +20,7 @@ async function getSearchUsers() {
     }
 }
 async function getAllBitUsers() {
-    console.log("Getting all Bit Users...");
+    //console.log("Getting all Bit Users...");
     try {
         const response = await fetch("/api/BitUserApi");
         const data = await response.json();
@@ -63,17 +65,17 @@ function displayBitUsers(bitUsers) {
             userCard.appendChild(tooltip);
 
             userCard.addEventListener("mouseover", () => {
-                console.log("should be visible now")
+                //console.log("should be visible now")
                 tooltip.style.visibility = "visible";
             });
 
             userCard.addEventListener("mouseout", () => {
-                console.log("should be hidden now")
+                //console.log("should be hidden now")
                 tooltip.style.visibility = "hidden";
             });
 
             userCard.addEventListener("click", () => {
-                console.log("Clicked on user: " + bitUser.username);
+                //console.log("Clicked on user: " + bitUser.username);
                 window.location.href = `/Home/SearchProfiles/${bitUser.id}`;
             });
 

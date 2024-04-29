@@ -25,7 +25,7 @@ public partial class Tournament
     public string Status { get; set; } = null!;
 
     [Column(TypeName = "datetime")]
-    public DateTime Created { get; set; }
+    public DateTime Created { get; set; } = DateTime.Now;
 
     public int? Owner { get; set; }
 

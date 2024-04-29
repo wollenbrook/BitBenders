@@ -134,6 +134,7 @@ h1 {
 
 }
 
+
 :root {
   /* Define light theme colors */
   --background-color-light: #7f9a8d, #00535f;
@@ -195,15 +196,30 @@ body.dark-theme {
 }
 
 .navbar-background {
-  /* Set the background color for the navbar */
-  background-color: var(--navbar-background) !important;
+    /* Set the background color for the navbar */
+    background-color: var(--navbar-background) !important;
+
 }
+
 
 .navbar-text {
   /* Set the text color for the navbar */
   color: var(--navbar-text-color) !important;
-}
+  font-size: 10px;    
 
+}
+.accept-button{
+  /* Set the background color for the accept button */
+  background-color: #5cb85c;
+  border: none;
+  font-size: 10px;
+}
+.decline-button{
+  /* Set the background color for the decline button */
+  background-color: #d9534f;
+  border: none;
+  font-size: 10px;
+}
 .title-styling {
   /* Specific styling for titles */
   font-family: 'Copperplate', 'Copperplate Gothic Light', sans-serif;
@@ -232,5 +248,13 @@ body.dark-theme {
 .announcement-container {
   max-width: 900px; 
   margin: auto; 
+}
+
+#generateButton {
+  display: none;
+}
+
+.large-text {
+  font-size: 2em;
 }
 

@@ -90,6 +90,8 @@ public class HomeController : Controller
     } 
     public async Task<IActionResult> SearchProfiles(int id)
     {
+        string senderId = _userManager.GetUserId(User);
+        BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
         //BitUser bitUser = _bitUserRepository.GetBitUserByName(name);
         BitUser bitUser = _bitUserRepository.GetBitUserByRegularId(id);
         BitUser bitUser1 = _bitUserRepository.GetBitUserByName(bitUser.Username);
@@ -111,7 +113,10 @@ public class HomeController : Controller
                 Email = userEmail.Result,
                 Bio = bitUser.Bio,
                 Tag = bitUser.Tag,
-                ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png"
+                ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png",
+                Friends = _bitUserRepository.CheckIfFriends(sender, bitUser),
+                FriendRequestSent = _bitUserRepository.CheckIfRequestSent(sender, bitUser),
+                ProfileID = bitUser.Id
             };
             return View(userViewModel);
         }

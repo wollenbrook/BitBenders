@@ -1,7 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const bracketId = urlParams.get('id');
 
-// Fetch bracket details
+// Fetch bracket details CHANGE THIS
 fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
     .then(response => response.json())
     .then(bracket => {
@@ -29,6 +29,7 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
             var json = JSON.stringify(data);
             localStorage.setItem('bracketData', json);
             console.log(data);
+            // update bracket data here
         }
 
         $(function() {
