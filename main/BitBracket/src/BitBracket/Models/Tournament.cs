@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Models/Tournament.cs
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -37,4 +39,13 @@ public partial class Tournament
 
     [InverseProperty("Tournament")]
     public virtual ICollection<UserAnnouncement> TournamentID { get; set; } = new List<UserAnnouncement>();  // Navigation property for Announcements
+
+    [InverseProperty("Tournament")]
+    public virtual ICollection<JoinedPlayer> Players { get; set; } = new List<JoinedPlayer>();
+
+    [InverseProperty("Tournament")]
+    public virtual ICollection<SentJoinRequest> SentJoinRequests { get; set; } = new List<SentJoinRequest>();
+
+    [InverseProperty("Tournament")]
+    public virtual ICollection<ReceivedPlayerRequest> ReceivedPlayerRequests { get; set; } = new List<ReceivedPlayerRequest>();
 }

@@ -51,4 +51,13 @@ public partial class BitUser
     
     [InverseProperty("BitUser")]
     public virtual ICollection<UserAnnouncement> UserAnnouncements { get; set; } = new List<UserAnnouncement>();
+
+    [InverseProperty("Player")]
+    public virtual ICollection<JoinedPlayer> JoinedTournaments { get; set; } = new List<JoinedPlayer>();
+
+    [InverseProperty("PlayerSender")]
+    public virtual ICollection<SentJoinRequest> SentJoinRequests { get; set; } = new List<SentJoinRequest>();
+
+    [InverseProperty("OwnerReceiver")]
+    public virtual ICollection<ReceivedPlayerRequest> ReceivedPlayerRequests { get; set; } = new List<ReceivedPlayerRequest>();
 }
