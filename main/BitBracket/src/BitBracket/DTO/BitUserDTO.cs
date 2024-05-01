@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿//DTO/BitUserDTO.CS
+
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using BitBracket.Models;
 namespace BitBracket.DTO

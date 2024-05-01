@@ -94,27 +94,32 @@ namespace BitBracket.Controllers
         [Authorize]
         public async Task<IActionResult> PublishAnnouncement(int id)
         {
+            _logger.LogInformation($"Attempting to publish announcement with ID: {id}");
             var userId = _userManager.GetUserId(User);
             var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
 
             if (bitUser == null)
             {
+                _logger.LogWarning("User not found for ID: {UserId}", userId);
                 return Unauthorized("User not found.");
             }
 
             var announcement = await _announcementRepo.GetByIdAsync(id);
             if (announcement == null)
             {
+                _logger.LogWarning("Announcement with ID: {Id} not found.", id);
                 return NotFound("Announcement not found.");
             }
 
             if (announcement.Owner != bitUser.Id)
             {
+                _logger.LogWarning("Unauthorized access attempt by user {UserId} for announcement {AnnouncementId}", userId, id);
                 return Unauthorized("Unauthorized access.");
             }
 
-            announcement.IsDraft = false; // Mark as published
+            announcement.IsDraft = false;
             await _announcementRepo.UpdateAsync(announcement);
+            _logger.LogInformation("Announcement with ID: {Id} published successfully.", id);
             return Ok("Announcement published successfully.");
         }
 
@@ -220,26 +225,31 @@ namespace BitBracket.Controllers
         [Authorize]
         public async Task<IActionResult> DeleteAnnouncement(int id)
         {
+            _logger.LogInformation($"Attempting to delete announcement with ID: {id}");
             var userId = _userManager.GetUserId(User);
             var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
 
             if (bitUser == null)
             {
+                _logger.LogWarning("User not found for ID: {UserId}", userId);
                 return Unauthorized("User not found.");
             }
 
             var announcement = await _announcementRepo.GetByIdAsync(id);
             if (announcement == null)
             {
+                _logger.LogWarning("Announcement with ID: {Id} not found for deletion.", id);
                 return NotFound("Announcement not found.");
             }
 
             if (announcement.Owner != bitUser.Id)
             {
+                _logger.LogWarning("Unauthorized deletion attempt by user {UserId} for announcement {AnnouncementId}", userId, id);
                 return Unauthorized("Unauthorized access.");
             }
 
             await _announcementRepo.DeleteAsync(id);
+            _logger.LogInformation("Announcement with ID: {Id} deleted successfully.", id);
             return Ok("Announcement deleted successfully.");
         }
 
@@ -272,6 +282,30 @@ namespace BitBracket.Controllers
              _bitUserRepository.AddOrUpdate(user);
 
             return Ok("Opt-In confirmation updated successfully.");
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAnnouncementById(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+
+            if (bitUser == null)
+            {
+                return Unauthorized("User not found.");
+            }
+
+            var announcement = await _announcementRepo.GetByIdAsync(id);
+            if (announcement == null)
+            {
+                return NotFound("Announcement not found.");
+            }
+
+            if (announcement.Owner != bitUser.Id)
+            {
+                return Unauthorized("Unauthorized access.");
+            }
+
+            return Ok(announcement);
         }
     }
 }

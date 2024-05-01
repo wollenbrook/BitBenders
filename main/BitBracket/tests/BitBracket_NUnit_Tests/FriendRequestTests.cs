@@ -1,4 +1,3 @@
-﻿
 using BitBracket.Models;
 using NUnit.Framework;
 using System;

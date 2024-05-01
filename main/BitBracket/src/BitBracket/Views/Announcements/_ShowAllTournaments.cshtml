@@ -1,0 +1,30 @@
+@model IEnumerable<BitBracket.Models.Tournament>
+
+@if (Model != null && Model.Any())
+{
+    <div class="ui cards">
+        @foreach (var tournament in Model)
+        {
+            <div class="card">
+                <div class="content">
+                    <div class="header">@tournament.Name</div>
+                    <div class="meta">
+                        <span class="category">@tournament.Location</span>
+                    </div>
+                    <div class="description">
+                        <p><strong>Organized by:</strong> @tournament.OwnerNavigation?.Username ?? "Unknown"</p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <button class="ui button primary joinTournament" data-tournament-id="@tournament.Id">
+                        Request to Join
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No tournaments available to display.</p>
+}

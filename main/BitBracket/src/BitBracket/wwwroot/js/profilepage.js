@@ -1,5 +1,3 @@
-//wwwroot/js/profilepage.js
-
 // Enable editing of the div content for Tag and Bio
 document.getElementById('tagId').contentEditable = true;
 document.getElementById('bioId').contentEditable = true;

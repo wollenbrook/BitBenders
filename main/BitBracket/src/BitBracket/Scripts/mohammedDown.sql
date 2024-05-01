@@ -1,9 +1,12 @@
 DROP TABLE [Announcements];
 DROP TABLE [UserAnnouncements];
 DROP TABLE [Brackets];
-DROP TABLE [Tournaments];
 DROP TABLE [Friends];
-DROP TABLE [ReceivedFriendRequests];
+DROP TABLE [RecievedFriendRequests];
 DROP TABLE [SentFriendRequests];
+DROP TABLE [JoinedPlayers];
+DROP TABLE [SentJoinRequests];
+DROP TABLE [ReceivedPlayerRequests];
+DROP TABLE [Tournaments];
 DROP TABLE [BitUser];
 DROP TABLE [__EFMigrationsHistory];

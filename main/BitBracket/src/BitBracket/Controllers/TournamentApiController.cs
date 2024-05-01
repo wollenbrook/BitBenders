@@ -203,5 +203,157 @@ public class TournamentAPIController : ControllerBase
     }
 
 
+    [HttpPut]
+    [Route("Bracket/Update")]
+    public async Task<IActionResult> UpdateBracket([FromBody] BracketUpdateViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var bracket = await _bracketRepository.Get(model.BracketId);
 
+            if (bracket == null)
+            {
+                return NotFound();
+            }
+            bracket.BracketData = model.BracketData;
+
+            await _bracketRepository.Update(bracket);
+
+            return Ok(bracket);
+        }
+
+        return BadRequest(ModelState);
+    }
+
+
+    [HttpPut]
+    [Route("Broadcast")]
+    public async Task<IActionResult> UpdateBroadcastLink([FromBody] BroadcastLinkViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var tournament = await _tournamentRepository.Get(model.TournamentId);
+        if (tournament == null)
+        {
+            return NotFound();
+        }
+
+        tournament.BroadcastType = model.BroadcastType;
+        tournament.BroadcastLink = model.NameOrID;
+
+        await _tournamentRepository.Update(tournament);
+
+        return NoContent();
+    }
+
+
+//
+    // [HttpGet("All")]
+    // public async Task<ActionResult<IEnumerable<Tournament>>> AllTournaments()
+    // {
+    //     return Ok(await _tournamentRepository.AllTournaments());
+    // }
+
+    [HttpPost("SendRequest/{userId}/{tournamentId}")]
+    public async Task<IActionResult> SendParticipateRequest(int userId, int tournamentId)
+    {
+        bool result = await _tournamentRepository.SendParticipateRequest(userId, tournamentId);
+        if (result)
+            return Ok(new { message = "Request sent successfully!" });
+        else
+            return BadRequest(new { message = "Request already exists or failed to send." });
+    }
+
+    [HttpPut("AcceptRequest/{requestId}")]
+    public async Task<IActionResult> AcceptParticipateRequest(int requestId)
+    {
+        bool result = await _tournamentRepository.AcceptParticipateRequest(requestId);
+        if (result)
+            return Ok(new { message = "Request accepted successfully!" });
+        else
+            return NotFound();
+    }
+
+    [HttpPut("DeclineRequest/{requestId}")]
+    public async Task<IActionResult> DeclineParticipateRequest(int requestId)
+    {
+        bool result = await _tournamentRepository.DeclineParticipateRequest(requestId);
+        if (result)
+            return Ok(new { message = "Request declined successfully!" });
+        else
+            return NotFound();
+    }
+
+
+    [HttpGet("GetParticipates/{tournamentId}")]
+    public async Task<IActionResult> GetParticipates(int tournamentId)
+    {
+        var participants = await _tournamentRepository.GetParticipates(tournamentId);
+        var participantDtos = participants.Select(p => new {
+            UserId = p.UserId,
+            Username = p.User.Username
+        }).ToList();
+        return Ok(participantDtos);
+    }
+
+    [HttpGet("GetParticipateRequests/{tournamentId}")]
+    public async Task<IActionResult> GetParticipateRequests(int tournamentId)
+    {
+        var requests = await _tournamentRepository.GetParticipateRequests(tournamentId);
+        var requestDtos = requests.Select(r => new {
+            RequestId = r.Id,
+            SenderId = r.SenderId,
+            SenderUsername = r.Sender.Username,
+            Status = r.Status
+        }).ToList();
+        return Ok(requestDtos);
+    }
+
+    [HttpPut("RemoveParticipate/{userId}/{tournamentId}")]
+    public async Task<IActionResult> RemoveParticipate(int userId, int tournamentId)
+    {
+        bool result = await _tournamentRepository.RemoveParticipate(userId, tournamentId);
+        if (result)
+            return Ok(new { message = "Participant removed successfully!" });
+        else
+            return NotFound(new { message = "Participant not found or could not be removed." });
+    }
+
+
+    [HttpGet("CheckIfParticipates/{userId}/{tournamentId}")]
+    public async Task<IActionResult> CheckIfParticipates(int userId, int tournamentId)
+    {
+        bool isParticipating = await _tournamentRepository.CheckIfParticipates(userId, tournamentId);
+        return Ok(new { isParticipating });
+    }
+
+//
+    [HttpGet("UserTournaments")]
+    public async Task<IActionResult> GetUserTournaments()
+    {
+        var userId = int.Parse(User.Claims.First(c => c.Type == "UserID").Value);  // Ensure you get the correct user ID from claims
+        var tournaments = await _tournamentRepository.GetTournamentsByUserId(userId);
+        return Ok(tournaments.Select(t => new 
+        {
+            Id = t.Id,
+            Name = t.Name,
+            Location = t.Location,
+            Status = t.Status
+        }));
+    }
+
+    [HttpPost("Withdraw/{tournamentId}")]
+    public async Task<IActionResult> WithdrawFromTournament(int tournamentId)
+    {
+        var userId = int.Parse(User.Claims.First(c => c.Type == "UserID").Value); // Retrieve user ID from claims
+        bool result = await _tournamentRepository.WithdrawFromTournament(userId, tournamentId);
+        if (result)
+        {
+            return Ok();
+        }
+        return BadRequest("Could not withdraw from the tournament.");
+    }
 }
