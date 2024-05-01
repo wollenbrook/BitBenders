@@ -12,5 +12,16 @@ namespace BitBracket.DAL.Abstract
         Task Add(Tournament tournament);
         Task Update(Tournament tournament);
         Task Delete(int id);
+        //
+        Task<bool> SendParticipateRequest(int userId, int tournamentId);
+        Task<bool> AcceptParticipateRequest(int requestId);
+        Task<bool> DeclineParticipateRequest(int requestId);
+        Task<bool> RemoveParticipate(int userId, int tournamentId);
+        Task<bool> CheckIfParticipates(int userId, int tournamentId);
+        Task<IEnumerable<ParticipateRequest>> GetParticipateRequests(int tournamentId);
+        Task<IEnumerable<Participate>> GetParticipates(int tournamentId);
+        //
+        Task<IEnumerable<Tournament>> GetTournamentsByUserId(int userId);
+        Task<bool> WithdrawFromTournament(int userId, int tournamentId);
     }
 }

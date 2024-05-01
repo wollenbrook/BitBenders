@@ -1,6 +1,4 @@
-﻿@* Views/Home/Profile *@
-
-@using BitBracket.ViewModels
+﻿@using BitBracket.ViewModels
 @model UserViewModel
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +40,8 @@
     </div>
 
     <a href="@Url.Action("ManageAnnouncement", "Home")" class="ui button secondary">Manage Announcements</a>
+    <a href="@Url.Action("TournamentImIn", "Home")" class="ui button secondary">View Registered Tournament</a>
+    <a href="@Url.Action("AllTournaments", "Home")" class="ui button secondary">See Available Tournaments</a>
 
     <script src="~/js/profilepage.js"></script>
 </body>

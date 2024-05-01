@@ -1,0 +1,30 @@
+@model BitBracket.Models.Tournament
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Name</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+</head>
+<body class="announcement-background">
+    <div class="ui container mt-5">
+        <div class="ui segment">
+            <h1 class="ui header">@Model.Name</h1>
+            <p>@Model.Location</p>
+            <p>Status: @Model.Status</p>
+            <button id="participateButton" class="ui button primary">Send Request</button>
+        </div>
+    </div>
+
+    <script src="~/js/tournamentProfile.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tournamentId = @Model.Id;
+            const userId = '@Model.Owner'; // Using ViewBag to retrieve the user ID
+            checkParticipationStatus(tournamentId, userId); // Check participation status on load
+        });
+    </script>
+</body>
+</html>

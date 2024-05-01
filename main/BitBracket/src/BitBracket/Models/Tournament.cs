@@ -37,4 +37,11 @@ public partial class Tournament
 
     [InverseProperty("Tournament")]
     public virtual ICollection<UserAnnouncement> TournamentID { get; set; } = new List<UserAnnouncement>();  // Navigation property for Announcements
+
+    // New additions for participation
+    [InverseProperty("Tournament")]
+    public virtual ICollection<Participate> Participates { get; set; } = new List<Participate>();
+
+    [InverseProperty("Tournament")]
+    public virtual ICollection<ParticipateRequest> ParticipateRequests { get; set; } = new List<ParticipateRequest>();
 }

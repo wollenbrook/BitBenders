@@ -36,17 +36,18 @@ namespace BitBracket.DAL.Concrete
         {
             return await _context.UserAnnouncements
                                  .Include(a => a.BitUser)
-                                 .Include(a => a.TournamentId)
+                                 .Include(a => a.Tournament)
                                  .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<IEnumerable<UserAnnouncement>> GetByUserIdAndStatus(string userId, bool isDraft)
         {
             return await _context.UserAnnouncements
-                                 .Include(a => a.Tournament)
-                                 .Where(a => a.Owner == int.Parse(userId) && a.IsDraft == isDraft)
-                                 .ToListAsync();
+                                .Include(a => a.Tournament)
+                                .Where(a => a.Owner.ToString() == userId && a.IsDraft == isDraft)
+                                .ToListAsync();
         }
+
 
         public async Task UpdateAsync(UserAnnouncement announcement)
         {
