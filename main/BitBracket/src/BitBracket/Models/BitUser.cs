@@ -61,4 +61,5 @@ public partial class BitUser
 
     [InverseProperty("Sender")]
     public virtual ICollection<ParticipateRequest> ParticipateRequestSenders { get; set; } = new List<ParticipateRequest>();
+
 }

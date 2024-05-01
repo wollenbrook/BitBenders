@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Models/Tournament.cs
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -44,4 +46,5 @@ public partial class Tournament
 
     [InverseProperty("Tournament")]
     public virtual ICollection<ParticipateRequest> ParticipateRequests { get; set; } = new List<ParticipateRequest>();
+
 }

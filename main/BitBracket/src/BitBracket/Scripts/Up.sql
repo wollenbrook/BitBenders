@@ -31,26 +31,17 @@ CREATE TABLE [Announcements] (
     [IsActive] BIT NOT NULL,
     [Author] NVARCHAR(50) NOT NULL 
 );
+CREATE TABLE [GuidBracket] (
+    [ID] INT PRIMARY KEY IDENTITY(1, 1),
+    [Guid] UNIQUEIDENTIFIER NOT NULL,
+    [BracketData] VARCHAR(4000) NOT NULL
+);
 
 CREATE TABLE [FriendRequests] (
 	[ID] INT IDENTITY(1,1) PRIMARY KEY,
 	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
 	[ReceiverID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
 	[Status] NVARCHAR(50) NOT NULL
-);
-
-
-CREATE TABLE [Friends] (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY,
-	[UserID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[FriendID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
-);
-
-
-CREATE TABLE [GuidBracket] (
-    [ID] INT PRIMARY KEY IDENTITY(1, 1),
-    [Guid] UNIQUEIDENTIFIER NOT NULL,
-    [BracketData] VARCHAR(4000) NOT NULL
 );
 
 CREATE TABLE [UserAnnouncements] (
@@ -62,4 +53,42 @@ CREATE TABLE [UserAnnouncements] (
     [Author] NVARCHAR(50) NOT NULL,
     [Owner] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
     [TournamentID] INT NULL FOREIGN KEY REFERENCES [Tournaments]([ID])
+);
+
+CREATE TABLE [SentFriendRequests] (
+	[ID] INT IDENTITY(1,1) PRIMARY KEY,
+	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
+	[ReceiverID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
+	[Status] NVARCHAR(50) NOT NULL
+);
+
+CREATE TABLE [RecievedFriendRequests] (
+	[ID] INT IDENTITY(1,1) PRIMARY KEY,
+	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
+	[Status] NVARCHAR(50) NOT NULL
+);
+
+CREATE TABLE [Friends] (
+	[ID] INT IDENTITY(1,1) PRIMARY KEY,
+	[UserID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
+	[FriendID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
+);
+
+-- Create Participate table
+CREATE TABLE [Participates] (
+    [ID] INT IDENTITY(1,1) PRIMARY KEY,
+    [UserID] INT NOT NULL,
+    [TournamentID] INT NOT NULL,
+    FOREIGN KEY ([UserID]) REFERENCES [BitUser]([ID]),
+    FOREIGN KEY ([TournamentID]) REFERENCES [Tournaments]([ID])
+);
+
+-- Create ParticipateRequest table
+CREATE TABLE [ParticipateRequests] (
+    [ID] INT IDENTITY(1,1) PRIMARY KEY,
+    [SenderID] INT NOT NULL,
+    [TournamentID] INT NOT NULL,
+    [Status] NVARCHAR(50) NOT NULL,
+    FOREIGN KEY ([SenderID]) REFERENCES [BitUser]([ID]),
+    FOREIGN KEY ([TournamentID]) REFERENCES [Tournaments]([ID])
 );
