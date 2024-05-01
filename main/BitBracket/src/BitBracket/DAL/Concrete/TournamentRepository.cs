@@ -21,6 +21,11 @@ namespace BitBracket.DAL.Concrete
             _context = context;
             _tournaments = context.Tournaments;
         }
+        public async Task<IEnumerable<Tournament>> GetByName(string Name)
+        {
+
+            return await _tournaments.Where(t => t.Name.Contains(Name)).ToListAsync();
+        }
 
         public async Task Add(Tournament tournament)
         {

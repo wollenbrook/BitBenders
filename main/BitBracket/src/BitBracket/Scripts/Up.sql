@@ -7,7 +7,6 @@ CREATE TABLE [BitUser] (
     [ProfilePicture] VARBINARY(MAX) NULL,
     [EmailConfirmedStatus] BIT NULL,
     [OptInConfirmation] BIT NULL
-
 );
 CREATE TABLE [Tournaments] (
     [ID] int PRIMARY KEY IDENTITY(1, 1),
@@ -47,13 +46,6 @@ CREATE TABLE [Friends] (
 	[FriendID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
 );
 
-
-CREATE TABLE [GuidBracket] (
-    [ID] INT PRIMARY KEY IDENTITY(1, 1),
-    [Guid] UNIQUEIDENTIFIER NOT NULL,
-    [BracketData] VARCHAR(4000) NOT NULL
-);
-
 CREATE TABLE [UserAnnouncements] (
     [ID] INT IDENTITY(1,1) PRIMARY KEY,
     [Title] NVARCHAR(50) NOT NULL,
@@ -63,4 +55,12 @@ CREATE TABLE [UserAnnouncements] (
     [Author] NVARCHAR(50) NOT NULL,
     [Owner] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
     [TournamentID] INT NULL FOREIGN KEY REFERENCES [Tournaments]([ID])
+);
+
+
+
+CREATE TABLE [GuidBracket] (
+    [ID] INT PRIMARY KEY IDENTITY(1, 1),
+    [Guid] UNIQUEIDENTIFIER NOT NULL,
+    [BracketData] VARCHAR(4000) NOT NULL
 );

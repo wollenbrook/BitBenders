@@ -13,5 +13,6 @@ namespace BitBracket.ViewModels
         public string Location { get; set; } = null!;
         public string Owner { get; set; } = "test";
         public string? Status { get; set; }
+        public string? CurrentUserName { get; set; }
     }
 }

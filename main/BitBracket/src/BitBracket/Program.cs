@@ -7,12 +7,14 @@ using BitBracket.DAL.Concrete;
 using MyApplication.Data;
 using HW6.DAL.Concrete;
 using Microsoft.Extensions.DependencyInjection;
+using SignalRChat.Hubs; 
 
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSignalR();
 var connectionString1 = builder.Configuration.GetConnectionString("AuthenticationConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<BitBracket.Data.ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString1));
@@ -82,6 +84,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<ChatHub>("/chatHub");
 
 app.MapControllerRoute(
     name: "default",

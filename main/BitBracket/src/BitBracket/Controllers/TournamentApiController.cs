@@ -48,6 +48,21 @@ public class TournamentAPIController : ControllerBase
 
         return Ok(tournaments);
     }
+
+    //  /api/TournamentAPI/Search/{Name}
+    [HttpGet]
+    [Route("Search/{Name}")]
+    public async Task<IActionResult> GetTournamentsByName(string Name)
+    {
+        var tournaments = await _tournamentRepository.GetByName(Name);
+
+        if (tournaments == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(tournaments);
+    }
     //  /api/TournamentAPI
     [HttpGet]
     public async Task<IActionResult> GetTournamentsByOwner()
