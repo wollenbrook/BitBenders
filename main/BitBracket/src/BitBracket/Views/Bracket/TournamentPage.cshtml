@@ -11,6 +11,28 @@
             <p class="ui sub header">Location: <span id="tournamentLocation">Tournament Location</span></p>
             <p class="ui sub header">Status: <span id="tournamentStatus">Tournament Status</span></p>
         </div>
+    <div>
+        <div id="stream-embed"></div>
+    </div>
+        <!-- Broadcast Link Form -->
+    <div class="ui container mb-3">
+        <div class="ui segment">
+            <h2 class="ui sub header">Set Broadcast Link</h2>
+            <form id="broadcastLinkForm">
+                <div class="form-group">
+                    <label for="BroadcastType">Broadcast Type:</label>
+                    <select class="form-control" id="BroadcastType" name="BroadcastType">
+                        <option value="Twitch">Twitch</option>
+                        <option value="YouTube">YouTube</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="BroadcastLink">Broadcast Channel (Twitch Channel Name or YouTube <a href="https://support.google.com/youtube/answer/3250431?hl=en#:~:text=Find%20your%20channel's%20user%20ID%20%26%20channel%20ID&text=Sign%20in%20to%20YouTube.&text=From%20the%20left%20menu%2C%20select,channel's%20user%20and%20channel%20IDs." target="_blank">Channel ID</a>):</label>
+                    <input type="text" class="form-control" id="BroadcastLink" name="BroadcastLink" placeholder="Enter broadcast channel">
+                </div>
+                <button type="submit" class="btn btn-primary">Set Broadcast</button>
+            </form>
+        </div>
     </div>
 
         <!-- Button to open the bracket creation form -->
@@ -93,5 +115,8 @@
 </body>
 </html>
 
+
+<script src="https://player.twitch.tv/js/embed/v1.js"></script>
  <script src="~/js/tournament.js"></script>
  <script src="~/js/participateRequest.js"></script>
+

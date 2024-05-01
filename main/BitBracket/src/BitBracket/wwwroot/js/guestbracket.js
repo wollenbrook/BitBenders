@@ -7,7 +7,7 @@ fetch(`/api/GuidAPI/${guid}`)
     .then(guidBracket => {
     // Parse bracket.BracketData from JSON string to object
     const bracketData = JSON.parse(guidBracket.bracketData);
-    
+    console.log(bracketData);
     // Separate teams and results
     const teams = bracketData.teams;
     const results = bracketData.results;
@@ -15,7 +15,7 @@ fetch(`/api/GuidAPI/${guid}`)
     // Create bracketFormat object
     const bracketFormat = {
         "teams": teams,
-        "results": [results]  // Winners bracket
+        "results": results
     };
     // needs fixing
     // Save function
@@ -24,7 +24,7 @@ fetch(`/api/GuidAPI/${guid}`)
         localStorage.setItem('bracketData', json);
         console.log(data);
         // update bracket data here
-        /*
+        
         // Prepare the data to send
         var dataToSend = {
             guid: guidBracket.guid,
@@ -39,12 +39,13 @@ fetch(`/api/GuidAPI/${guid}`)
             data: JSON.stringify(dataToSend),
             success: function(response) {
                 //console.log('Bracket data updated successfully');
+                //console.log(response);
             },
             error: function(error) {
                 console.error('Failed to update bracket data', error);
             }
         });
-        */
+        
     }
 
     $(function() {

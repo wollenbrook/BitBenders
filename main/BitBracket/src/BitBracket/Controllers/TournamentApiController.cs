@@ -186,6 +186,54 @@ public class TournamentAPIController : ControllerBase
         return BadRequest(ModelState);
     }
 
+
+    [HttpPut]
+    [Route("Bracket/Update")]
+    public async Task<IActionResult> UpdateBracket([FromBody] BracketUpdateViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var bracket = await _bracketRepository.Get(model.BracketId);
+
+            if (bracket == null)
+            {
+                return NotFound();
+            }
+            bracket.BracketData = model.BracketData;
+
+            await _bracketRepository.Update(bracket);
+
+            return Ok(bracket);
+        }
+
+        return BadRequest(ModelState);
+    }
+
+
+    [HttpPut]
+    [Route("Broadcast")]
+    public async Task<IActionResult> UpdateBroadcastLink([FromBody] BroadcastLinkViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var tournament = await _tournamentRepository.Get(model.TournamentId);
+        if (tournament == null)
+        {
+            return NotFound();
+        }
+
+        tournament.BroadcastType = model.BroadcastType;
+        tournament.BroadcastLink = model.NameOrID;
+
+        await _tournamentRepository.Update(tournament);
+
+        return NoContent();
+    }
+
+
 //
     // [HttpGet("All")]
     // public async Task<ActionResult<IEnumerable<Tournament>>> AllTournaments()
@@ -257,6 +305,7 @@ public class TournamentAPIController : ControllerBase
         else
             return NotFound(new { message = "Participant not found or could not be removed." });
     }
+
 
     [HttpGet("CheckIfParticipates/{userId}/{tournamentId}")]
     public async Task<IActionResult> CheckIfParticipates(int userId, int tournamentId)
