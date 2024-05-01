@@ -40,6 +40,28 @@
         Create Bracket
     </button>
 
+        <!-- Participate Requests Dropdown -->
+    <div class="ui accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            Participation Requests
+        </div>
+        <div class="content">
+            <p id="participationRequests"></p>
+        </div>
+    </div>
+
+    <!-- Approved Participants Dropdown -->
+    <div class="ui accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            Approved Participants
+        </div>
+        <div class="content">
+            <p id="approvedParticipants"></p>
+        </div>
+    </div>
+
     <!-- Bracket creation form (modal dialog) -->
    <div class="modal fade" id="bracketModal" tabindex="-1" role="dialog" aria-labelledby="bracketModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -93,5 +115,8 @@
 </body>
 </html>
 
+
 <script src="https://player.twitch.tv/js/embed/v1.js"></script>
  <script src="~/js/tournament.js"></script>
+ <script src="~/js/participateRequest.js"></script>
+

@@ -1,3 +1,5 @@
+//wwwroot/js/tournament.js
+
 // Get the tournament ID from the URL
 
 const urlParams = new URLSearchParams(window.location.search);

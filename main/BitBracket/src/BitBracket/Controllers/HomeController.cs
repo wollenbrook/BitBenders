@@ -15,13 +15,17 @@ public class HomeController : Controller
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IBitUserRepository _bitUserRepository;
     private readonly IAnnouncementRepository _announcementRepository;
+    private readonly ITournamentRepository _tournamentRepository;
+    private readonly IUserAnnouncementRepository _announcementRepo;
 
-    public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, IAnnouncementRepository announcementRepository)
+    public HomeController(IUserAnnouncementRepository announcementRepo, ITournamentRepository tournamentRepository, ILogger<HomeController> logger, UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, IAnnouncementRepository announcementRepository)
     {
         _logger = logger;
         _userManager = userManager;
         _bitUserRepository = bitUserRepository;
         _announcementRepository = announcementRepository;
+        _tournamentRepository = tournamentRepository;
+        _announcementRepo = announcementRepo;
     }
 
     public async Task<IActionResult> Index()
@@ -45,10 +49,77 @@ public class HomeController : Controller
     {
         return View();
     }
-    public IActionResult ManageAnnouncement()
+    public async Task<IActionResult> ManageAnnouncement()
+    {
+        var userId = _userManager.GetUserId(User);
+        if (userId == null)
+        {
+            return Unauthorized("User must be logged in.");
+        }
+
+        var drafts = await _announcementRepo.GetByUserIdAndStatus(userId, true);
+        var published = await _announcementRepo.GetByUserIdAndStatus(userId, false);
+
+        var viewModel = new ManageAnnouncementsViewModel
+        {
+            DraftAnnouncements = drafts,
+            PublishedAnnouncements = published
+        };
+
+        return View(viewModel);
+    }
+
+    // [Authorize]  // Ensures that only logged-in users can access this action
+    // public async Task<IActionResult> TournamentImIn()
+    // {
+    //     var userId = _userManager.GetUserId(User);  // Get the current logged-in user's ID
+
+    //     if (string.IsNullOrEmpty(userId))
+    //     {
+    //         return Redirect("/Login");  // Redirect to login page if user is not found (or not logged in)
+    //     }
+
+    //     try
+    //     {
+    //         // Assuming the method GetParticipatesByUserId exists and fetches all the tournaments a user is participating in
+    //         var tournaments = await _tournamentRepository.GetTournamentsByUserId(userId);
+            
+    //         // We could use a ViewModel to pass data to the view if needed, or pass the model directly
+    //         return View(tournaments);
+    //     }
+    //     catch
+    //     {
+    //         // Handle any exceptions or errors that might occur
+    //         return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    //     }
+    // }
+    public IActionResult TournamentImIn()
     {
         return View();
     }
+
+    public IActionResult AllTournaments()
+    {
+        return View();
+    }
+    public async Task<IActionResult> TournamentProfile(int id)
+    {
+        var tournament = await _tournamentRepository.Get(id);
+        if (tournament == null)
+        {
+            return NotFound();
+        }
+
+        // Fetch the user ID using UserManager
+        var userId = _userManager.GetUserId(User);
+
+        // You can use ViewBag, ViewData, or a specific ViewModel to pass this data
+        ViewBag.UserId = userId;
+
+        return View(tournament);
+    }
+
+
     public IActionResult OptInConfirmation()
     {
         return View();

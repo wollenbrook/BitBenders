@@ -1,6 +1,6 @@
 Feature: SCRUM116 Theme Switching Management in Application
 
-@mohammed
+@Mohammed
 Scenario: Visibility of the Theme button on the navbar
     Given a user is navigating the application
     When the user views the navbar

@@ -17,16 +17,16 @@ Scenario: CreateBracket page has a textbox form
 Scenario: CreateBracket page Generates bracket
 	Given I am a visitor
 	When I am on the "CreateBracket" page
-		and enter "Player1, Player2" into the textbox
-		and click the Generate Bracket button 
+		And enter "Player1, Player2" into the textbox
+		And click the Generate Bracket button 
 	Then a Bracket container will appear
 
 Scenario: CreateBracket page Generates Double Elimination bracket
 	Given I am a visitor
 	When I am on the "CreateBracket" page
-		and enter "Player1, Player2, Player3, Player4" into the textbox
-		and select "Double Elimination" from the drop down menu
-		and click the Generate Bracket button 
+		And enter "Player1, Player2, Player3, Player4" into the textbox
+		And select "Double Elimination" from the drop down menu
+		And click the Generate Bracket button 
 	Then a loser Bracket container will appear
 
 Scenario: CreateBracket page Generates bracket with editable match scores
