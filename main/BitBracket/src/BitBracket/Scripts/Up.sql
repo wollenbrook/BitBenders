@@ -95,6 +95,7 @@ CREATE TABLE [GuidBracket] (
     [ID] INT PRIMARY KEY IDENTITY(1, 1),
     [Guid] UNIQUEIDENTIFIER NOT NULL,
     [BracketData] VARCHAR(4000) NOT NULL
+);
 
 -- Create Participate table
 CREATE TABLE [Participates] (
