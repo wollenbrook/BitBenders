@@ -12,6 +12,31 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
         document.getElementById('tournamentLocation').textContent = tournament.location;
         document.getElementById('tournamentStatus').textContent = tournament.status;
 
+        // Display tournament broadcast
+        var broadcastType = tournament.broadcastType;
+        var broadcastLink = tournament.broadcastLink
+        if (broadcastType === 'Twitch') {
+            new Twitch.Player("stream-embed", {
+                channel: tournament.broadcastLink
+              });
+        } 
+        else if (broadcastType === 'YouTube') {
+            var youtubeEmbedUrl = `https://www.youtube.com/embed/live_stream?channel=${broadcastLink}`;
+            var iframe = document.createElement('iframe');
+            iframe.src = youtubeEmbedUrl;
+            iframe.allowFullscreen = "";
+            iframe.scrolling = "no";
+            iframe.frameBorder = "0";
+            iframe.allow = "autoplay; fullscreen";
+            iframe.title = "YouTube";
+            iframe.sandbox = "allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation";
+            document.getElementById('stream-embed').appendChild(iframe);
+        } 
+        else{
+            document.getElementById('stream-embed').textContent = 'No broadcast available';
+        }
+
+
         // Fetch user details
         fetch(`/api/TournamentAPI/User/${tournament.owner}`)
             .then(response => response.json())
@@ -21,6 +46,44 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
             });
     });
 
+    // Set Broadcast Link from the form
+    $(document).ready(function() {
+        $('#broadcastLinkForm').on('submit', function(e) {
+            e.preventDefault();  // Prevent the form from being submitted in the traditional way
+            var broadcastLink = $('#BroadcastLink').val(); // Broadcast Link string
+            var broadcastType = $('#BroadcastType').val(); // Broadcast Type string
+            if (!broadcastLink) {
+                alert('You must enter a Twitch channel name or YouTube channel ID for the broadcast.');
+                return;
+            }
+    
+            var dataToSend = {
+                NameOrID: broadcastLink,
+                BroadcastType: broadcastType,
+                TournamentId: tournamentId
+            };
+            console.log(dataToSend);
+    
+            // Send the broadcastLink to the server
+            $.ajax({
+                url: '/api/TournamentAPI/Broadcast',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(dataToSend),
+                success: function(data) {
+                    // Handle success - you might want to add the new bracket to the #bracketsList
+                    alert("Broadcast Link Updated");
+                    location.reload();
+                },
+                error: function(error) {
+                    // Handle error - you might want to display an error message
+                    alert("Failed to update broadcast link, try again later");
+                }
+            });
+        });
+    });
+
+    
 
     $(document).ready(function() {
         $('#createBracketForm').on('submit', function(e) {

@@ -60,6 +60,7 @@ namespace BitBracket_NUnit_Tests
         {
             var guid = Guid.NewGuid();
             var guidBracket = new GuidBracket();
+            guidBracket.Guid = guid;
             _repository.Setup(x => x.GetGuidBracket(guid)).ReturnsAsync(guidBracket);
 
             var result = await _controller.GetGuidBracket(guid);

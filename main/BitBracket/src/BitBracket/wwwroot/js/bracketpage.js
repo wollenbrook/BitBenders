@@ -21,7 +21,7 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
         // Create bracketFormat object
         const bracketFormat = {
             "teams": teams,
-            "results": [results]  // Winners bracket
+            "results": results
         };
         // needs fixing
         // Save function
@@ -29,6 +29,27 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
             var json = JSON.stringify(data);
             localStorage.setItem('bracketData', json);
             console.log(data);
+
+        // Prepare the data to send
+        var dataToSend = {
+            BracketId: bracket.id,
+            BracketData: json
+        };
+
+        // Make the PUT request
+        $.ajax({
+            url: '/api/TournamentAPI/Bracket/Update',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToSend),
+            success: function(response) {
+                //console.log('Bracket data updated successfully');
+                //console.log(response);
+            },
+            error: function(error) {
+                console.error('Failed to update bracket data', error);
+            }
+        });
         }
 
         $(function() {
