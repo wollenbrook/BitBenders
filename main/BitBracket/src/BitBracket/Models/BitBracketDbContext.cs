@@ -29,10 +29,8 @@ public partial class BitBracketDbContext : DbContext
     public virtual DbSet<FriendRequest> FriendRequests { get; set; }
 
     public virtual DbSet<Tournament> Tournaments { get; set; }
-
-    public virtual DbSet<JoinedPlayer> JoinedPlayers { get; set; }
-    public virtual DbSet<ReceivedPlayerRequest> ReceivedPlayerRequests { get; set; }
-    public virtual DbSet<SentJoinRequest> SentJoinRequests { get; set; }
+    public virtual DbSet<Participate> Participates { get; set; } // Added for participation tracking
+    public virtual DbSet<ParticipateRequest> ParticipateRequests { get; set; } // Added for participation requests
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=BitBracketConnection");
@@ -95,25 +93,18 @@ public partial class BitBracketDbContext : DbContext
             entity.HasOne(d => d.OwnerNavigation).WithMany(p => p.Tournaments).HasConstraintName("FK__Tournamen__Owner__71D1E811");
         });
 
-        modelBuilder.Entity<JoinedPlayer>(entity =>
+        modelBuilder.Entity<Participate>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_JoinedPlayers");
-            entity.HasOne(d => d.Player).WithMany(p => p.JoinedTournaments).HasForeignKey(d => d.PlayerId);
-            entity.HasOne(d => d.Tournament).WithMany(p => p.Players ).HasForeignKey(d => d.TournamentId);
+            entity.HasKey(e => e.Id).HasName("PK__Participate");
+            entity.HasOne(d => d.User).WithMany(p => p.Participates).HasForeignKey(d => d.UserId);
+            entity.HasOne(d => d.Tournament).WithMany(p => p.Participates).HasForeignKey(d => d.TournamentId);
         });
 
-        modelBuilder.Entity<ReceivedPlayerRequest>(entity =>
+        modelBuilder.Entity<ParticipateRequest>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_ReceivedPlayerRequests");
-            entity.HasOne(d => d.OwnerReceiver).WithMany(p => p.ReceivedPlayerRequests).HasForeignKey(d => d.ReceiverId);
-            entity.HasOne(d => d.Tournament).WithMany(p => p.ReceivedPlayerRequests).HasForeignKey(d => d.TournamentId);
-        });
-
-        modelBuilder.Entity<SentJoinRequest>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK_SentJoinRequests");
-            entity.HasOne(d => d.PlayerSender).WithMany(p => p.SentJoinRequests).HasForeignKey(d => d.SenderId);
-            entity.HasOne(d => d.Tournament).WithMany(p => p.SentJoinRequests).HasForeignKey(d => d.TournamentId);
+            entity.HasKey(e => e.Id).HasName("PK__ParticipateRequest");
+            entity.HasOne(d => d.Sender).WithMany(p => p.ParticipateRequestSenders).HasForeignKey(d => d.SenderId);
+            entity.HasOne(d => d.Tournament).WithMany(p => p.ParticipateRequests).HasForeignKey(d => d.TournamentId);
         });
 
         OnModelCreatingPartial(modelBuilder);

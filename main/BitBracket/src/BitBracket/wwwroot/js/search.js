@@ -1,5 +1,3 @@
-
-
 function initialize() {
     const searchAllButton = document.getElementById("searchAllButtonId");
     const searchButton = document.getElementById("searchButtonId");

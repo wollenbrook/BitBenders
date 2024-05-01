@@ -1,0 +1,37 @@
+@{
+    ViewBag.Title = "Tournaments I'm Participating In";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+</head>
+<body class="announcement-background">
+    <div class="ui container">
+        <h1 class="title-styling">Registered Tournaments</h1>
+        <p class="text-styling">Here you can view all the tournaments you are registered for and withdraw if necessary.</p>
+
+        <div class="ui very padded segment">
+            <div class="ui divided items" id="tournaments-container">
+                <!-- Tournament items will be dynamically populated here -->
+                <!-- Placeholder for empty state -->
+                <div class="item" id="empty-placeholder" style="display: none;">
+                    <div class="content">
+                        <h3 class="ui header">No registered tournaments found.</h3>
+                        <div class="description">
+                            <p>You are currently not registered in any tournaments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="~/js/TournamentImIn.js"></script>
+    }
+</body>
+</html>

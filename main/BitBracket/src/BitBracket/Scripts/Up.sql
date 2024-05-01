@@ -1,11 +1,12 @@
 CREATE TABLE [BitUser] (
-	[ID] INT PRIMARY KEY IDENTITY(1,1),
+    [ID] INT PRIMARY KEY IDENTITY(1,1),
     [ASPNetIdentityID] NVARCHAR(50) NOT NULL,
-	[Username] NVARCHAR(50) NOT NULL,
+    [Username] NVARCHAR(50) NOT NULL,
     [Tag] NVARCHAR(50) NOT NULL,
     [Bio] NVARCHAR(500) NOT NULL,
     [ProfilePicture] VARBINARY(MAX) NULL,
-    [EmailConfirmedStatus] BIT NULL
+    [EmailConfirmedStatus] BIT NULL,
+    [OptInConfirmation] BIT NOT NULL DEFAULT 1
 );
 CREATE TABLE [Tournaments] (
     [ID] int PRIMARY KEY IDENTITY(1, 1),
@@ -34,6 +35,7 @@ CREATE TABLE [GuidBracket] (
     [ID] INT PRIMARY KEY IDENTITY(1, 1),
     [Guid] UNIQUEIDENTIFIER NOT NULL,
     [BracketData] VARCHAR(4000) NOT NULL
+);
 
 CREATE TABLE [FriendRequests] (
 	[ID] INT IDENTITY(1,1) PRIMARY KEY,
@@ -72,25 +74,21 @@ CREATE TABLE [Friends] (
 	[FriendID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
 );
 
--- Create JoinedPlayers table
-CREATE TABLE [JoinedPlayers] (
-    [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [PlayerId] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-    [TournamentId] INT FOREIGN KEY REFERENCES [Tournaments]([ID])
+-- Create Participate table
+CREATE TABLE [Participates] (
+    [ID] INT IDENTITY(1,1) PRIMARY KEY,
+    [UserID] INT NOT NULL,
+    [TournamentID] INT NOT NULL,
+    FOREIGN KEY ([UserID]) REFERENCES [BitUser]([ID]),
+    FOREIGN KEY ([TournamentID]) REFERENCES [Tournaments]([ID])
 );
 
--- Create SentJoinRequests table
-CREATE TABLE [SentJoinRequests] (
-    [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [SenderId] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-    [TournamentId] INT FOREIGN KEY REFERENCES [Tournaments]([ID]),
-    [Status] NVARCHAR(50) NOT NULL DEFAULT 'Pending'
-);
-
--- Create ReceivedPlayerRequests table
-CREATE TABLE [ReceivedPlayerRequests] (
-    [ID] INT PRIMARY KEY IDENTITY(1,1),
-    [ReceiverId] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-    [TournamentId] INT FOREIGN KEY REFERENCES [Tournaments]([ID]),
-    [Status] NVARCHAR(50) NOT NULL DEFAULT 'Pending'
+-- Create ParticipateRequest table
+CREATE TABLE [ParticipateRequests] (
+    [ID] INT IDENTITY(1,1) PRIMARY KEY,
+    [SenderID] INT NOT NULL,
+    [TournamentID] INT NOT NULL,
+    [Status] NVARCHAR(50) NOT NULL,
+    FOREIGN KEY ([SenderID]) REFERENCES [BitUser]([ID]),
+    FOREIGN KEY ([TournamentID]) REFERENCES [Tournaments]([ID])
 );

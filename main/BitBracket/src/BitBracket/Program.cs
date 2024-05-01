@@ -7,6 +7,7 @@ using BitBracket.DAL.Concrete;
 using MyApplication.Data;
 using HW6.DAL.Concrete;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
 
 
 
@@ -51,6 +52,12 @@ builder.Services.AddSingleton<ISmsService>(new SmsService(
 ));
 
 builder.Services.AddControllers();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
