@@ -163,7 +163,7 @@ public class HomeController : Controller
     {
         string name = User?.Identity?.Name ?? "Not signed in";
 
-        Tournament tournament = await _tournamentRespository.Get(id);
+        Tournament tournament = await _tournamentRepository.Get(id);
         BitUser Owner = _bitUserRepository.GetBitUserByRegularId(tournament.Owner);
         IEnumerable<Bracket> bracket = tournament.Brackets;
         TournamentViewModel tournamentView = new TournamentViewModel

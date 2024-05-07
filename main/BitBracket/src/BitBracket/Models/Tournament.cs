@@ -36,7 +36,7 @@ public partial class Tournament
     [StringLength(10)]
     public string? BroadcastType { get; set; }
 
-    public int? Owner { get; set; }
+    public int Owner { get; set; }
 
     [InverseProperty("Tournament")]
     public virtual ICollection<Bracket> Brackets { get; set; } = new List<Bracket>();
