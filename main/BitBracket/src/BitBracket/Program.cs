@@ -7,6 +7,7 @@ using BitBracket.DAL.Concrete;
 using MyApplication.Data;
 using HW6.DAL.Concrete;
 using Microsoft.Extensions.DependencyInjection;
+using SignalRChat.Hubs; 
 using System.Text.Json.Serialization;
 
 
@@ -14,6 +15,7 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSignalR();
 var connectionString1 = builder.Configuration.GetConnectionString("AuthenticationConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<BitBracket.Data.ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString1));
@@ -24,7 +26,6 @@ builder.Services.AddDbContext<BitBracket.Models.BitBracketDbContext>(options => 
                     .UseSqlServer(connectionString));
 builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IUserAnnouncementRepository, UserAnnouncementRepository>();
-builder.Services.AddScoped<ITournamentPlayerRepository, TournamentPlayerRepository>();
 builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
 builder.Services.AddScoped<IBracketRepository, BracketRepository>();
@@ -90,6 +91,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<ChatHub>("/chatHub");
 
 app.MapControllerRoute(
     name: "default",
@@ -99,7 +101,10 @@ app.MapControllerRoute(
     name: "SearchProfiles",
     pattern: "/SearchProfiles/{bitUserId}",
     defaults: new { controller = "Home", action = "SearchProfile" });
-
+app.MapControllerRoute(
+    name: "Tournaments",
+    pattern: "/Tournaments/{tournamentId}",
+    defaults: new { controller = "Home", action = "Tournaments" });
 app.MapRazorPages();
 
 app.Run();

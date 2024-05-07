@@ -32,13 +32,29 @@ public class TournamentAPIController : ControllerBase
         _bracketRepository = bracketRepository;
     }
 
+    // /api/TournamentAPI/All/
     [HttpGet]
-    [Route("All/")]
+    [Route("All")]
 
     public async Task<IActionResult> GetAllTournaments()
     {
 
         var tournaments = await _tournamentRepository.GetAll();
+
+        if (tournaments == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(tournaments);
+    }
+
+    //  /api/TournamentAPI/Search/{Name}
+    [HttpGet]
+    [Route("Search/{Name}")]
+    public async Task<IActionResult> GetTournamentsByName(string Name)
+    {
+        var tournaments = await _tournamentRepository.GetByName(Name);
 
         if (tournaments == null)
         {

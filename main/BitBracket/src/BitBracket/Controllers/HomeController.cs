@@ -159,8 +159,25 @@ public class HomeController : Controller
     {
         return View();
     } 
-    public async Task<IActionResult> SearchProfiles(int id)
+    public async Task<IActionResult> Tournaments(int id)
     {
+        string name = User?.Identity?.Name ?? "Not signed in";
+
+        Tournament tournament = await _tournamentRepository.Get(id);
+        BitUser Owner = _bitUserRepository.GetBitUserByRegularId(tournament.Owner);
+        IEnumerable<Bracket> bracket = tournament.Brackets;
+        TournamentViewModel tournamentView = new TournamentViewModel
+        {
+            Name = tournament.Name,
+            Location = tournament.Location,
+            Owner = Owner.Username,
+            Status = tournament.Status,
+            CurrentUserName = name
+        };
+        return View(tournamentView);
+    }
+    public async Task<IActionResult> SearchProfiles(int id)
+    { 
         string senderId = _userManager.GetUserId(User);
         BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
         //BitUser bitUser = _bitUserRepository.GetBitUserByName(name);
@@ -192,7 +209,10 @@ public class HomeController : Controller
             return View(userViewModel);
         }
     }
-
+    public IActionResult Test()
+    {
+        return View();
+    }
     public IActionResult Privacy()
     {
         return View();

@@ -7,9 +7,16 @@
     <div class="section-gap"></div>
     <div class="section-gap"></div>
     <div class="search-bar" style="text-align: center;">
-        <input id="searchInputId" type="text"  class="search-input" style="font-size: 30px; width: 500px;" placeholder="Search...">
+        <input id="searchInputId" type="text" class="search-input" style="font-size: 30px; width: 400px;" placeholder="Search...">
+        <select id="statusDropdownId" class="ui dropdown" style="font-size: 24px; width: 100px">
+            <option value="" selected disabled>Select a filter option</option>
+            <option value="Any">Any</option>
+            <option value="Users">Users</option>
+            <option value="Tournaments">Tournaments</option>
+        </select>
         <button id="searchButtonId" class="ui small primary button" style="font-size: 24px;">Search</button>
-        <button id="searchAllButtonId" class="ui small primary button" style="font-size: 14px;">Search All</button>
+        <button id="searchAllButtonId" class="ui small primary button" style="font-size: 24px;">Search All</button>
+
     </div>
     <div class="section-gap"></div>
     <div id="bitUsersContainer">
