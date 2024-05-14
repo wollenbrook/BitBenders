@@ -18,7 +18,10 @@
                 <form id="createBracketForm" method="post" class="ui form" style="padding: 20px; background-color: #93a86d; border-radius: 10px;">
                     <div class="mb-3">
                         <label for="Names" class="form-label ui field">Player Names (comma-delimited):</label>
-                        <textarea input asp-for="Names" type="text" class="form-control" id="Names" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
+                        <textarea input asp-for="Names" type="text" class="form-control" id="Names" placeholder="Enter Player Names: e.g., Player1, Player2" required></textarea>
+                        <button type="button" id="recordBtn" class="ui icon button"><i class="microphone icon"></i></button>
+                        <button type="button" id="stopBtn" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+                        <button type="button" id="clearBtn" class="ui icon button"><i class="undo icon"></i></button>
                         <span asp-validation-for="Names" class="text-danger"></span>
                     </div>
                     <div class="mb-3">

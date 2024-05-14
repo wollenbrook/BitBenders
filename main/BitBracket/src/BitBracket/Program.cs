@@ -8,6 +8,7 @@ using MyApplication.Data;
 using HW6.DAL.Concrete;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
+//using System.Net.Http.Headers;
 
 
 
@@ -24,17 +25,21 @@ builder.Services.AddDbContext<BitBracket.Models.BitBracketDbContext>(options => 
                     .UseSqlServer(connectionString));
 builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddScoped<IUserAnnouncementRepository, UserAnnouncementRepository>();
-builder.Services.AddScoped<ITournamentPlayerRepository, TournamentPlayerRepository>();
 builder.Services.AddScoped<IBitUserRepository, BitUserRepository>();
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
 builder.Services.AddScoped<IBracketRepository, BracketRepository>();
 builder.Services.AddScoped<IGuidBracketRepository, GuidBracketRepository>();
 builder.Services.AddScoped<IFriendRequestRepository, FriendRequestRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IWhisperService, WhisperService>();
 // Register IWhisperService with HttpClientFactory
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IWhisperService, WhisperService>();
 
+
+
+// Register the Whisper service
+builder.Services.AddScoped<IWhisperService, WhisperService>();
 
 // Register EmailService
 var sendGridKey = builder.Configuration["SendGridKey"];

@@ -112,9 +112,10 @@ public class HomeController : Controller
 
         // Fetch the user ID using UserManager
         var userId = _userManager.GetUserId(User);
+        var bituserId = _bitUserRepository.GetBitUserByEntityId(userId);
 
         // You can use ViewBag, ViewData, or a specific ViewModel to pass this data
-        ViewBag.UserId = userId;
+        ViewBag.UserId = bituserId;
 
         return View(tournament);
     }
@@ -124,10 +125,9 @@ public class HomeController : Controller
     {
         return View();
     }
-    public IActionResult TestInput()
+    public IActionResult WhisperTest()
     {
-        var model = new SpeechToTextViewModel();
-        return View(model);
+        return View();
     }
     
     public async Task<IActionResult> Profile()
