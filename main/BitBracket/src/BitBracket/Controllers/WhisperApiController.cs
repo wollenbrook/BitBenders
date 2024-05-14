@@ -1,3 +1,5 @@
+//Controllers/WhisperApiController.cs
+
 using Microsoft.AspNetCore.Mvc;
 using BitBracket.DAL.Abstract;
 using System.Threading.Tasks;
@@ -17,16 +19,19 @@ namespace BitBracket.Controllers
         }
 
         [HttpPost("transcribe")]
-        public async Task<IActionResult> TranscribeAudio(IFormFile audioFile, [FromForm] string language)
+        public async Task<IActionResult> TranscribeAudio(IFormFile audioFile)
         {
             if (audioFile == null || audioFile.Length == 0)
             {
                 return BadRequest("No audio file uploaded.");
             }
 
-            using var audioStream = audioFile.OpenReadStream();
-            var transcription = await _whisperService.TranscribeAudioAsync(audioStream, language);
-            return Ok(transcription);
+            var transcriptionResult = await _whisperService.TranscribeAudioAsync(audioFile);
+            if (transcriptionResult.IsSuccess)
+            {
+                return Ok(transcriptionResult.Text);
+            }
+            return BadRequest(transcriptionResult.ErrorMessage);
         }
     }
 }

@@ -1,5 +1,9 @@
+//wwwroot/js/userAnnouncementCreate.js
+
 document.addEventListener('DOMContentLoaded', function() {
     fetchTournaments(); // Load tournaments when the document is ready
+    setupWhisperControls('title', 'recordBtnTitle', 'stopBtnTitle', 'clearBtnTitle');
+    setupWhisperControls('description', 'recordBtnDescription', 'stopBtnDescription', 'clearBtnDescription');
 
     const form = document.getElementById('createAnnouncementForm');
     form.addEventListener('submit', function(event) {
@@ -7,6 +11,61 @@ document.addEventListener('DOMContentLoaded', function() {
         createAnnouncement();
     });
 });
+
+function setupWhisperControls(inputId, recordBtnId, stopBtnId, clearBtnId) {
+    const inputField = document.getElementById(inputId);
+    const recordBtn = document.getElementById(recordBtnId);
+    const stopBtn = document.getElementById(stopBtnId);
+    const clearBtn = document.getElementById(clearBtnId);
+    
+    let mediaRecorder;
+    let audioChunks = [];
+
+    recordBtn.addEventListener('click', () => {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+                stopBtn.disabled = false;
+                recordBtn.disabled = true;
+            }).catch(error => console.error("Error accessing microphone: ", error));
+    });
+
+    stopBtn.addEventListener('click', () => {
+        mediaRecorder.stop();
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+            const formData = new FormData();
+            formData.append('audioFile', audioBlob);
+
+            try {
+                const response = await fetch('/api/WhisperApi/transcribe', {
+                    method: 'POST',
+                    body: formData,
+                });
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+                const resultText = await response.text();
+                inputField.value = resultText;
+            } catch (error) {
+                console.error('Error:', error);
+                inputField.value = error.message;
+            }
+
+            audioChunks = [];
+            stopBtn.disabled = true;
+            recordBtn.disabled = false;
+        };
+    });
+
+    clearBtn.addEventListener('click', () => {
+        inputField.value = '';
+    });
+}
 
 function fetchTournaments() {
     fetch('/api/UserAnnouncementsApi/Tournaments')

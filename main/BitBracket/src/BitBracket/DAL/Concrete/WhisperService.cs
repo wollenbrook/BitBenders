@@ -1,13 +1,15 @@
-using BitBracket.DAL.Abstract;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
+//DAL/Concrete/WhisperService.CS
+
 using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using BitBracket.DAL.Abstract;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace BitBracket.DAL.Concrete
 {
@@ -21,48 +23,56 @@ namespace BitBracket.DAL.Concrete
         {
             _httpClient = httpClientFactory.CreateClient();
             _logger = logger;
-            _apiKey = configuration["BitBracketOpenAI"];
+            _apiKey = configuration["BitBracketOpenAI2"]; // Make sure this is properly configured in your secrets.
 
-            // Set up the HttpClient instance with the OpenAI API base URL and authentication headers.
+            // Set up HttpClient instance with OpenAI API base URL and authentication headers.
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
         }
 
-        public async Task<string> TranscribeAudioAsync(Stream audioStream, string languageCode)
+        public async Task<(bool IsSuccess, string Text, string ErrorMessage)> TranscribeAudioAsync(IFormFile audioFile)
         {
+            if (audioFile == null || audioFile.Length == 0)
+            {
+                return (false, null, "No audio file provided or file is empty.");
+            }
+
             try
             {
-                // OpenAI API endpoint.
-                var requestUri = "https://api.openai.com/v1/whisper/transcriptions"; 
-
+                var requestUri = "https://api.openai.com/v1/audio/transcriptions";
                 using var content = new MultipartFormDataContent();
+                using var audioStream = audioFile.OpenReadStream();
                 var streamContent = new StreamContent(audioStream);
-                streamContent.Headers.ContentType = new MediaTypeHeaderValue("audio/wav");
-                content.Add(streamContent, "file", "audio.wav");
-
-                // Include language code if the API supports or requires it.
-                // This may vary based on the actual API's capabilities and your requirements.
-                content.Add(new StringContent(languageCode), "language");
+                streamContent.Headers.ContentType = new MediaTypeHeaderValue("audio/mp3");
+                content.Add(streamContent, "file", audioFile.FileName);
+                content.Add(new StringContent("whisper-1"), "model");
 
                 var response = await _httpClient.PostAsync(requestUri, content);
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    return (false, null, $"API error: {response.StatusCode} - {errorResponse}");
+                }
 
                 var jsonResponse = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(jsonResponse);
+                var text = json["text"].Value<string>();
 
-                // The JSON parsing path here is hypothetical; adjust it based on the actual response structure.
-                var transcript = json["transcription"].Value<string>();
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    return (false, null, "Voice not clear, try again please.");
+                }
 
-                return transcript;
+                return (true, text, null);
             }
             catch (HttpRequestException e)
             {
                 _logger.LogError($"HTTP request error: {e.Message}", e);
-                throw new ApplicationException("An error occurred when calling the OpenAI transcription service.", e);
+                return (false, null, "An error occurred when calling the Whisper transcription service.");
             }
             catch (Exception e)
             {
                 _logger.LogError($"An unexpected error occurred: {e.Message}", e);
-                throw new ApplicationException("An unexpected error occurred in WhisperService.", e);
+                return (false, null, "An unexpected error occurred in the Whisper service.");
             }
         }
     }

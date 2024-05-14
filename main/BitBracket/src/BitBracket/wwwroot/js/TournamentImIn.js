@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function fetchTournaments() {
-    fetch('/api/ParticipateApi/GetParticipates')
+    fetch('/api/TournamentApi/UserTournaments')
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('tournaments-container');

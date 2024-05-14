@@ -1,3 +1,5 @@
+//TournamentApiController.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -331,29 +333,29 @@ public class TournamentAPIController : ControllerBase
     }
 
 //
-    [HttpGet("UserTournaments")]
-    public async Task<IActionResult> GetUserTournaments()
-    {
-        var userId = int.Parse(User.Claims.First(c => c.Type == "UserID").Value);  // Ensure you get the correct user ID from claims
-        var tournaments = await _tournamentRepository.GetTournamentsByUserId(userId);
-        return Ok(tournaments.Select(t => new 
-        {
-            Id = t.Id,
-            Name = t.Name,
-            Location = t.Location,
-            Status = t.Status
-        }));
-    }
+    // [HttpGet("UserTournaments")]
+    // public async Task<IActionResult> GetUserTournaments()
+    // {
+    //     var userId = int.Parse(User.Claims.First(c => c.Type == "UserID").Value);  // Ensure you get the correct user ID from claims
+    //     var tournaments = await _tournamentRepository.GetTournamentsByUserId(userId);
+    //     return Ok(tournaments.Select(t => new 
+    //     {
+    //         Id = t.Id,
+    //         Name = t.Name,
+    //         Location = t.Location,
+    //         Status = t.Status
+    //     }));
+    // }
 
-    [HttpPost("Withdraw/{tournamentId}")]
-    public async Task<IActionResult> WithdrawFromTournament(int tournamentId)
-    {
-        var userId = int.Parse(User.Claims.First(c => c.Type == "UserID").Value); // Retrieve user ID from claims
-        bool result = await _tournamentRepository.WithdrawFromTournament(userId, tournamentId);
-        if (result)
-        {
-            return Ok();
-        }
-        return BadRequest("Could not withdraw from the tournament.");
-    }
+    // [HttpPost("Withdraw/{tournamentId}")]
+    // public async Task<IActionResult> WithdrawFromTournament(int tournamentId)
+    // {
+    //     var userId = int.Parse(User.Claims.First(c => c.Type == "UserID").Value); // Retrieve user ID from claims
+    //     bool result = await _tournamentRepository.WithdrawFromTournament(userId, tournamentId);
+    //     if (result)
+    //     {
+    //         return Ok();
+    //     }
+    //     return BadRequest("Could not withdraw from the tournament.");
+    // }
 }

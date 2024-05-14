@@ -1,9 +1,7 @@
---Up.sql
-
 CREATE TABLE [BitUser] (
-	[ID] INT PRIMARY KEY IDENTITY(1,1),
+    [ID] INT PRIMARY KEY IDENTITY(1,1),
     [ASPNetIdentityID] NVARCHAR(50) NOT NULL,
-	[Username] NVARCHAR(50) NOT NULL,
+    [Username] NVARCHAR(50) NOT NULL,
     [Tag] NVARCHAR(50) NOT NULL,
     [Bio] NVARCHAR(500) NOT NULL,
     [ProfilePicture] VARBINARY(MAX) NULL,
@@ -16,6 +14,9 @@ CREATE TABLE [Tournaments] (
     [Location] nvarchar(255) NOT NULL,
     [Status] nvarchar(50) NOT NULL,
     [Created] datetime NOT NULL,
+    [StartDate] datetime NULL,
+    [BroadcastType] nvarchar(10) NULL,
+    [BroadcastLink] nvarchar(255) NULL,
     [Owner] int FOREIGN KEY REFERENCES [BitUser]([ID])
 );
 CREATE TABLE [Brackets] (
@@ -47,6 +48,7 @@ CREATE TABLE [Friends] (
 	[UserID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
 	[FriendID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
 );
+
 
 CREATE TABLE [GuidBracket] (
     [ID] INT PRIMARY KEY IDENTITY(1, 1),
@@ -82,23 +84,4 @@ CREATE TABLE [ParticipateRequests] (
     [Status] NVARCHAR(50) NOT NULL,
     FOREIGN KEY ([SenderID]) REFERENCES [BitUser]([ID]),
     FOREIGN KEY ([TournamentID]) REFERENCES [Tournaments]([ID])
-);
-
-CREATE TABLE [SentFriendRequests] (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY,
-	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[ReceiverID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[Status] NVARCHAR(50) NOT NULL
-);
-
-CREATE TABLE [RecievedFriendRequests] (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY,
-	[SenderID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[Status] NVARCHAR(50) NOT NULL
-);
-
-CREATE TABLE [Friends] (
-	[ID] INT IDENTITY(1,1) PRIMARY KEY,
-	[UserID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
-	[FriendID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
 );

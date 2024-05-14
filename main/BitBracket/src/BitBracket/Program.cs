@@ -9,6 +9,7 @@ using HW6.DAL.Concrete;
 using Microsoft.Extensions.DependencyInjection;
 using SignalRChat.Hubs; 
 using System.Text.Json.Serialization;
+//using System.Net.Http.Headers;
 
 
 
@@ -32,10 +33,15 @@ builder.Services.AddScoped<IBracketRepository, BracketRepository>();
 builder.Services.AddScoped<IGuidBracketRepository, GuidBracketRepository>();
 builder.Services.AddScoped<IFriendRequestRepository, FriendRequestRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IWhisperService, WhisperService>();
 // Register IWhisperService with HttpClientFactory
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IWhisperService, WhisperService>();
 
+
+
+// Register the Whisper service
+builder.Services.AddScoped<IWhisperService, WhisperService>();
 
 // Register EmailService
 var sendGridKey = builder.Configuration["SendGridKey"];

@@ -1,3 +1,5 @@
+@* TournamentPage.cshtml *@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,25 +42,27 @@
         Create Bracket
     </button>
 
-        <!-- Participate Requests Dropdown -->
-    <div class="ui accordion">
-        <div class="title">
-            <i class="dropdown icon"></i>
-            Participation Requests
+    <div class="ui container">
+        <!-- Participation Requests Dropdown -->
+        <div class="ui styled accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Participation Requests
+            </div>
+            <div class="content">
+                <div id="participationRequests"></div>
+            </div>
         </div>
-        <div class="content">
-            <p id="participationRequests"></p>
-        </div>
-    </div>
 
-    <!-- Approved Participants Dropdown -->
-    <div class="ui accordion">
-        <div class="title">
-            <i class="dropdown icon"></i>
-            Approved Participants
-        </div>
-        <div class="content">
-            <p id="approvedParticipants"></p>
+        <!-- Approved Participants Dropdown -->
+        <div class="ui styled accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Approved Participants
+            </div>
+            <div class="content">
+                <div id="approvedParticipants"></div>
+            </div>
         </div>
     </div>
 
@@ -77,10 +81,16 @@
                         <div class="field">
                             <label for="BracketName">Bracket Name:</label>
                             <input type="text" id="BracketName" name="BracketName" placeholder="Enter Bracket Name" required>
+                            <button type="button" id="recordBtnBracketName" class="ui icon button"><i class="microphone icon"></i></button>
+                            <button type="button" id="stopBtnBracketName" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+                            <button type="button" id="clearBtnBracketName" class="ui icon button"><i class="undo icon"></i></button>
                         </div>
                         <div class="field">
                             <label for="Names">Player Names (comma-delimited):</label>
                             <textarea id="playerNames" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
+                            <button type="button" id="recordBtnPlayerNames" class="ui icon button"><i class="microphone icon"></i></button>
+                            <button type="button" id="stopBtnPlayerNames" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+                            <button type="button" id="clearBtnPlayerNames" class="ui icon button"><i the="undo icon"></i></button>
                         </div>
                         <div class="field">
                             <label for="Format">Format:</label>

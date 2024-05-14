@@ -112,22 +112,31 @@ public class HomeController : Controller
 
         // Fetch the user ID using UserManager
         var userId = _userManager.GetUserId(User);
+        if (string.IsNullOrEmpty(userId))
+        {
+            return NotFound("User not found");
+        }
 
-        // You can use ViewBag, ViewData, or a specific ViewModel to pass this data
-        ViewBag.UserId = userId;
+        // Asynchronously get the BitUser associated with the userID
+        var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+        if (bitUser == null)
+        {
+            return NotFound("Bit user not found");
+        }
+
+        // Use ViewBag to pass data to the view
+        ViewBag.UserId = bitUser.Id;
 
         return View(tournament);
     }
-
 
     public IActionResult OptInConfirmation()
     {
         return View();
     }
-    public IActionResult TestInput()
+    public IActionResult WhisperTest()
     {
-        var model = new SpeechToTextViewModel();
-        return View(model);
+        return View();
     }
     
     public async Task<IActionResult> Profile()
