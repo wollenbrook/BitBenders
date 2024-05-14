@@ -44,7 +44,7 @@ Scenario: CreateBracket page Generates bracket and the bracket can progress in S
 		and enter a winning score for one of the matches
 	Then the second round of the bracket appear with the player that won
 
-Scenario: CreateBracket page Generates bracket and the bracket can progress in Single Elimination
+Scenario: CreateBracket page Generates bracket and the bracket can progress in Double Elimination
 	Given I am a visitor
 	When I am on the "CreateBracket" page
 		and enter "Player1, Player2, Player3, Player4" into the textbox

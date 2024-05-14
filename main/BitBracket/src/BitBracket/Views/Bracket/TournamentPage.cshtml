@@ -1,3 +1,5 @@
+@* TournamentPage.cshtml *@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,28 @@
             <p class="ui sub header">Location: <span id="tournamentLocation">Tournament Location</span></p>
             <p class="ui sub header">Status: <span id="tournamentStatus">Tournament Status</span></p>
         </div>
+    <div>
+        <div id="stream-embed"></div>
+    </div>
+        <!-- Broadcast Link Form -->
+    <div class="ui container mb-3">
+        <div class="ui segment">
+            <h2 class="ui sub header">Set Broadcast Link</h2>
+            <form id="broadcastLinkForm">
+                <div class="form-group">
+                    <label for="BroadcastType">Broadcast Type:</label>
+                    <select class="form-control" id="BroadcastType" name="BroadcastType">
+                        <option value="Twitch">Twitch</option>
+                        <option value="YouTube">YouTube</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="BroadcastLink">Broadcast Channel (Twitch Channel Name or YouTube <a href="https://support.google.com/youtube/answer/3250431?hl=en#:~:text=Find%20your%20channel's%20user%20ID%20%26%20channel%20ID&text=Sign%20in%20to%20YouTube.&text=From%20the%20left%20menu%2C%20select,channel's%20user%20and%20channel%20IDs." target="_blank">Channel ID</a>):</label>
+                    <input type="text" class="form-control" id="BroadcastLink" name="BroadcastLink" placeholder="Enter broadcast channel">
+                </div>
+                <button type="submit" class="btn btn-primary">Set Broadcast</button>
+            </form>
+        </div>
     </div>
 
         <!-- Button to open the bracket creation form -->
@@ -18,25 +42,27 @@
         Create Bracket
     </button>
 
-        <!-- Participate Requests Dropdown -->
-    <div class="ui accordion">
-        <div class="title">
-            <i class="dropdown icon"></i>
-            Participation Requests
+    <div class="ui container">
+        <!-- Participation Requests Dropdown -->
+        <div class="ui styled accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Participation Requests
+            </div>
+            <div class="content">
+                <div id="participationRequests"></div>
+            </div>
         </div>
-        <div class="content">
-            <p id="participationRequests"></p>
-        </div>
-    </div>
 
-    <!-- Approved Participants Dropdown -->
-    <div class="ui accordion">
-        <div class="title">
-            <i class="dropdown icon"></i>
-            Approved Participants
-        </div>
-        <div class="content">
-            <p id="approvedParticipants"></p>
+        <!-- Approved Participants Dropdown -->
+        <div class="ui styled accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Approved Participants
+            </div>
+            <div class="content">
+                <div id="approvedParticipants"></div>
+            </div>
         </div>
     </div>
 
@@ -55,10 +81,16 @@
                         <div class="field">
                             <label for="BracketName">Bracket Name:</label>
                             <input type="text" id="BracketName" name="BracketName" placeholder="Enter Bracket Name" required>
+                            <button type="button" id="recordBtnBracketName" class="ui icon button"><i class="microphone icon"></i></button>
+                            <button type="button" id="stopBtnBracketName" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+                            <button type="button" id="clearBtnBracketName" class="ui icon button"><i class="undo icon"></i></button>
                         </div>
                         <div class="field">
                             <label for="Names">Player Names (comma-delimited):</label>
                             <textarea id="playerNames" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
+                            <button type="button" id="recordBtnPlayerNames" class="ui icon button"><i class="microphone icon"></i></button>
+                            <button type="button" id="stopBtnPlayerNames" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+                            <button type="button" id="clearBtnPlayerNames" class="ui icon button"><i the="undo icon"></i></button>
                         </div>
                         <div class="field">
                             <label for="Format">Format:</label>
@@ -93,5 +125,8 @@
 </body>
 </html>
 
+
+<script src="https://player.twitch.tv/js/embed/v1.js"></script>
  <script src="~/js/tournament.js"></script>
  <script src="~/js/participateRequest.js"></script>
+

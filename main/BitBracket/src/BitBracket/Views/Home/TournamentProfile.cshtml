@@ -17,14 +17,13 @@
             <button id="participateButton" class="ui button primary">Send Request</button>
         </div>
     </div>
-
-    <script src="~/js/tournamentProfile.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const tournamentId = @Model.Id;
-            const userId = '@Model.Owner'; // Using ViewBag to retrieve the user ID
+            const userId = @ViewBag.UserId; // Correctly retrieve userId from ViewBag
             checkParticipationStatus(tournamentId, userId); // Check participation status on load
         });
     </script>
 </body>
 </html>
+<script src="~/js/tournamentProfile.js"></script>

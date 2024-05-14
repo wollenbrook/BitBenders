@@ -1,5 +1,64 @@
 //wwwroot/js/tournament.js
+document.addEventListener('DOMContentLoaded', function() {
+    setupWhisperControls('BracketName', 'recordBtnBracketName', 'stopBtnBracketName', 'clearBtnBracketName');
+    setupWhisperControls('playerNames', 'recordBtnPlayerNames', 'stopBtnPlayerNames', 'clearBtnPlayerNames');
+    // Other initializations remain unchanged
+});
 
+function setupWhisperControls(inputId, recordBtnId, stopBtnId, clearBtnId) {
+    const inputField = document.getElementById(inputId);
+    const recordBtn = document.getElementById(recordBtnId);
+    const stopBtn = document.getElementById(stopBtnId);
+    const clearBtn = document.getElementById(clearBtnId);
+    
+    let mediaRecorder;
+    let audioChunks = [];
+
+    recordBtn.addEventListener('click', () => {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+                stopBtn.disabled = false;
+                recordBtn.disabled = true;
+            }).catch(error => console.error("Error accessing microphone: ", error));
+    });
+
+    stopBtn.addEventListener('click', () => {
+        mediaRecorder.stop();
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+            const formData = new FormData();
+            formData.append('audioFile', audioBlob);
+
+            try {
+                const response = await fetch('/api/WhisperApi/transcribe', {
+                    method: 'POST',
+                    body: formData,
+                });
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+                const resultText = await response.text();
+                inputField.value = resultText;
+            } catch (error) {
+                console.error('Error:', error);
+                inputField.value = error.message;
+            }
+
+            audioChunks = [];
+            stopBtn.disabled = true;
+            recordBtn.disabled = false;
+        };
+    });
+
+    clearBtn.addEventListener('click', () => {
+        inputField.value = '';
+    });
+}
 // Get the tournament ID from the URL
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -14,6 +73,31 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
         document.getElementById('tournamentLocation').textContent = tournament.location;
         document.getElementById('tournamentStatus').textContent = tournament.status;
 
+        // Display tournament broadcast
+        var broadcastType = tournament.broadcastType;
+        var broadcastLink = tournament.broadcastLink
+        if (broadcastType === 'Twitch') {
+            new Twitch.Player("stream-embed", {
+                channel: tournament.broadcastLink
+              });
+        } 
+        else if (broadcastType === 'YouTube') {
+            var youtubeEmbedUrl = `https://www.youtube.com/embed/live_stream?channel=${broadcastLink}`;
+            var iframe = document.createElement('iframe');
+            iframe.src = youtubeEmbedUrl;
+            iframe.allowFullscreen = "";
+            iframe.scrolling = "no";
+            iframe.frameBorder = "0";
+            iframe.allow = "autoplay; fullscreen";
+            iframe.title = "YouTube";
+            iframe.sandbox = "allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation";
+            document.getElementById('stream-embed').appendChild(iframe);
+        } 
+        else{
+            document.getElementById('stream-embed').textContent = 'No broadcast available';
+        }
+
+
         // Fetch user details
         fetch(`/api/TournamentAPI/User/${tournament.owner}`)
             .then(response => response.json())
@@ -23,6 +107,44 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
             });
     });
 
+    // Set Broadcast Link from the form
+    $(document).ready(function() {
+        $('#broadcastLinkForm').on('submit', function(e) {
+            e.preventDefault();  // Prevent the form from being submitted in the traditional way
+            var broadcastLink = $('#BroadcastLink').val(); // Broadcast Link string
+            var broadcastType = $('#BroadcastType').val(); // Broadcast Type string
+            if (!broadcastLink) {
+                alert('You must enter a Twitch channel name or YouTube channel ID for the broadcast.');
+                return;
+            }
+    
+            var dataToSend = {
+                NameOrID: broadcastLink,
+                BroadcastType: broadcastType,
+                TournamentId: tournamentId
+            };
+            console.log(dataToSend);
+    
+            // Send the broadcastLink to the server
+            $.ajax({
+                url: '/api/TournamentAPI/Broadcast',
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(dataToSend),
+                success: function(data) {
+                    // Handle success - you might want to add the new bracket to the #bracketsList
+                    alert("Broadcast Link Updated");
+                    location.reload();
+                },
+                error: function(error) {
+                    // Handle error - you might want to display an error message
+                    alert("Failed to update broadcast link, try again later");
+                }
+            });
+        });
+    });
+
+    
 
     $(document).ready(function() {
         $('#createBracketForm').on('submit', function(e) {

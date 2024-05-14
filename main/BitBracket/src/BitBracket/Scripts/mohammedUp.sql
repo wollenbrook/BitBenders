@@ -14,6 +14,9 @@ CREATE TABLE [Tournaments] (
     [Location] nvarchar(255) NOT NULL,
     [Status] nvarchar(50) NOT NULL,
     [Created] datetime NOT NULL,
+    [StartDate] datetime NULL,
+    [BroadcastType] nvarchar(10) NULL,
+    [BroadcastLink] nvarchar(255) NULL,
     [Owner] int FOREIGN KEY REFERENCES [BitUser]([ID])
 );
 CREATE TABLE [Brackets] (

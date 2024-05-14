@@ -27,7 +27,16 @@ public partial class Tournament
     [Column(TypeName = "datetime")]
     public DateTime Created { get; set; } = DateTime.Now;
 
-    public int? Owner { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? StartDate { get; set; }
+
+    [StringLength(255)]
+    public string? BroadcastLink { get; set; }
+
+    [StringLength(10)]
+    public string? BroadcastType { get; set; }
+
+    public int Owner { get; set; }
 
     [InverseProperty("Tournament")]
     public virtual ICollection<Bracket> Brackets { get; set; } = new List<Bracket>();

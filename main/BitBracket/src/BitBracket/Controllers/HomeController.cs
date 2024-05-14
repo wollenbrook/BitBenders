@@ -112,14 +112,23 @@ public class HomeController : Controller
 
         // Fetch the user ID using UserManager
         var userId = _userManager.GetUserId(User);
-        var bituserId = _bitUserRepository.GetBitUserByEntityId(userId);
+        if (string.IsNullOrEmpty(userId))
+        {
+            return NotFound("User not found");
+        }
 
-        // You can use ViewBag, ViewData, or a specific ViewModel to pass this data
-        ViewBag.UserId = bituserId;
+        // Asynchronously get the BitUser associated with the userID
+        var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+        if (bitUser == null)
+        {
+            return NotFound("Bit user not found");
+        }
+
+        // Use ViewBag to pass data to the view
+        ViewBag.UserId = bitUser.Id;
 
         return View(tournament);
     }
-
 
     public IActionResult OptInConfirmation()
     {
@@ -159,8 +168,25 @@ public class HomeController : Controller
     {
         return View();
     } 
-    public async Task<IActionResult> SearchProfiles(int id)
+    public async Task<IActionResult> Tournaments(int id)
     {
+        string name = User?.Identity?.Name ?? "Not signed in";
+
+        Tournament tournament = await _tournamentRepository.Get(id);
+        BitUser Owner = _bitUserRepository.GetBitUserByRegularId(tournament.Owner);
+        IEnumerable<Bracket> bracket = tournament.Brackets;
+        TournamentViewModel tournamentView = new TournamentViewModel
+        {
+            Name = tournament.Name,
+            Location = tournament.Location,
+            Owner = Owner.Username,
+            Status = tournament.Status,
+            CurrentUserName = name
+        };
+        return View(tournamentView);
+    }
+    public async Task<IActionResult> SearchProfiles(int id)
+    { 
         string senderId = _userManager.GetUserId(User);
         BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
         //BitUser bitUser = _bitUserRepository.GetBitUserByName(name);
@@ -192,7 +218,10 @@ public class HomeController : Controller
             return View(userViewModel);
         }
     }
-
+    public IActionResult Test()
+    {
+        return View();
+    }
     public IActionResult Privacy()
     {
         return View();
