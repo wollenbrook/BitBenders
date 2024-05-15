@@ -1,5 +1,3 @@
-// This script handles fetching and managing participation requests and participants.
-
 document.addEventListener('DOMContentLoaded', function () {
     fetchParticipationRequests();
     fetchApprovedParticipants();
@@ -15,14 +13,16 @@ function fetchParticipationRequests() {
             const container = document.getElementById('participationRequests');
             container.innerHTML = ''; // Clear previous entries
             data.forEach(request => {
-                const node = document.createElement('div');
-                node.innerHTML = `
-                    <p>${request.senderUsername} - ${request.status}
-                        <button onclick="acceptRequest(${request.requestId})">Approve</button>
-                        <button onclick="declineRequest(${request.requestId})">Deny</button>
-                    </p>
-                `;
-                container.appendChild(node);
+                if (request.status === 'Pending') { // Only show pending requests
+                    const node = document.createElement('div');
+                    node.innerHTML = `
+                        <p>${request.senderUsername} - ${request.status}
+                            <button onclick="acceptRequest(${request.requestId}, ${tournamentId})">Approve</button>
+                            <button onclick="declineRequest(${request.requestId}, ${tournamentId})">Deny</button>
+                        </p>
+                    `;
+                    container.appendChild(node);
+                }
             });
             $('.ui.accordion').accordion('refresh'); // Refresh accordion to account for new content
         });
@@ -38,8 +38,8 @@ function fetchApprovedParticipants() {
             container.innerHTML = ''; // Clear previous entries
             data.forEach(participant => {
                 const node = document.createElement('div');
-                node.innerHTML = `<p>${participant.Username}
-                                    <button onclick="removeParticipant(${participant.UserId}, ${tournamentId})">Remove</button>
+                node.innerHTML = `<p>${participant.username}
+                                    <button onclick="removeParticipant(${participant.userId}, ${tournamentId})">Remove</button>
                                   </p>`;
                 container.appendChild(node);
             });
@@ -47,32 +47,37 @@ function fetchApprovedParticipants() {
         });
 }
 
-function acceptRequest(requestId) {
+function acceptRequest(requestId, tournamentId) {
     fetch(`/api/TournamentAPI/AcceptRequest/${requestId}`, { method: 'PUT' })
         .then(response => {
             if (response.ok) {
                 alert("Request accepted");
-                fetchParticipationRequests(); // Refresh the list
+                fetchParticipationRequests();
+                fetchApprovedParticipants(); // Refresh the list of approved participants
             }
         });
 }
 
-function declineRequest(requestId) {
+function declineRequest(requestId, tournamentId) {
     fetch(`/api/TournamentAPI/DeclineRequest/${requestId}`, { method: 'PUT' })
         .then(response => {
             if (response.ok) {
                 alert("Request declined");
-                fetchParticipationRequests(); // Refresh the list
+                fetchParticipationRequests(); // Refresh the list to remove the declined request
             }
         });
 }
 
 function removeParticipant(userId, tournamentId) {
+    if (!userId) {
+        alert('Error: User ID is undefined.');
+        return;
+    }
     fetch(`/api/TournamentAPI/RemoveParticipate/${userId}/${tournamentId}`, { method: 'PUT' })
         .then(response => {
             if (response.ok) {
                 alert("Participant removed");
-                fetchApprovedParticipants(); // Refresh the list
+                fetchApprovedParticipants(); // Refresh the list to remove the participant
             }
         });
 }
