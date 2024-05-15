@@ -144,7 +144,83 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
         });
     });
 
+
+    // Get the BracketType select element
+    const bracketTypeSelect = document.getElementById('BracketType');
+
+    // Listen for changes on the BracketType select element
+    bracketTypeSelect.addEventListener('change', function() {
+        // Check if the selected option is 'Registered User Bracket'
+        if (this.value === 'Registered User Bracket') {
+            // Fetch the registered users
+            fetch(`/api/TournamentAPI/GetParticipates/${tournamentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Get the playerNames textarea
+                    const playerNamesTextarea = document.getElementById('playerNames');
+
+                    // Change the label text
+                    playerNamesLabel.textContent = 'Registered Users (Descending Order):';
+
+                    // Clear the textarea
+                    playerNamesTextarea.value = '';
+
+                    // Populate the textarea with the fetched data
+                    data.forEach(participant => {
+                        playerNamesTextarea.value += participant.Username + ', ';
+                    });
+
+                    // Remove the last comma and space
+                    playerNamesTextarea.value = playerNamesTextarea.value.slice(0, -2);
+
+                    // Make the textarea read-only
+                    playerNamesTextarea.readOnly = true;
+
+                    // Add draggable attribute to each name
+                    let names = playerNamesTextarea.value.split(', ');
+
+                    let playerNamesContainer = document.createElement('div');
+                    playerNamesContainer.id = 'playerNamesContainer';
+                    playerNamesContainer.style.display = 'flex'; // Add this line
+                    playerNamesContainer.style.flexDirection = 'column'; // Add this line
+                    names.forEach(name => {
+                        let span = document.createElement('span');
+                        span.draggable = true;
+                        span.textContent = name;
+                        span.className = 'ui label ui-widget-content ui-corner-all'; // Add classes for jQuery UI styling
+                        playerNamesContainer.appendChild(span);
+                    });
+
+                    // Replace the textarea with the new container
+                    playerNamesTextarea.replaceWith(playerNamesContainer);
+
+                    // Make the names sortable
+                    $(playerNamesContainer).sortable();
+
+                    // Apply jQuery UI styles to the name containers
+                    $(playerNamesContainer).children().each(function() {
+                        $(this).css({
+                            'margin': '5px',
+                            'padding': '5px',
+                            'cursor': 'grab'
+                        });
+                    });
+                });
+        } else {
+            // Change the label text back
+            playerNamesLabel.textContent = 'Player Names (comma-delimited):';
+
+            // Get the playerNamesContainer
+            const playerNamesContainer = document.getElementById('playerNamesContainer');
     
+            // Create a new textarea
+            let playerNamesTextarea = document.createElement('textarea');
+            playerNamesTextarea.id = 'playerNames';
+    
+            // Replace the container with the new textarea
+            playerNamesContainer.replaceWith(playerNamesTextarea);
+        }
+    });
 
     $(document).ready(function() {
         $('#createBracketForm').on('submit', function(e) {
@@ -170,7 +246,7 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
             };
             console.log(formData);
             
-             // Create a format variable
+        // Create a format variable
         var format = formData.Format;
 
         // Create a RandomSeeding variable
