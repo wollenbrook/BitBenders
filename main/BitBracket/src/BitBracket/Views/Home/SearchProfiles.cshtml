@@ -2,9 +2,23 @@
 @model UserViewModel
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
 <body class="announcement-background">
     <div class="ui container">
-        <h1 class="title-styling">Welcome to @Model.Username's profile page!</h1>
+        <h1 class="title-styling">Welcome to @Model.Username's profile page!
+            <button id="myBtn">i</button>
+        </h1>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Welcome to another users profile page! Here you can view their profile details along with being able to send them a friend request.</p>
+            </div>
+        </div>
 
         <div class="ui very padded segment">
             <div class="ui divided items">
@@ -34,5 +48,6 @@
         </div>
     </div>
     <script src="~/js/UsersPage.js" ></script>
+    <script src="~/js/modalswitcher.js"></script>
 
 </body>

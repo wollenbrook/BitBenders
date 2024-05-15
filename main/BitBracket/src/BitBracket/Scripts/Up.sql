@@ -94,7 +94,7 @@ CREATE TABLE [GuidBracket] (
 CREATE TABLE [UserAnnouncements] (
     [ID] INT IDENTITY(1,1) PRIMARY KEY,
     [Title] NVARCHAR(50) NOT NULL,
-);    [IsDraft] BIT NOT NULL DEFAULT 0,
+    [IsDraft] BIT NOT NULL DEFAULT 0,
     [Author] NVARCHAR(50) NOT NULL,
     [Owner] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
     [TournamentID] INT NULL FOREIGN KEY REFERENCES [Tournaments]([ID])
