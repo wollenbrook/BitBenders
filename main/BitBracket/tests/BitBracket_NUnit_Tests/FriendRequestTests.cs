@@ -240,6 +240,7 @@ public class FriendRequestTests
         Assert.IsFalse(friends);
         
     }
+    //
     //[Test]
     // public void TestThatCheckIfTheyAreFriendsAfterAcceptingFriendRequest()
     // {
