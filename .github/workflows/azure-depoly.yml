@@ -22,16 +22,16 @@ jobs:
       run: dotnet restore main\BitBracket\src\BitBracket\BitBracket.csproj
 
     - name: Build
-      run: dotnet build main\BitBracket\src\BitBracket\BitBracket.csproj --configuration Release --no-restore
+      run: dotnet build main/BitBracket/src/BitBracket/BitBracket.csproj --configuration Release --no-restore
 
     - name: Restore dependencies for test project
-      run: dotnet restore main\BitBracket\tests\BitBracket_NUnit_Tests\BitBracket_NUnit_Tests.csproj
+      run: dotnet restore main/BitBracket/tests/BitBracket_NUnit_Tests\BitBracket_NUnit_Tests.csproj
 
     - name: Test
-      run: dotnet test main\BitBracket\tests\BitBracket_NUnit_Tests\BitBracket_NUnit_Tests.csproj --no-restore --verbosity normal
+      run: dotnet test main/BitBracket/tests/BitBracket_NUnit_Tests\BitBracket_NUnit_Tests.csproj --no-restore --verbosity normal
 
     - name: Publish
-      run: dotnet publish main\BitBracket\src\BitBracket\BitBracket.csproj --configuration Release --no-build -o ./publish
+      run: dotnet publish main/BitBracket/src/BitBracket/BitBracket.csproj --configuration Release --no-build -o ./publish
 
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
