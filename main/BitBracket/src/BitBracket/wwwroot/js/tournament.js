@@ -144,15 +144,123 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
         });
     });
 
-    
+
+    // Get the BracketType select element
+    const bracketTypeSelect = document.getElementById('BracketType');
+
+    // Add a hidden input field to the form
+    let hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.id = 'hiddenInput';
+    document.getElementById('createBracketForm').appendChild(hiddenInput);
+
+    // Listen for changes on the BracketType select element
+    bracketTypeSelect.addEventListener('change', function() {
+        // Check if the selected option is 'Registered User Bracket'
+        if (this.value === 'Registered User Bracket') {
+            // Fetch the registered users
+            fetch(`/api/TournamentAPI/GetParticipates/${tournamentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Get the playerNames textarea
+                    const playerNamesTextarea = document.getElementById('playerNames');
+
+                    // Change the label text
+                    playerNamesLabel.textContent = 'Registered Users (Descending Order):';
+
+                    // Clear the textarea
+                    playerNamesTextarea.value = '';
+
+                    // Populate the textarea with the fetched data
+                    data.forEach(participant => {
+                        playerNamesTextarea.value += participant.username + ', ';
+                    });
+
+                    // Remove the last comma and space
+                    playerNamesTextarea.value = playerNamesTextarea.value.slice(0, -2);
+
+                    // Update the hidden input value with the participant usernames
+                    hiddenInput.value = playerNamesTextarea.value;
+                    //console.log(hiddenInput.value);
+
+                    // Make the textarea read-only
+                    playerNamesTextarea.readOnly = true;
+
+                    // Add draggable attribute to each name
+                    let names = playerNamesTextarea.value.split(', ');
+
+                    let playerNamesContainer = document.createElement('div');
+                    playerNamesContainer.id = 'playerNamesContainer';
+                    playerNamesContainer.style.display = 'flex'; // Add this line
+                    playerNamesContainer.style.flexDirection = 'column'; // Add this line
+                    names.forEach(name => {
+                        let span = document.createElement('span');
+                        span.draggable = true;
+                        span.textContent = name;
+                        span.className = 'ui label ui-widget-content ui-corner-all'; // Add classes for jQuery UI styling
+                        playerNamesContainer.appendChild(span);
+                    });
+
+                    // Replace the textarea with the new container
+                    playerNamesTextarea.replaceWith(playerNamesContainer);
+
+                    // Make the names sortable and update the order when changed
+                    $(playerNamesContainer).sortable({
+                        update: function(event, ui) {
+                            let updatedOrder = $(this).children().toArray().map(function(item) {
+                                return item.textContent;
+                            });
+                            // Now updatedOrder is an array of usernames in the new order
+                            // You can update your data or a hidden input field with this new order
+                            hiddenInput.value = updatedOrder.join(', ');
+                            playerNamesTextarea.value = hiddenInput.value;
+                            console.log(playerNamesTextarea.value)
+                        }
+                    });
+
+                    // Apply jQuery UI styles to the name containers
+                    $(playerNamesContainer).children().each(function() {
+                        $(this).css({
+                            'margin': '5px',
+                            'padding': '5px',
+                            'cursor': 'grab'
+                        });
+                    });
+                });
+        } else {
+            // Change the label text back
+            playerNamesLabel.textContent = 'Player Names (comma-delimited):';
+
+            // Get the playerNamesContainer
+            const playerNamesContainer = document.getElementById('playerNamesContainer');
+
+            // Create a new textarea
+            let playerNamesTextarea = document.createElement('textarea');
+            playerNamesTextarea.id = 'playerNames';
+
+            // Replace the container with the new textarea
+            playerNamesContainer.replaceWith(playerNamesTextarea);
+        }
+    });
 
     $(document).ready(function() {
         $('#createBracketForm').on('submit', function(e) {
             e.preventDefault();  // Prevent the form from being submitted in the traditional way
             // Create an array of player names
+            if ($('#BracketType').val() === 'Registered User Bracket') {
+                var names = $('#hiddenInput').val().split(', ');
+            }
+            else {
             var names = $('#playerNames').val().split(',');
+            }
+            // Check if there are at least 2 names
             if (names.length < 2) {
                 alert('You must enter at least 2 names.');
+                return;
+            }
+            // Check if the format is 'Double Elimination' and there are only 2 players
+            if ($('#Format').val() === 'Double Elimination' && names.length <= 2) {
+                alert('Double elimination does not support 2 or less players.');
                 return;
             }
 
@@ -161,6 +269,13 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                 alert('You must enter a name for the bracket.');
                 return;
             }
+
+            if($('#BracketType').val() === 'Registered User Bracket'){
+                var isRegisteredUserBracket = true;
+            }
+            else{
+                var isRegisteredUserBracket = false;
+            }
     
             var formData = {
                 BracketName: $('#BracketName').val(), // Bracket Name string
@@ -168,9 +283,10 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                 Format: $('#Format').val(), // Single or Double Elimination string
                 RandomSeeding: $('#RandomSeeding').is(':checked') // Random seeding boolean
             };
-            console.log(formData);
+            //console.log(formData);
+        
             
-             // Create a format variable
+        // Create a format variable
         var format = formData.Format;
 
         // Create a RandomSeeding variable
@@ -303,7 +419,8 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
             var dataToSend = {
                 bracketName: bracketName,
                 tournamentId: tournamentId,
-                bracketData: JSON.stringify(bracketData)
+                bracketData: JSON.stringify(bracketData),
+                isUserBracket: isRegisteredUserBracket
             };
             console.log(dataToSend);
 

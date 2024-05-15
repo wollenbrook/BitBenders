@@ -25,6 +25,7 @@ public partial class Bracket
     [Column("TournamentID")]
     public int? TournamentID { get; set; } = null;
 
+    public bool? UserBracket { get; set; } = null;
 
     [InverseProperty("Brackets")]
     [JsonIgnore]

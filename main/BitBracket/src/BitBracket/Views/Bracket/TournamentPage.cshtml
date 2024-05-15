@@ -92,6 +92,13 @@
                 <form id="createBracketForm" method="post" class="ui form">
                     <div class="modal-body">
                         <div class="field">
+                            <label for="BracketType">Bracket Type:</label>
+                            <select id="BracketType" name="BracketType">
+                                <option value="Write-in Bracket">Write-in Bracket</option>
+                                <option value="Registered User Bracket">Registered User Bracket</option>
+                            </select>
+                        </div>
+                        <div class="field">
                             <label for="BracketName">Bracket Name:</label>
                             <input type="text" id="BracketName" name="BracketName" placeholder="Enter Bracket Name" required>
                             <button type="button" id="recordBtnBracketName" class="ui icon button"><i class="microphone icon"></i></button>
@@ -99,7 +106,7 @@
                             <button type="button" id="clearBtnBracketName" class="ui icon button"><i class="undo icon"></i></button>
                         </div>
                         <div class="field">
-                            <label for="Names">Player Names (comma-delimited):</label>
+                            <label id="playerNamesLabel" for="Names">Player Names (comma-delimited):</label>
                             <textarea id="playerNames" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
                             <button type="button" id="recordBtnPlayerNames" class="ui icon button"><i class="microphone icon"></i></button>
                             <button type="button" id="stopBtnPlayerNames" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
