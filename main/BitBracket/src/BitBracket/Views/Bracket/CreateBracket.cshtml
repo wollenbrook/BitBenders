@@ -9,10 +9,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="~/css/site.css" />
     <title>Competition Bracket</title>
 </head>
 <body class="announcement-background">
-    <h2 class="title-styling">@ViewData["Title"]</h2>
+    <h2 class="title-styling">@ViewData["Title"]
+        
+        <button id="myBtn">i</button>
+    </h2>
+<div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Welcome to the competition bracket page! From here, you can create a bracket for your competition, and generate a bracket link to share with others.</p>
+        </div>
+</div>
     <div class="container mt-4">
         
                 <form id="createBracketForm" method="post" class="ui form" style="padding: 20px; background-color: #93a86d; border-radius: 10px;">
@@ -56,4 +67,6 @@
 </html>
 
 
-<script src="~/js/bracket.js"></script> 
+<script src="~/js/bracket.js"></script>
+<script src="~/js/modalswitcher.js"></script>
+

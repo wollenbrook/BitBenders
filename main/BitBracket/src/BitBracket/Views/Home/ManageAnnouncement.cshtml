@@ -1,13 +1,26 @@
 @{
     ViewData["Title"] = "Manage Announcement";
 }
-
+<head>
+<link rel="stylesheet" href="~/css/site.css" />
+</head>
 <body class="announcement-background"></body>
 <div class="section-gap"></div>
-<h1 class="title-styling">@ViewData["Title"]</h1>
+<h1 class="title-styling">@ViewData["Title"]
+    
+<button id="myBtn">i</button>
+</h1>
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Welcome to the manage announcements page, where you can manage your personal announcements and delete published drafts, or publish drafted announcements!</p>
+    </div>
+</div>
 
 @Html.Partial("~/Views/Announcements/_ManageAnnouncement.cshtml")
 
 @section Scripts {
     <script src="~/js/manageAnnouncement.js"></script>
+<script src="~/js/modalswitcher.js"></script>
 }
