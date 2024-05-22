@@ -4,8 +4,20 @@
 <html>
 <head>
     <title>Tournament Page</title>
+<link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body class="announcement-background">
+    <h1 class="title-styling">
+        Tournament Page
+        <button id="myBtn">i</button>
+    </h1>
+<div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Welcome to the tournament page, where you can create a new bracket, set a broadcast link, and manage participation requests! You can also view your created brackets and see them in more detail there.</p>
+        </div>
+</div>
+
     <div class="ui container mb-3">
         <div class="ui segment">
             <h1 class="ui sub header" id="tournamentName">Tournament Name</h1>
@@ -13,6 +25,7 @@
             <p class="ui sub header">Location: <span id="tournamentLocation">Tournament Location</span></p>
             <p class="ui sub header">Status: <span id="tournamentStatus">Tournament Status</span></p>
         </div>
+    </div>
     <div>
         <div id="stream-embed"></div>
     </div>
@@ -79,6 +92,13 @@
                 <form id="createBracketForm" method="post" class="ui form">
                     <div class="modal-body">
                         <div class="field">
+                            <label for="BracketType">Bracket Type:</label>
+                            <select id="BracketType" name="BracketType">
+                                <option value="Write-in Bracket">Write-in Bracket</option>
+                                <option value="Registered User Bracket">Registered User Bracket</option>
+                            </select>
+                        </div>
+                        <div class="field">
                             <label for="BracketName">Bracket Name:</label>
                             <input type="text" id="BracketName" name="BracketName" placeholder="Enter Bracket Name" required>
                             <button type="button" id="recordBtnBracketName" class="ui icon button"><i class="microphone icon"></i></button>
@@ -86,7 +106,7 @@
                             <button type="button" id="clearBtnBracketName" class="ui icon button"><i class="undo icon"></i></button>
                         </div>
                         <div class="field">
-                            <label for="Names">Player Names (comma-delimited):</label>
+                            <label id="playerNamesLabel" for="Names">Player Names (comma-delimited):</label>
                             <textarea id="playerNames" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
                             <button type="button" id="recordBtnPlayerNames" class="ui icon button"><i class="microphone icon"></i></button>
                             <button type="button" id="stopBtnPlayerNames" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
@@ -129,4 +149,4 @@
 <script src="https://player.twitch.tv/js/embed/v1.js"></script>
  <script src="~/js/tournament.js"></script>
  <script src="~/js/participateRequest.js"></script>
-
+<script src="~/js/modalswitcher.js"></script>

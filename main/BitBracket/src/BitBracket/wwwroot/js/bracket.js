@@ -8,6 +8,11 @@ $(document).ready(function() {
             alert('You must enter at least 2 names.');
             return;
         }
+        // Check if the format is 'Double Elimination' and there are only 2 players
+        if ($('#Format').val() === 'Double Elimination' && names.length <= 2) {
+            alert('Double elimination does not support 2 or less players.');
+            return;
+        }
 
         $('#generateButton').show();
         var formData = {

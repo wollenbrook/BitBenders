@@ -3,13 +3,25 @@
 @{
     ViewData["Title"] = "Create a new Announcement";
 }
+<head>
 
+<link rel="stylesheet" href="~/css/site.css" />
+</head>
 <body class="announcement-background">
 <div class="section-gap"></div>
     <div class="ui container">
-        <h2 class="title-styling">@ViewData["Title"]</h2>
+        <h2 class="title-styling">@ViewData["Title"]
+            
+            <button id="myBtn">i</button>
+        </h2>
 
-        <div class="section-gap"></div>
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Welcome to the admin announcements page, where you can create an announcement as save it as a draft, or publish it right away as an admin announcement!</p>
+            </div>
+        </div>
 
         <section class="section-gap">
             @await Html.PartialAsync("~/Views/Announcements/_CreateAnnouncementPartial.cshtml")
@@ -21,4 +33,5 @@
 </body>
 @section Scripts {
     <script src="~/js/announcementCreateForm.js" defer></script>
+<script src="~/js/modalswitcher.js" defer></script>
 }
