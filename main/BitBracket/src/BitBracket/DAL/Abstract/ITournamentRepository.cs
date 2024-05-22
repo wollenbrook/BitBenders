@@ -16,15 +16,14 @@ namespace BitBracket.DAL.Abstract
         Task Update(Tournament tournament);
         Task Delete(int id);
         //
-        Task<bool> SendParticipateRequest(int userId, int tournamentId);
-        Task<bool> AcceptParticipateRequest(int requestId);
-        Task<bool> DeclineParticipateRequest(int requestId);
-        Task<bool> RemoveParticipate(int userId, int tournamentId);
-        Task<bool> CheckIfParticipates(int userId, int tournamentId);
-        Task<IEnumerable<ParticipateRequest>> GetParticipateRequests(int tournamentId);
-        Task<IEnumerable<Participate>> GetParticipates(int tournamentId);
-        //
-        Task<IEnumerable<Tournament>> GetTournamentsByUserId(int userId);
-        Task<bool> WithdrawFromTournament(int userId, int tournamentId);
+        Task<bool> SendParticipationRequestAsync(int userId, int tournamentId);
+        Task<bool> AcceptParticipationRequestAsync(int requestId);
+        Task<bool> DenyOrRemoveParticipationRequestAsync(int requestId);
+        Task<bool> RemoveParticipantAsync(int userId, int tournamentId);
+        Task<bool> CheckIfParticipatesAsync(int userId, int tournamentId);
+        Task<IEnumerable<Tournament>> GetTournamentsUserParticipatesInAsync(int userId);
+        Task<bool> WithdrawFromTournamentAsync(int userId, int tournamentId);
+        Task<IEnumerable<ParticipateRequest>> GetAllParticipationRequests(int tournamentId);
+        Task<IEnumerable<Participate>> GetApprovedParticipates(int tournamentId);
     }
 }

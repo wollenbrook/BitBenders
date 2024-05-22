@@ -1,6 +1,6 @@
-//wwwroot/js/whisper.js
+// wwwroot/js/whisperTests.js
 
-document.addEventListener('DOMContentLoaded', function () {
+function initialize() {
     const recordBtn = document.getElementById('recordBtn');
     const stopBtn = document.getElementById('stopBtn');
     const clearBtn = document.getElementById('clearBtn');
@@ -51,8 +51,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     clearBtn.addEventListener('click', () => {
-        console.log("Clear button clicked"); // Debug statement
         audioInput.value = ''; // Clears the input
     });
-});
+}
 
+module.exports = {
+    initialize
+};
