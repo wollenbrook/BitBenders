@@ -18,7 +18,7 @@ function fetchParticipationRequests() {
                     node.innerHTML = `
                         <p>${request.senderUsername} - ${request.status}
                             <button onclick="acceptRequest(${request.requestId}, ${tournamentId})">Approve</button>
-                            <button onclick="declineRequest(${request.requestId}, ${tournamentId})">Deny</button>
+                            <button onclick="denyRequest(${request.requestId}, ${tournamentId})">Deny</button>
                         </p>
                     `;
                     container.appendChild(node);
@@ -52,32 +52,28 @@ function acceptRequest(requestId, tournamentId) {
         .then(response => {
             if (response.ok) {
                 alert("Request accepted");
-                fetchParticipationRequests();
-                fetchApprovedParticipants(); // Refresh the list of approved participants
+                fetchParticipationRequests(tournamentId);
+                fetchApprovedParticipants(tournamentId); // Refresh the lists
             }
         });
 }
 
-function declineRequest(requestId, tournamentId) {
-    fetch(`/api/TournamentAPI/DeclineRequest/${requestId}`, { method: 'PUT' })
+function denyRequest(requestId, tournamentId) {
+    fetch(`/api/TournamentAPI/DenyOrRemoveRequest/${requestId}`, { method: 'PUT' })
         .then(response => {
             if (response.ok) {
-                alert("Request declined");
-                fetchParticipationRequests(); // Refresh the list to remove the declined request
+                alert("Request denied");
+                fetchParticipationRequests(tournamentId); // Refresh the list
             }
         });
 }
 
 function removeParticipant(userId, tournamentId) {
-    if (!userId) {
-        alert('Error: User ID is undefined.');
-        return;
-    }
-    fetch(`/api/TournamentAPI/RemoveParticipate/${userId}/${tournamentId}`, { method: 'PUT' })
+    fetch(`/api/TournamentAPI/RemoveParticipant/${userId}/${tournamentId}`, { method: 'PUT' })
         .then(response => {
             if (response.ok) {
                 alert("Participant removed");
-                fetchApprovedParticipants(); // Refresh the list to remove the participant
+                fetchApprovedParticipants(tournamentId); // Refresh the list
             }
         });
 }

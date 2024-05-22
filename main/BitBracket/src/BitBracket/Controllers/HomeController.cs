@@ -93,11 +93,30 @@ public class HomeController : Controller
     //         return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     //     }
     // }
-    public IActionResult TournamentImIn()
+    public async Task<IActionResult> TournamentImIn()
     {
-        return View();
-    }
+        var userId = _userManager.GetUserId(User); // Get the current user's ID from UserManager
+        if (string.IsNullOrEmpty(userId))
+        {
+            return NotFound("User not found");
+        }
 
+        var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+        if (bitUser == null)
+        {
+            return NotFound("Bit user not found");
+        }
+
+        ViewBag.UserId = bitUser.Id; // Pass the user ID to the view through ViewBag
+
+        var tournaments = await _tournamentRepository.GetTournamentsUserParticipatesInAsync(bitUser.Id);
+        if (tournaments == null || !tournaments.Any())
+        {
+            return NotFound(); // You could have a view to display when there are no tournaments
+        }
+
+        return View(tournaments); // Pass the list of tournaments to the view
+    }
     public IActionResult AllTournaments()
     {
         return View();

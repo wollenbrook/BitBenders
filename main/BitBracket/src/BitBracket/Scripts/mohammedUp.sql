@@ -1,3 +1,5 @@
+--Up.sql
+
 CREATE TABLE [BitUser] (
     [ID] INT PRIMARY KEY IDENTITY(1,1),
     [ASPNetIdentityID] NVARCHAR(50) NOT NULL,
