@@ -1,9 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
-    fetchTournaments();
-});
-
-function fetchTournaments() {
-    fetch('/api/TournamentApi/UserTournaments')
+function fetchTournaments(userId) {
+    fetch(`/api/TournamentAPI/UserTournaments/${userId}`)
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('tournaments-container');
@@ -11,8 +7,8 @@ function fetchTournaments() {
                 document.getElementById('empty-placeholder').style.display = 'block';
             } else {
                 data.forEach(tournament => {
-                    const tournamentElement = createTournamentElement(tournament);
-                    container.appendChild(tournamentElement);
+                    const node = createTournamentElement(tournament, userId);
+                    container.appendChild(node);
                 });
             }
         })
@@ -22,26 +18,26 @@ function fetchTournaments() {
         });
 }
 
-function createTournamentElement(tournament) {
+function createTournamentElement(tournament, userId) {
     let div = document.createElement('div');
     div.className = 'item';
     div.innerHTML = `
         <div class="content">
             <h3 class="ui header">${tournament.name || 'Unnamed Tournament'}</h3>
             <p>${tournament.location || 'No location specified'}</p>
-            <button onclick="withdraw(${tournament.id})" class="ui red button">Withdraw</button>
+            <button onclick="withdraw(${tournament.id}, ${userId})" class="ui red button">Withdraw</button>
         </div>
     `;
     return div;
 }
 
-function withdraw(tournamentId) {
+function withdraw(tournamentId, userId) {
     if (confirm('Are you sure you want to withdraw from this tournament?')) {
-        fetch('/api/ParticipateApi/Withdraw/' + tournamentId, { method: 'PUT' })
+        fetch(`/api/TournamentAPI/Withdraw/${userId}/${tournamentId}`, { method: 'PUT' })
             .then(response => {
                 if (response.ok) {
                     alert('You have successfully withdrawn from the tournament.');
-                    fetchTournaments(); // Refresh the list
+                    fetchTournaments(userId); // Refresh the list
                 } else {
                     alert('Failed to withdraw from the tournament.');
                 }

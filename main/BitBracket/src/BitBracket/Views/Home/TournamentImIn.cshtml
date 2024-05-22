@@ -1,47 +1,21 @@
+@model IEnumerable<BitBracket.Models.Tournament>
+
 @{
-    ViewBag.Title = "Tournaments I'm Participating In";
+    ViewData["Title"] = "Tournaments I'm In";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body class="announcement-background">
-    <div class="ui container">
-        <h1 class="title-styling">Registered Tournaments
-            <button id="myBtn">i</button>
-        </h1>
-<div id="myModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>This page allows you to view all the tournaments you are registered for, along with the option to withdraw.</p>
-            </div>
-</div>
+<h2>Tournaments I'm In</h2>
 
-        <div class="ui very padded segment">
-            <div class="ui divided items" id="tournaments-container">
-                <!-- Tournament items will be dynamically populated here -->
-                <!-- Placeholder for empty state -->
-                <div class="item" id="empty-placeholder" style="display: none;">
-                    <div class="content">
-                        <h3 class="ui header">No registered tournaments found.</h3>
-                        <div class="description">
-                            <p>You are currently not registered in any tournaments.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div id="tournaments-container"></div>
 
-    @section Scripts {
-        <script src="~/js/TournamentImIn.js"></script>
-        <script src="~/js/modalswitcher.js"></script>
-    }
-</body>
-</html>
+@if (Model == null || !Model.Any())
+{
+    <p id="empty-placeholder" style="display:none;">You are not participating in any tournaments.</p>
+}
+<script src="~/js/TournamentImIn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userId = @ViewBag.UserId; // Ensure you get the correct user ID
+        fetchTournaments(userId);
+    });
+</script>

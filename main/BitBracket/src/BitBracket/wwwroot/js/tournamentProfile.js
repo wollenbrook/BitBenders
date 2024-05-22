@@ -13,7 +13,7 @@ function sendParticipationRequest(tournamentId, userId) {
 }
 
 function checkParticipationStatus(tournamentId, userId) {
-    fetch(`/api/TournamentAPI/CheckIfParticipates/${userId}/${tournamentId}`)
+    fetch(`/api/TournamentAPI/CheckParticipation/${userId}/${tournamentId}`)
         .then(response => response.json())
         .then(data => {
             const button = document.getElementById('participateButton');
