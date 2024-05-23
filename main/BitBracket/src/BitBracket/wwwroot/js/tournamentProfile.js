@@ -1,3 +1,14 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const userId = document.getElementById('userId').value;
+    const tournamentId = document.getElementById('tournamentId').value;
+
+    checkParticipationStatus(tournamentId, userId);
+}
+);
+
+
+
+
 function sendParticipationRequest(tournamentId, userId) {
     fetch(`/api/TournamentAPI/SendRequest/${userId}/${tournamentId}`, {
         method: 'POST'
