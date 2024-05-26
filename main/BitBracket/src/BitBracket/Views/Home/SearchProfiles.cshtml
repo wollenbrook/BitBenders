@@ -28,11 +28,13 @@
                     
                     </div>
                     <div class="content">
-                        <a class="header">@Model.Username</a>
+                        <a class="header" id="persons-name">@Model.Username</a>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <button class="ui button" id="friend-button"></button>
+                            <button class="ui small secondary button" id="friend-button"></button>
+                            <button class="ui small secondary button" id="block-button">Block</button>
                             <div id="hiddenElement" style="visibility: hidden;">@Model.ProfileID</div>
+                            
                         }
 
 
@@ -41,8 +43,9 @@
                             <p><strong>Tag:</strong> <div id="tagId" class="ui label">@Model.Tag</div></p>
                             <p><strong>Bio:</strong> <div id="bioId" class="ui small fluid input">@Model.Bio</div></p>
                         </div>
-    
+                        
                     </div>
+                    
                 </div>
             </div>
         </div>

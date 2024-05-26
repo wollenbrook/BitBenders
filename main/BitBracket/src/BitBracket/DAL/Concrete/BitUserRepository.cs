@@ -222,6 +222,20 @@ namespace BitBracket.DAL.Concrete
             }
             return Task.FromResult(user.FriendRequestReceivers.AsEnumerable());
         }
+        /*public Task<IEnumerable<BlockedUsers>> GetBlockedUsers(int id)
+         * 
+        */
+        public Task BlockUser(BitUser viewer, BitUser personBeingViewed)
+        {
+            /* BlockedUsers blockedUser = new BlockedUsers { BLockerId = viewer.Id, BlockedUserId = personBeingViewed.Id };
+             * viewer.BlockedUsers.Add(blockedUser);
+             * personBeingViewed.BlockedUsers.Add(blockedUser);
+             * _bitUsers.Update(viewer);
+             * _bitUsers.Update(personBeingViewed);
+             * _context.SaveChanges();
+             */
+            return Task.CompletedTask;
+        }
         public IEnumerable<BitUser> GetOptedInUsers()
         {
             return _bitUsers.Where(u => u.OptInConfirmation).ToList();

@@ -251,5 +251,47 @@ namespace BitBracket.Controllers
 
             return Ok(friendRequests);
         }
+        // PUT: api/BitUserApi/BlockUser/{name}
+        [HttpPut("BlockUser/{name}")]
+        public async Task<IActionResult> BlockUser(string name)
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser viewer = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser personBeingViewed = _bitUserRepository.GetBitUserByName(name);
+            await RemoveFriend(personBeingViewed.Id);
+            if (viewer == null || personBeingViewed == null)
+            {
+                return NotFound();
+            }
+
+            /* sender.BlockedUsers.Add(new BlockedUser
+            {
+                BlockerId = viewer.id
+                BlockedUserId = personBeingViewed.Id
+            });
+            _bitUserRepository.AddOrUpdate(sender);
+            */
+            return Ok();
+        }
+        // PUT: api/BitUserApi/UnblockUser/{name}
+        [HttpPut("UnblockUser/{name}")]
+        public async Task<IActionResult> UnblockUser(string name)
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser viewer = _bitUserRepository.GetBitUserByEntityId(senderId);
+            BitUser personBeingViewed = _bitUserRepository.GetBitUserByName(name);
+            if (viewer == null || personBeingViewed == null)
+            {
+                return NotFound();
+            }
+            /* BlockedUser blockedUser = viewer.BlockedUsers.FirstOrDefault(bu => bu.BlockedUserId == personBeingViewed.Id);
+               if (blockedUser != null)
+               {
+               viewer.BlockedUsers.Remove(blockedUser);
+               _bitUserRepository.AddOrUpdate(viewer);
+               }
+                */
+            return Ok();
+        }
     }
 }

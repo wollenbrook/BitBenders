@@ -251,7 +251,8 @@ public class HomeController : Controller
                     ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png",
                     Friends = _bitUserRepository.CheckIfFriends(sender, bitUser),
                     FriendRequestSent = _bitUserRepository.CheckIfRequestSent(sender, bitUser),
-                    ProfileID = bitUser.Id
+                    ProfileID = bitUser.Id,
+                    PersonID = id
                 };
                 return View(userViewModel);
             } else

@@ -1,9 +1,24 @@
 function initialize() {
     const id = document.getElementById('hiddenElement').textContent;
     CheckStatus(id);
-    
+    const name = document.getElementById('persons-name').textContent;
+    const blockbutton = document.getElementById('block-button');
+    blockbutton.addEventListener('click', () => BlockUser(name));
     
 }
+async function BlockUser(name) {
+        const response = await fetch("/api/BitUserApi/BlockUser/" + name, {
+        method: 'PUT',
+        });
+    const data = await response.json();
+    if (data) {
+        alert('User blocked successfully!');
+        location.reload();
+    } else {
+        alert('Failed to block user.');
+    }
+}
+
 async function CheckStatus(id) {
     const response = await fetch("/api/BitUserApi/CheckIfFriends/" + id); 
     const data = await response.json();
