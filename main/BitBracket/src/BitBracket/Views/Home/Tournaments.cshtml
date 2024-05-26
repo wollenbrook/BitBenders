@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
     <link rel="stylesheet" href="~/css/broadcast.css" />
 </head>
 <body class="announcement-background">
@@ -43,14 +45,14 @@
                     </div>
                     <div class="extra">
                         <button id="participateButton" class="ui small primary button">Register</button>
-                        <button id="openChatButton" class="ui small secondary button">Open chat</button>
+                        <button id="openChatButton" class="ui small secondary button">Open Chat</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="ui very padded segment">
+    @*<div class="ui very padded segment">
         <div class="ui divided items">
             <div class="item">
                 
@@ -62,11 +64,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
-    <div class="container">
-            <div class="row p-1">
-                <div class="col-1">User</div>
+    <div class="message-container" id="message-container" style="display: none;">
+        <div class="row p-1 ui very padded segment">
+                <div class="col-1 ui">User</div>
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="col-5">
@@ -80,7 +82,7 @@
             }
 
             </div>
-            <div class="row p-1">
+            <div class="row p-1 ui very padded segment">
                 <div class="col-1">Message</div>
                 <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
             </div>
@@ -97,25 +99,29 @@
                 </div>
 
             </div>
-        </div>
         <div class="row p-1">
-            <div class="col-6">
-                <p>Message Board</p>
-                <hr />
+            <div class="row p-1">
+                <div class="col-6 ui very padded segment">
+                    <h2>Message Board</h2>
+                    <hr />
+                    <ul id="messagesList" class="message-board"></ul>
+                </div>
             </div>
+
         </div>
         <div class="row p-1">
             <div class="col-6">
                 <ul id="messagesList"></ul>
             </div>
         </div>
+    </div>
     <script>
-        @*
+        
         document.addEventListener('DOMContentLoaded', function () {
-            const tournamentId = @Model.Id;
-            const userId = @ViewBag.UserId; // Correctly retrieve userId from ViewBag
+            const tournamentId = @Model.TournamentId;
+            const userId = @Model.UserId; // Correctly retrieve userId from ViewBag
             checkParticipationStatus(tournamentId, userId); // Check participation status on load
-        });*@
+        });
     </script>
     <script src="https://player.twitch.tv/js/embed/v1.js"></script>
     <script src="~/js/signlar/dist/browser/signalr.js"></script>

@@ -39,6 +39,7 @@ namespace BitBracket.DAL.Concrete
 
         public BitUser GetBitUserByEntityId(string id)
         {
+
             return _bitUsers.FirstOrDefault(u => u.AspnetIdentityId == id);
         }
 
@@ -183,7 +184,7 @@ namespace BitBracket.DAL.Concrete
         {
             if (Sender == null || Reciver == null)
             {
-                throw new WebException("User not found");
+                throw new Exception("User not found");
             }
             return Sender.FriendUsers.Any(f => f.FriendId == Reciver.Id);
 
@@ -192,7 +193,7 @@ namespace BitBracket.DAL.Concrete
         {
             if (Sender == null || Reciever == null)
             {
-                throw new WebException("User not found");
+                throw new Exception("User not found");
             }
             return Sender.FriendRequestSenders.Any(fr => fr.ReceiverId == Reciever.Id && fr.Status == "Pending");
         }
