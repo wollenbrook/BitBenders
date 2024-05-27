@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using EllipticCurve.Utils;
-using BitBracket.DAL.Concrete;
-using HW6.DAL.Concrete;
+using BitBracket.DAL.Abstract;
 using NuGet.Protocol.Plugins;
 using System.Reflection;
 using Twilio.TwiML.Fax;
@@ -39,6 +38,7 @@ namespace BitBracket.DAL.Concrete
 
         public BitUser GetBitUserByEntityId(string id)
         {
+
             return _bitUsers.FirstOrDefault(u => u.AspnetIdentityId == id);
         }
 
@@ -183,7 +183,7 @@ namespace BitBracket.DAL.Concrete
         {
             if (Sender == null || Reciver == null)
             {
-                throw new WebException("User not found");
+                throw new Exception("User not found");
             }
             return Sender.FriendUsers.Any(f => f.FriendId == Reciver.Id);
 
@@ -192,7 +192,7 @@ namespace BitBracket.DAL.Concrete
         {
             if (Sender == null || Reciever == null)
             {
-                throw new WebException("User not found");
+                throw new Exception("User not found");
             }
             return Sender.FriendRequestSenders.Any(fr => fr.ReceiverId == Reciever.Id && fr.Status == "Pending");
         }
@@ -220,6 +220,43 @@ namespace BitBracket.DAL.Concrete
                 throw new WebException("User not found");
             }
             return Task.FromResult(user.FriendRequestReceivers.AsEnumerable());
+        }
+        public Task<IEnumerable<BlockedUser>> GetAllBlockedUsers(int id)
+        {
+            BitUser user = _bitUsers.FirstOrDefault(u => u.Id == id);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            return Task.FromResult(user.BlockedUserBlockeds.AsEnumerable());
+
+        }
+        
+        public Task BlockUser(BitUser viewer, BitUser personBeingViewed)
+        {
+            bool areTheyFriends = CheckIfFriends(viewer, personBeingViewed);
+            if (areTheyFriends)
+            {
+                RemoveFriend(viewer, personBeingViewed);
+            }
+            BlockedUser blockedUser = new BlockedUser { BlockedId = viewer.Id, BlockedUserId = personBeingViewed.Id };
+             viewer.BlockedUserBlockeds.Add(blockedUser);
+             _bitUsers.Update(viewer);
+             _context.SaveChanges(); 
+             
+            return Task.CompletedTask;
+        }
+        public Task UnBlockUser(BitUser viewer, BitUser personBeingViewed)
+        {
+            BlockedUser blockedUser = viewer.BlockedUserBlockeds.FirstOrDefault(b => b.BlockedUserId == personBeingViewed.Id);
+            if (blockedUser == null)
+            {
+                throw new WebException("User not found");
+            }
+            viewer.BlockedUserBlockeds.Remove(blockedUser);
+            _bitUsers.Update(viewer);
+            _context.SaveChanges();
+            return Task.CompletedTask;
         }
         public IEnumerable<BitUser> GetOptedInUsers()
         {

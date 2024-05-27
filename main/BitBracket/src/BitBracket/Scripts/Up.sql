@@ -88,3 +88,17 @@ CREATE TABLE [ParticipateRequests] (
     FOREIGN KEY ([SenderID]) REFERENCES [BitUser]([ID]),
     FOREIGN KEY ([TournamentID]) REFERENCES [Tournaments]([ID])
 );
+
+CREATE TABLE [BlockedUsers] (
+    [ID] INT IDENTITY(1,1) PRIMARY KEY,
+    [BlockedID] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
+    [BlockedUserID] INT FOREIGN KEY REFERENCES [BitUser]([ID])
+);
+
+CREATE TABLE [Standings] (
+	[ID] INT IDENTITY(1,1) PRIMARY KEY,
+	[Person] INT FOREIGN KEY REFERENCES [BitUser]([ID]),
+	[TournamentID] INT FOREIGN KEY REFERENCES [Tournaments]([ID]),
+    [Placement] INT,
+    [Notes] NVARCHAR(500)
+);

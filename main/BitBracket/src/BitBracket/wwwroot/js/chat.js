@@ -1,4 +1,25 @@
-
+document.addEventListener('DOMContentLoaded', function () {
+    var openChatButton = document.getElementById('openChatButton');
+    var chatContainer = document.getElementById('message-container');
+    openChatButton.addEventListener('click', function () {
+        if (openChatButton.textContent === 'Open Chat') {
+            openChat();
+            openChatButton.textContent = 'Close Chat';
+        }
+        else {
+            closeChat();
+            openChatButton.textContent = 'Open Chat';
+        }
+    })
+});
+function closeChat() {
+    var chatContainer = document.getElementById('message-container');
+    chatContainer.style.display = 'none';
+}
+function openChat() {
+    var chatContainer = document.getElementById('message-container');
+    chatContainer.style.display = 'block';
+}
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 //Disable the send button until connection is established.

@@ -12,6 +12,7 @@ namespace BitBracket.ViewModels
         public bool Friends { get; set; } = false;
         public bool FriendRequestSent { get; set; } = false;
         public int? ProfileID { get; set; } = null;
+        public int? PersonID { get; set; }
 
     }
 }

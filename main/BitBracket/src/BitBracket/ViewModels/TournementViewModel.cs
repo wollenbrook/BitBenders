@@ -1,3 +1,4 @@
+using BitBracket.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace BitBracket.ViewModels
@@ -16,5 +17,8 @@ namespace BitBracket.ViewModels
         public string? Owner { get; set; } = "test";
         public string? Status { get; set; }
         public string? CurrentUserName { get; set; }
+        public int? TournamentId { get; set; }
+        public IEnumerable<Bracket>? Brackets { get; set; }
+        public int? UserId { get; set; } 
     }
 }
