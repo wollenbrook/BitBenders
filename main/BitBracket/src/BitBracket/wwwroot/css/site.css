@@ -254,6 +254,10 @@ body.dark-theme {
   display: none;
 }
 
+#captcha {
+  display: none;
+}
+
 .large-text {
   font-size: 2em;
 }
