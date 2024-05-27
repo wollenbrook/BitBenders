@@ -28,6 +28,11 @@ public class BracketController : Controller
         return View((object)id);
     }
 
+    public IActionResult BracketView(int id)
+    {
+        return View((object)id);
+    }
+
     [HttpPost]
     public IActionResult CreateBracket(BasicBracketViewModel model)
     {
