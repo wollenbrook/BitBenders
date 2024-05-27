@@ -222,18 +222,41 @@ namespace BitBracket.DAL.Concrete
             }
             return Task.FromResult(user.FriendRequestReceivers.AsEnumerable());
         }
-        /*public Task<IEnumerable<BlockedUsers>> GetBlockedUsers(int id)
-         * 
-        */
+        public Task<IEnumerable<BlockedUser>> GetAllBlockedUsers(int id)
+        {
+            BitUser user = _bitUsers.FirstOrDefault(u => u.Id == id);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            return Task.FromResult(user.BlockedUserBlockeds.AsEnumerable());
+
+        }
+        
         public Task BlockUser(BitUser viewer, BitUser personBeingViewed)
         {
-            /* BlockedUsers blockedUser = new BlockedUsers { BLockerId = viewer.Id, BlockedUserId = personBeingViewed.Id };
-             * viewer.BlockedUsers.Add(blockedUser);
-             * personBeingViewed.BlockedUsers.Add(blockedUser);
-             * _bitUsers.Update(viewer);
-             * _bitUsers.Update(personBeingViewed);
-             * _context.SaveChanges();
-             */
+            bool areTheyFriends = CheckIfFriends(viewer, personBeingViewed);
+            if (areTheyFriends)
+            {
+                RemoveFriend(viewer, personBeingViewed);
+            }
+            BlockedUser blockedUser = new BlockedUser { BlockedId = viewer.Id, BlockedUserId = personBeingViewed.Id };
+             viewer.BlockedUserBlockeds.Add(blockedUser);
+             _bitUsers.Update(viewer);
+             _context.SaveChanges(); 
+             
+            return Task.CompletedTask;
+        }
+        public Task UnBlockUser(BitUser viewer, BitUser personBeingViewed)
+        {
+            BlockedUser blockedUser = viewer.BlockedUserBlockeds.FirstOrDefault(b => b.BlockedUserId == personBeingViewed.Id);
+            if (blockedUser == null)
+            {
+                throw new WebException("User not found");
+            }
+            viewer.BlockedUserBlockeds.Remove(blockedUser);
+            _bitUsers.Update(viewer);
+            _context.SaveChanges();
             return Task.CompletedTask;
         }
         public IEnumerable<BitUser> GetOptedInUsers()

@@ -56,8 +56,15 @@
 
     <a href="@Url.Action("ManageAnnouncement", "Home")" class="ui button secondary">Manage Announcements</a>
     <a href="@Url.Action("TournamentImIn", "Home")" class="ui button secondary">View Registered Tournament</a>
-    <a href="blank-for-now" class="ui button secondary">View Friends</a>
+    <a class="ui button secondary">View Friends</a>
+
+    <button class="ui button secondary" id="show-blocked-users">Show Blocked Users</button>
+    <div class="ui very padded segment divided items" id="show-blocked-container" style="display: none;">
+        <h3>Blocked Users</h3>
+        <div id="blocked-users-list"></div>
+    </div>
     <script src="~/js/profilepage.js"></script>
     <script src="~/js/modalswitcher.js"></script>
+
 </body>
 </html>

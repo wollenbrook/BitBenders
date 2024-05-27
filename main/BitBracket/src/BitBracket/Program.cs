@@ -34,6 +34,7 @@ builder.Services.AddScoped<IGuidBracketRepository, GuidBracketRepository>();
 builder.Services.AddScoped<IFriendRequestRepository, FriendRequestRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IWhisperService, WhisperService>();
+builder.Services.AddScoped<IBlockedUsersRepository, BlockedUsersRepository>();
 // Register IWhisperService with HttpClientFactory
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IWhisperService, WhisperService>();

@@ -10,13 +10,9 @@ async function BlockUser(name) {
         const response = await fetch("/api/BitUserApi/BlockUser/" + name, {
         method: 'PUT',
         });
-    const data = await response.json();
-    if (data) {
         alert('User blocked successfully!');
-        location.reload();
-    } else {
-        alert('Failed to block user.');
-    }
+        window.location.href = `/Home/Search`;
+
 }
 
 async function CheckStatus(id) {

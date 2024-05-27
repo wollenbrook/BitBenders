@@ -21,11 +21,12 @@ namespace BitBracket.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IBitUserRepository _bitUserRepository;
+        private readonly IBlockedUsersRepository _blockedUserRepository;
 
 
-        public BitUserApiController(UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository)
+        public BitUserApiController(UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, IBlockedUsersRepository blockedUsersRepository)
         {
-           
+           _blockedUserRepository = blockedUsersRepository;
             _userManager = userManager;
             _bitUserRepository = bitUserRepository;
         }
@@ -41,22 +42,65 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
+            string id = _userManager.GetUserId(User);
+            BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
+
+
             var DtoBitUsers = bitUsers.Select(u => u.ReturnBitUserSearchDTO()).ToList();
+            if (bitUser == null)
+            {
+                return DtoBitUsers;
+            }
+            else
+            {
+                foreach (BlockedUser blockedUser in bitUser.BlockedUserBlockeds)
+                {
+
+                    DtoBitUsers.RemoveAll(u => u.Id == blockedUser.BlockedUserId);
+                }
+                var blockedUsers = await _blockedUserRepository.GetAllBlockedUsers();
+                foreach (BlockedUser blockedUser in blockedUsers)
+                {
+                    if (blockedUser.BlockedUserId == bitUser.Id)
+                    {
+                        DtoBitUsers.RemoveAll(u => u.Id == blockedUser.BlockedId);
+                    }
+                }
+            }
+            if (bitUsers == null)
+            {
+                return NotFound();
+            }
             return DtoBitUsers;
         }
         // GET: api/BitUserApi/Search/{username}
         [HttpGet("Search/{username}")]
         public async Task<ActionResult<IEnumerable<BitUser>>> GetBitUserByUsername(string username)
         {
+
             var bitUsers = await _bitUserRepository.GetAll()
                 .Where(u => (u.Username.Contains(username) && u.EmailConfirmedStatus))
                 .ToListAsync();
+            string id = _userManager.GetUserId(User);
+            BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(id);
+            var DtoBitUsers = bitUsers.Select(u => u.ReturnBitUserSearchDTO()).ToList();
+
+            if (bitUser == null)
+            {
+                return bitUsers;
+            }
+            else
+            {
+                foreach (BlockedUser blockedUser in bitUser.BlockedUserBlockeds)
+                {
+                    bitUsers.RemoveAll(u => u.Id == blockedUser.BlockedUserId);
+                }
+            }
             if (bitUsers == null)
             {
                 return NotFound();
             }
 
-            var DtoBitUsers = bitUsers.Select(u => u.ReturnBitUserSearchDTO()).ToList();
             return bitUsers;
         }
         // GET: api/BitUserApi/5
@@ -258,20 +302,36 @@ namespace BitBracket.Controllers
             string senderId = _userManager.GetUserId(User);
             BitUser viewer = _bitUserRepository.GetBitUserByEntityId(senderId);
             BitUser personBeingViewed = _bitUserRepository.GetBitUserByName(name);
-            await RemoveFriend(personBeingViewed.Id);
+            
+            //put friend stuff here
+
             if (viewer == null || personBeingViewed == null)
             {
                 return NotFound();
             }
             
-            /* sender.BlockedUsers.Add(new BlockedUser
-            {
-                BlockerId = viewer.id
-                BlockedUserId = personBeingViewed.Id
-            });
-            _bitUserRespository.BlockUser(viewer ,personBeingViewed);
-            */
+           
+            _bitUserRepository.BlockUser(viewer ,personBeingViewed);
+            
             return Ok();
+        }
+        // GET: api/BitUserApi/GetBlockedUsers
+        [HttpGet("GetBlockedUsers")]
+        public async Task<ActionResult<IEnumerable<BlockedUser>>> GetBlockedUsers()
+        {
+            string senderId = _userManager.GetUserId(User);
+            BitUser sender = _bitUserRepository.GetBitUserByEntityId(senderId);
+            if (sender == null)
+            {
+                return NotFound();
+            }
+            IEnumerable<BlockedUser> blockedUsers = await _bitUserRepository.GetAllBlockedUsers(sender.Id);
+            if (blockedUsers == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(blockedUsers);
         }
         // PUT: api/BitUserApi/UnblockUser/{name}
         [HttpPut("UnblockUser/{name}")]
@@ -284,13 +344,8 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
-            /* BlockedUser blockedUser = viewer.BlockedUsers.FirstOrDefault(bu => bu.BlockedUserId == personBeingViewed.Id);
-               if (blockedUser != null)
-               {
-               viewer.BlockedUsers.Remove(blockedUser);
-               _bitUserRepository.AddOrUpdate(viewer);
-               }
-                */
+            await _bitUserRepository.UnBlockUser(viewer, personBeingViewed);
+
             return Ok();
         }
     }
