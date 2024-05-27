@@ -277,6 +277,20 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult Standings()
+    {
+        string userId = _userManager.GetUserId(User);
+        BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+        if (bitUser == null)
+        {
+            return NotFound("User not found");
+        }
+        UserViewModel simpleModel = new UserViewModel
+        {
+            Username = bitUser.Username
+        };
+        return View(simpleModel);
+    }
     public IActionResult Privacy()
     {
         return View();

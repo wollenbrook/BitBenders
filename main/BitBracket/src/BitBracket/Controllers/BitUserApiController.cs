@@ -22,13 +22,15 @@ namespace BitBracket.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IBitUserRepository _bitUserRepository;
         private readonly IBlockedUsersRepository _blockedUserRepository;
+        private readonly IStandingRepository _standingRepository;
 
 
-        public BitUserApiController(UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, IBlockedUsersRepository blockedUsersRepository)
+        public BitUserApiController(UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, IBlockedUsersRepository blockedUsersRepository, IStandingRepository standingRepository)
         {
-           _blockedUserRepository = blockedUsersRepository;
+            _blockedUserRepository = blockedUsersRepository;
             _userManager = userManager;
             _bitUserRepository = bitUserRepository;
+            _standingRepository = standingRepository;
         }
 
         // GET: api/BitUserApi
@@ -346,6 +348,35 @@ namespace BitBracket.Controllers
             }
             await _bitUserRepository.UnBlockUser(viewer, personBeingViewed);
 
+            return Ok();
+        }
+
+        // GET: api/BitUserApi/GetPlacementsByUser/{name}
+        [HttpGet("GetPlacementsByUser/{name}")]
+        public async Task<ActionResult<IEnumerable<Standing>>> GetPlacementsByUser(string name)
+        {
+            BitUser user = _bitUserRepository.GetBitUserByName(name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            IEnumerable<Standing> standings = await _standingRepository.GetByPersonId(user.Id);
+            if (standings == null)
+            {
+                return NotFound();
+            }
+            return Ok(standings);
+        }
+        // PUT: api/BitUserApi/AddOrUpdatePlacement/{BitUserId}/{TournamentId}/{Placement}
+        [HttpPut("AddOrUpdatePlacement/{BitUserId}/{TournamentId}/{Placement}")]
+        public async Task<IActionResult> AddOrUpdatePlacement(int BitUserId, int TournamentId, int Placement)
+        {
+            BitUser user = _bitUserRepository.GetBitUserByRegularId(BitUserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            await _standingRepository.InsertOrUpdatePlacement(BitUserId, TournamentId, Placement);
             return Ok();
         }
     }

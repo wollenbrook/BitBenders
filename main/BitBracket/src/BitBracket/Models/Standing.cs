@@ -20,7 +20,7 @@ public partial class Standing
     public int? Person { get; set; }
 
     [StringLength(4000)]
-    public string Notes { get; set; } = null!;
+    public string Notes { get; set; } = "No current notes";
 
     [ForeignKey("Person")]
     [InverseProperty("Standings")]

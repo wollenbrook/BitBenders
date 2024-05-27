@@ -7,7 +7,6 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using EllipticCurve.Utils;
 using BitBracket.DAL.Concrete;
-using HW6.DAL.Concrete;
 
 namespace BitBracket.DAL.Concrete
 {

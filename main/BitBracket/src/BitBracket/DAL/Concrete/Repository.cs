@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-namespace HW6.DAL.Concrete
+namespace BitBracket.DAL.Concrete
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
