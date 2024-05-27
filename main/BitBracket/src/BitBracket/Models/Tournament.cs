@@ -56,4 +56,7 @@ public partial class Tournament
     [InverseProperty("Tournament")]
     public virtual ICollection<ParticipateRequest> ParticipateRequests { get; set; } = new List<ParticipateRequest>();
 
+    [InverseProperty("Tournament")]
+    public virtual ICollection<Standing> Standings { get; set; } = new List<Standing>();
+
 }

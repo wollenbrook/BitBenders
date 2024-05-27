@@ -263,13 +263,13 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
-
+            
             /* sender.BlockedUsers.Add(new BlockedUser
             {
                 BlockerId = viewer.id
                 BlockedUserId = personBeingViewed.Id
             });
-            _bitUserRepository.AddOrUpdate(sender);
+            _bitUserRespository.BlockUser(viewer ,personBeingViewed);
             */
             return Ok();
         }
