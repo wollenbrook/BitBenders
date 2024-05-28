@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function CalculateEstimatedSkillLevel() { 
-    fetch('/api/BitUserApi/GetEstimatedSkillLevel')
+    var nameofplayer = document.getElementById('username-thing').textContent;
+    fetch('/api/BitUserApi/GetEstimatedSkillLevel/' + nameofplayer)
     .then(response => response.json())
     .then(data => {
         const skillLevelElement = document.getElementById('estimated-skill-level');

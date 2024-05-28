@@ -166,7 +166,7 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                     const playerNamesTextarea = document.getElementById('playerNames');
 
                     // Change the label text
-                    playerNamesLabel.textContent = 'Registered Users (Descending Order):';
+                    playerNamesLabel.textContent = 'Registered Users (Descending Order - Weights only matter for smart seeding):';
 
                     // Clear the textarea
                     playerNamesTextarea.value = '';
@@ -193,14 +193,38 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                     playerNamesContainer.id = 'playerNamesContainer';
                     playerNamesContainer.style.display = 'flex'; // Add this line
                     playerNamesContainer.style.flexDirection = 'column'; // Add this line
+                    const dictionaryThatHasNameAndWeight = {};
+
                     names.forEach(name => {
                         let span = document.createElement('span');
                         span.draggable = true;
                         span.textContent = name;
                         span.className = 'ui label ui-widget-content ui-corner-all'; // Add classes for jQuery UI styling
+                        fetch(`/api/BitUserApi/GetEstimatedSkillLevel/${name}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                span.title = 'Estimated Skill Level:  ' + data;
+                                dictionaryThatHasNameAndWeight[name] = data;
+                            });
+                        //this is the dictionary that has the name and weight associated with the user based on performance, not input from user
+                        console.log(dictionaryThatHasNameAndWeight);
+                        // Create an input box for skill level
+                        let input = document.createElement('input');
+                        // Add CSS styles to the input box
+                        input.style.width = '75px'; // Set the width of the input box
+                        input.style.verticalAlign = 'middle'; // Align the input box vertically with the span
+                        input.style.alignItems = 'right';
+                        input.type = 'number';
+                        input.min = 1;
+                        input.max = 8;
+                        input.value = 1;  // Default value
+                        input.style.marginLeft = '10px';  // Add some space between the name and the input box
+                        input.id = name;  // Set the id of the input box to the name of the player
+                        // Append the input box to the span
+                        span.appendChild(input);
+
                         playerNamesContainer.appendChild(span);
                     });
-
                     // Replace the textarea with the new container
                     playerNamesTextarea.replaceWith(playerNamesContainer);
 
@@ -243,12 +267,18 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
         }
     });
 
-    $(document).ready(function() {
+$(document).ready(function () {
+        //var numAssociatedWithPlayerName = getElementById.name; This is the number associated with the player name based on input from user, which could be the recommended weight, or inputed weight
+        dictionaryWithPlayerNameAndWeight = {};
         $('#createBracketForm').on('submit', function(e) {
             e.preventDefault();  // Prevent the form from being submitted in the traditional way
             // Create an array of player names
             if ($('#BracketType').val() === 'Registered User Bracket') {
                 var names = $('#hiddenInput').val().split(', ');
+                names.forEach(name => {
+                    dictionaryWithPlayerNameAndWeight[name] = document.getElementById(name).value;
+                })
+                console.log(dictionaryWithPlayerNameAndWeight);
             }
             else {
             var names = $('#playerNames').val().split(',');
