@@ -27,5 +27,6 @@ namespace BitBracket.DAL.Abstract
         public Task<IEnumerable<FriendRequest>> GetFriendRequests(int id);
 
         Task<BitUser> GetByName(string username);
+        public int GetEstimatedSkillLevel(BitUser user);
     }
 }

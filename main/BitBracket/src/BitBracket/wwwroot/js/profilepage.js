@@ -2,8 +2,76 @@ document.addEventListener('DOMContentLoaded', function () {
     const showBlockedButton = document.getElementById('show-blocked-users');
     PopulateBlockedUsers();
     showBlockedButton.addEventListener('click', () => ShowBlockedUsers());
+    CalculateEstimatedSkillLevel();
 });
 
+function CalculateEstimatedSkillLevel() { 
+    var nameofplayer = document.getElementById('username-thing').textContent;
+    fetch('/api/BitUserApi/GetEstimatedSkillLevel/' + nameofplayer)
+    .then(response => response.json())
+    .then(data => {
+        const skillLevelElement = document.getElementById('estimated-skill-level');
+        levelData = CleanData(data);
+        skillLevelElement.textContent = levelData;
+        skillLevelElement.classList.add('skill-level-bar');
+        skillLevelElement.style.backgroundColor = getSkillLevelColor(data);
+
+    });
+}
+
+function CleanData(data) {
+    if (data === 1) {
+        data = 'Amatuer: Level 1';
+    }
+    else if (data === 2) {
+        data = 'Beginner: Level 2';
+    }
+    else if (data === 3) {
+        data = 'Novice: Level 3';
+    }
+    else if (data === 4) {
+        data = 'Intermediate: Level 4';
+    }
+    else if (data === 5) {
+        data = 'Skilled: Level 5';
+    }
+    else if (data === 6) {
+        data = 'Advanced: Level 6';
+    }
+    else if (data === 7) {
+        data = 'Expert: Level 7';
+    }
+    else if (data === 8) {
+        data = 'Master: Level 8';
+    }
+    else {
+        data = 'Play in tournaments to get an estimated skill level';
+    }
+    return data;
+}
+
+function getSkillLevelColor(level) {
+    switch (level) {
+        case 1:
+            return 'red';
+        case 2:
+            return 'orange';
+        case 3:
+            return 'yellow';
+        case 4:
+            return 'green';
+        case 5:
+            return 'blue';
+        case 6:
+            return 'indigo';
+        case 7:
+            return 'violet';
+        case 8:
+            return 'purple';
+        default:
+            return 'gray';
+    }
+}
 function PopulateBlockedUsers() {
     const blockedUsersContainer = document.getElementById('blocked-users-list');
     blockedUsersContainer.innerHTML = ''; // Clear previous entries
