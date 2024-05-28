@@ -262,6 +262,54 @@ namespace BitBracket.DAL.Concrete
         {
             return _bitUsers.Where(u => u.OptInConfirmation).ToList();
         }
+        public int GetEstimatedSkillLevel(BitUser user)
+        {
+            if (user.Standings.Count == 0)
+            {
+                return 0;
+            }
+            int totalPoints = 0;
+            List<int> placementList = [];
+            Dictionary<int, int> dictionaryOfPoints = new Dictionary<int, int>()
+            {
+            {1, 80},
+            {2, 70},
+            {3, 60},
+            {4, 50},
+            {5, 40},
+            {6, 30},
+            {7, 20},
+            {8, 10}
+            };
+            // Calculate placement points
+
+            foreach (Standing standings in user.Standings)
+            {
+                if (standings.Placement > 8)
+                {
+                    totalPoints += 5;
+                }
+                else
+                {
+                    totalPoints += dictionaryOfPoints[(standings.Placement)];
+                }
+                placementList.Add(standings.Placement);
+            }
+            totalPoints = totalPoints / placementList.Count;
+            placementList.Sort();
+            // Calculate bonus points based on consistency
+            if (placementList.Take(3).All(p => p - placementList.Min() <= 2))
+            {
+                totalPoints += 10; 
+            }
+            //int skillLevel = totalPoints / 10;  // Adjust divisor as needed
+            int skillLevel = totalPoints / 10;
+            if (skillLevel > 8)
+            {
+                skillLevel = 8;
+            }
+            return skillLevel;
+        }
     }
 
 }

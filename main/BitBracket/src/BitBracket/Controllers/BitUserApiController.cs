@@ -379,5 +379,18 @@ namespace BitBracket.Controllers
             await _standingRepository.InsertOrUpdatePlacement(BitUserId, TournamentId, Placement);
             return Ok();
         }
+        //GET: api/BitUserApi/GetEstimatedSkillLevel
+        [HttpGet("GetEstimatedSkillLevel")]
+        public async Task<ActionResult<int>> GetEstimatedSkillLevel()
+        {
+            string id = _userManager.GetUserId(User);
+            BitUser user = _bitUserRepository.GetBitUserByEntityId(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            int estimatedSkillLevel = _bitUserRepository.GetEstimatedSkillLevel(user);
+            return Ok(estimatedSkillLevel);
+        }
     }
 }

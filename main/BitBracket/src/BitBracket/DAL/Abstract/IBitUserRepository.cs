@@ -25,5 +25,6 @@ namespace BitBracket.DAL.Abstract
         public Task BlockUser(BitUser viewer, BitUser personBeingViewed);
         public Task UnBlockUser(BitUser viewer, BitUser personBeingViewed);
         public Task<IEnumerable<FriendRequest>> GetFriendRequests(int id);
+        public int GetEstimatedSkillLevel(BitUser user);
     }
 }

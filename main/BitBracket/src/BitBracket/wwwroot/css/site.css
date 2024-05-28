@@ -317,7 +317,30 @@ close:focus {
     border-radius: 50%;
     cursor: pointer;
 }
+#mySkillBtn {
+    background-color: #007bff; /* Bootstrap primary color */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
-    #myBtn:hover {
-        background-color: #0056b3; /* Darker shade for hover */
-    }
+#myBtn:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+}
+
+.skill-level-bar {
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
