@@ -115,15 +115,17 @@
             </div>
         </div>
     </div>
-    <script>
-        
-        document.addEventListener('DOMContentLoaded', function () {
-            const tournamentId = @Model.TournamentId;
-            const userId = @Model.UserId; // Correctly retrieve userId from ViewBag
-            checkParticipationStatus(tournamentId, userId); // Check participation status on load
-        });
-    </script>
+
+    <div>
+        <h2>Tournament Brackets:</h2>
+    </div>
+
+    <!-- Bracket display -->
+    <div id="bracketsList"></div>
+
+ 
     <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+    <script src="~/js/bracketList.js"></script>
     <script src="~/js/signlar/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>
     <script src="~/js/modalswitcher.js"></script>

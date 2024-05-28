@@ -28,7 +28,6 @@ public partial class Bracket
 
     public bool? UserBracket { get; set; } = null;
 
-    [ForeignKey("TournamentId")]
     [InverseProperty("Brackets")]
     [JsonIgnore]
     public virtual Tournament? Tournament { get; set; }
