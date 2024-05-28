@@ -23,5 +23,7 @@ namespace BitBracket.DAL.Abstract
         IEnumerable<BitUser> GetOptedInUsers();
 
         public Task<IEnumerable<FriendRequest>> GetFriendRequests(int id);
+
+        Task<BitUser> GetByName(string username);
     }
 }

@@ -5,68 +5,92 @@
 }
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
     <title>Competition Bracket</title>
+    <style>
+        .avatar {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .team .name {
+            font-size: 0.7em;  /* Adjusted font size for player names */
+        }
+        .bracket-container {
+            display: flex;
+            justify-content: flex-start; /* Align container to the start */
+            align-items: flex-start;    /* Align items to the start */
+            margin-top: 20px;
+        }
+        .form-container {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body class="announcement-background">
-    <h2 class="title-styling">@ViewData["Title"]
-        
-        <button id="myBtn">i</button>
-    </h2>
-<div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Welcome to the competition bracket page! From here, you can create a bracket for your competition, and generate a bracket link to share with others.</p>
+    <div class="ui container">
+        <h2 class="title-styling">@ViewData["Title"]
+            <button id="myBtn">i</button>
+        </h2>
+        <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Welcome to the competition bracket page! From here, you can create a bracket for your competition, and generate a bracket link to share with others.</p>
+                </div>
         </div>
-</div>
-    <div class="container mt-4">
-        
-                <form id="createBracketForm" method="post" class="ui form" style="padding: 20px; background-color: #93a86d; border-radius: 10px;">
-                    <div class="mb-3">
-                        <label for="Names" class="form-label ui field">Player Names (comma-delimited):</label>
-                        <textarea input asp-for="Names" type="text" class="form-control" id="Names" placeholder="Enter Player Names: e.g., Player1, Player2" required></textarea>
-                        <button type="button" id="recordBtn" class="ui icon button"><i class="microphone icon"></i></button>
-                        <button type="button" id="stopBtn" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
-                        <button type="button" id="clearBtn" class="ui icon button"><i class="undo icon"></i></button>
-                        <span asp-validation-for="Names" class="text-danger"></span>
+
+        <div class="ui segment form-container">
+            <form id="createBracketForm" method="post" class="ui form">
+                <div class="field">
+                    <label for="Names">Player Names (comma-delimited):</label>
+                    <textarea asp-for="Names" id="Names" placeholder="Enter Player Names: e.g., Player1, Player2" required></textarea>
+                    <button type="button" id="recordBtn" class="ui icon button"><i class="microphone icon"></i></button>
+                    <button type="button" id="stopBtn" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+                    <button type="button" id="clearBtn" class="ui icon button"><i class="undo icon"></i></button>
+                    <div asp-validation-for="Names" class="ui pointing red basic label"></div>
+                </div>
+                <div class="field">
+                    <label for="Format">Format:</label>
+                    <select id="Format" name="Format" class="ui dropdown">
+                        <option value="Single Elimination">Single Elimination</option>
+                        <option value="Double Elimination">Double Elimination</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" checked="@Model.RandomSeeding" />
+                        <label for="RandomSeeding">Random Seeding (Seeding will be done in entered order otherwise)</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="Format" class="form-label ui field">Format:</label>
-                        <select id="Format" name="Format" class="form-control">
-                            <option value="Single Elimination">Single Elimination</option>
-                            <option value="Double Elimination">Double Elimination</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label>
-                        <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" checked="@Model.RandomSeeding" /> Random Seeding (Seeding will be done in entered order otherwise)</label>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Generate Bracket</button>
-                    </div>
-                </form>
-         
-    </div>
-    <div class="d-grid gap-2">
-        <button id="generateButton" type="button" class="btn btn-primary">
-            Generate Bracket Link
-            <i class="clipboard icon"></i>
-        </button>     
-    </div>
-    <div id="minimal" class="row">
-        <div class="col demo"></div>
+                </div>
+                <button type="submit" class="ui button primary">Generate Bracket</button>
+            </form>
+        </div>
+
+        <div class="ui segment">
+            <button id="generateButton" type="button" class="ui button primary">
+                Generate Bracket Link
+                <i class="clipboard icon"></i>
+            </button>
+        </div>
+
+        <div id="minimal" class="row">
+            <div class="col demo"></div>
+        </div>
     </div>
 
-</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="~/js/bracket.js"></script>
+    <script src="~/js/modalswitcher.js"></script>
 </body>
 </html>
-
-
-<script src="~/js/bracket.js"></script>
-<script src="~/js/modalswitcher.js"></script>
-
