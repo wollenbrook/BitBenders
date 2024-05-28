@@ -1,7 +1,17 @@
-﻿@model BitBracket.Models.Announcement
+@model BitBracket.Models.Announcement
 
 @{
     ViewData["Title"] = "Home Page";
+}
+
+@{
+    var alert = TempData["Alert"] as string;
+    if (!string.IsNullOrEmpty(alert))
+    {
+        <div class="alert alert-warning">
+            @alert
+        </div>
+    }
 }
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">

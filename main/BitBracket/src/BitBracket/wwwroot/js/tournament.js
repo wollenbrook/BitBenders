@@ -144,7 +144,25 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
             });
         });
     });
-
+    /*
+    function sortUsersBySkillLevel(users) {
+        // Sort the users by skill level in descending order
+        // Randomly order users with the same skill level
+        users.sort((a, b) => {
+            if (a.skillLevels === b.skillLevels) {
+                // Randomly return -1 or 1
+                return 0.5 - Math.random();
+            }
+            return b.skillLevels - a.skillLevels;
+        });
+    
+        // Create a new list of usernames
+        const usernames = users.map(user => user.username);
+    
+        // Return the list of usernames
+        return usernames;
+    }
+    */
 
     // Get the BracketType select element
     const bracketTypeSelect = document.getElementById('BracketType');
