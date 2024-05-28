@@ -1,4 +1,5 @@
 //wwwroot/js/tournament.js
+
 document.addEventListener('DOMContentLoaded', function() {
     setupWhisperControls('BracketName', 'recordBtnBracketName', 'stopBtnBracketName', 'clearBtnBracketName');
     setupWhisperControls('playerNames', 'recordBtnPlayerNames', 'stopBtnPlayerNames', 'clearBtnPlayerNames');

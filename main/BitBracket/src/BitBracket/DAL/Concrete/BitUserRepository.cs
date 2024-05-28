@@ -1,4 +1,6 @@
-﻿using BitBracket.DAL.Abstract;
+﻿//DAL/Concrete/BitUserRepository.cs
+
+using BitBracket.DAL.Abstract;
 using BitBracket.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -261,6 +263,11 @@ namespace BitBracket.DAL.Concrete
         public IEnumerable<BitUser> GetOptedInUsers()
         {
             return _bitUsers.Where(u => u.OptInConfirmation).ToList();
+        }
+
+        public async Task<BitUser> GetByName(string username)
+        {
+            return await _bitUsers.FirstOrDefaultAsync(u => u.Username == username);
         }
     }
 

@@ -1,5 +1,3 @@
-﻿@* Home/Index.cshtml *@
-
 @model BitBracket.Models.Announcement
 
 @{
@@ -16,34 +14,108 @@
     }
 }
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .background-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .background-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .background-container img.blur {
+            filter: blur(8px);
+        }
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            padding: 20px;
+            background-color: rgba(167, 167, 167, 0.5);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+        }
+        .ui.button {
+            margin: 10px 0;
+        }
+        .title-styling {
+            font-size: 2em;
+            white-space: nowrap; /* Ensure title stays on one line */
+        }
+        .text-styling {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .ui.animated.button {
+            margin: 5px;
+        }
+        .ui.buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
 </head>
-<div class="section-gap"></div>
-<div class="section-gap"></div>
-<body class="announcement-background"></body>
-    <div class="ui container center aligned">
-        <h1 class="title-styling">Welcome to BitBracket
-        <button id="myBtn">i</button>
-
-        </h1>
-    <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Welcome to our home page! From here, you can see the latest admin announcement, see some information</p>
-            <p>about our softwares purpose, and get oriented before seeing what we have to offer! </p>
-          
-        </div>
+<body>
+    <div class="background-container">
+        <img class="ui image" src="/images/Image1.JPG" alt="Image 1">
+        <img class="ui image" src="/images/Image2.JPG" alt="Image 2">
+        <img class="ui image" src="/images/Image3.JPG" alt="Image 3">
+        <img class="ui image" src="/images/Image4.JPG" alt="Image 4">
+        <img class="ui image" src="/images/Image5.JPG" alt="Image 5">
+        <img class="ui image" src="/images/Image6.JPG" alt="Image 6">
+        <img class="ui image" src="/images/Image7.JPG" alt="Image 7">
+        <img class="ui image" src="/images/Image8.JPG" alt="Image 8">
+        <img class="ui image" src="/images/Image9.JPG" alt="Image 9">
+        <img class="ui image" src="/images/Image10.JPG" alt="Image 10">
+        <img class="ui image" src="/images/Image11.JPG" alt="Image 11">
+        <img class="ui image" src="/images/Image12.JPG" alt="Image 12">
+        <img class="ui image" src="/images/Image13.JPG" alt="Image 13">
+        <img class="ui image" src="/images/Image14.JPG" alt="Image 14">
     </div>
+
+    <div class="overlay">
+        <h1 class="title-styling">Welcome to BitBracket
+            @* <button id="myBtn" class="ui button small icon">
+                <i class="info circle icon" style="color: white;"></i>
+            </button> *@
+        </h1>
+        @* <div id="myModal" class="ui modal">
+            <div class="header">Welcome!</div>
+            <div class="content">
+                <p>Welcome to our home page! From here, you can see the latest admin announcement, see some information about our software's purpose, and get oriented before seeing what we have to offer!</p>
+            </div>
+            <div class="actions">
+                <div class="ui button close">Close</div>
+            </div>
+        </div> *@
         <p class="text-styling">Your ultimate platform for organizing and participating in tournaments.</p>
-        
-        <div class="ui center aligned segment">
+
+        <div class="ui buttons">
             <a href="@Url.Action("CreateBracket", "Bracket")" class="ui animated button" tabindex="0">
                 <div class="visible content">Got an idea for a tournament?</div>
-                <div class="hidden content">Create a Basic Bracket.
-                </div>
+                <div class="hidden content">Create a Basic Bracket.</div>
             </a>
-            <a href="@Url.Action("Announcement", "Home")" class="ui animated button" tabindex="0">
+            <a href="@Url.Action("UserAnnouncementForm", "Home")" class="ui animated button" tabindex="0">
                 <div class="visible content">What have you missed?</div>
                 <div class="hidden content">Check Announcements Page</div>
             </a>
@@ -51,64 +123,12 @@
                 <div class="visible content">What is BitBracket?</div>
                 <div class="hidden content">Check About Page</div>
             </a>
-
-        </div>
-
-<div class="section-gap"></div>
-        <div class="ui hidden divider"></div>
-
-        <h2 class="ui header">Latest Announcement</h2>
-        @if (Model != null)
-        {
-            <div class="ui card centered">
-                <div class="content">
-                    <div class="header">@Model.Title</div>
-                    <div class="description">
-                        @Model.Description
-                    </div>
-                    <div class="meta">@Model.CreationDate.ToString("MMMM dd, yyyy")</div>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div>No announcements to display.</div>
-        }
-
-        <div class="section-gap"></div>
-        <div class="section-gap"></div>
-        <div class="section-gap"></div>
-        <div class="section-gap"></div>
-        <div class="ui hidden divider"></div>
-        <div class="ui hidden divider"></div>
-        <div class="ui hidden divider"></div>
-        <div class="ui hidden divider"></div>
-
-        <h2 class="text-styling">Why Choose BitBracket?</h2>
-        <div class="section-gap"></div>
-        <div class="ui three column very relaxed grid">
-            <div class="column">
-                <div class="ui icon header icon-color">
-                    <i class="world icon icon-color"></i> 
-                    Global Community
-                </div>
-                <p class="medium-text">Connect with players from all over the world.</p>
-            </div>
-            <div class="column">
-                <div class="ui icon header icon-color">
-                    <i class="trophy icon icon-color"></i> 
-                    Competitive Tournaments
-                </div>
-                <p class="medium-text">Compete in high-stakes tournaments across various games.</p>
-            </div>
-            <div class="column">
-                <div class="ui icon header icon-color">
-                    <i class="users icon icon-color"></i> 
-                    Friendly Environment
-                </div>
-                <p class="medium-text">Enjoy a welcoming community regardless of your skill level.</p>
-            </div>
         </div>
     </div>
 
-<script src="~/js/modalswitcher.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="~/js/modalswitcher.js"></script>
+    <script src="~/js/homeSlideshow.js"></script>
+</body>
+</html>
