@@ -1,4 +1,4 @@
-//Models/Participate.cs
+﻿//Models/Participate.cs
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

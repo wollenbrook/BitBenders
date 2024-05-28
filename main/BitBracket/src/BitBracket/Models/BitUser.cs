@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace BitBracket.Models;
 
@@ -32,34 +32,44 @@ public partial class BitUser
     public bool EmailConfirmedStatus { get; set; } = false;
     public bool OptInConfirmation { get; set; } = true;
 
+    [InverseProperty("BlockedUserNavigation")]
+    public virtual ICollection<BlockedUser> BlockedUserBlockedUserNavigations { get; set; } = new List<BlockedUser>();
+
+    [InverseProperty("Blocked")]
+    public virtual ICollection<BlockedUser> BlockedUserBlockeds { get; set; } = new List<BlockedUser>();
+
     [InverseProperty("FriendNavigation")]
     [JsonIgnore]
-    public virtual ICollection<Friend> FriendFriendNavigations { get; set; } = new List<Friend>();
 
+    public virtual ICollection<Friend> FriendFriendNavigations { get; set; } = new List<Friend>();
 
     [InverseProperty("Receiver")]
     [JsonIgnore]
+
     public virtual ICollection<FriendRequest> FriendRequestReceivers { get; set; } = new List<FriendRequest>();
 
     [InverseProperty("Sender")]
     [JsonIgnore]
+
     public virtual ICollection<FriendRequest> FriendRequestSenders { get; set; } = new List<FriendRequest>();
 
     [InverseProperty("User")]
     [JsonIgnore]
+
     public virtual ICollection<Friend> FriendUsers { get; set; } = new List<Friend>();
 
-    [InverseProperty("OwnerNavigation")]
-    public virtual ICollection<Tournament> Tournaments { get; set; } = new List<Tournament>();
-    
-    [InverseProperty("BitUser")]
-    public virtual ICollection<UserAnnouncement> UserAnnouncements { get; set; } = new List<UserAnnouncement>();
-   
-    // New additions for participation
+    [InverseProperty("Sender")]
+    public virtual ICollection<ParticipateRequest> ParticipateRequests { get; set; } = new List<ParticipateRequest>();
+
     [InverseProperty("User")]
     public virtual ICollection<Participate> Participates { get; set; } = new List<Participate>();
 
-    [InverseProperty("Sender")]
-    public virtual ICollection<ParticipateRequest> ParticipateRequestSenders { get; set; } = new List<ParticipateRequest>();
+    [InverseProperty("PersonNavigation")]
+    public virtual ICollection<Standing> Standings { get; set; } = new List<Standing>();
 
+    [InverseProperty("OwnerNavigation")]
+    public virtual ICollection<Tournament> Tournaments { get; set; } = new List<Tournament>();
+
+    [InverseProperty("BitUser")]
+    public virtual ICollection<UserAnnouncement> UserAnnouncements { get; set; } = new List<UserAnnouncement>();
 }

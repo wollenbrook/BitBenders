@@ -14,6 +14,7 @@ $(document).ready(function() {
         }
 
         $('#generateButton').show();
+        $("#captcha").show();
         var formData = {
             Names: $('#Names').val(),
             Format: $('#Format').val(),
@@ -142,31 +143,41 @@ function setupBracket(format, teams, results) {
 }
 
 function generateBracketLink(bracketFormat) {
-    var dataToSend = {
-        bracketData: JSON.stringify({ teams: bracketFormat.teams, results: bracketFormat.results })
-    };
+    grecaptcha.ready(async function() {
+        var recaptchaResponse = grecaptcha.getResponse();
 
-    console.log("Sending data:", dataToSend);
-
-    $.ajax({
-        url: '/api/GuidAPI',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(dataToSend),
-        success: function(data) {
-            var guidLink = data.guid;
-            var baseUrl = window.location.origin;
-            var fullUrl = baseUrl + '/bracket/guestbracketview?id=' + guidLink;
-            var button = $('#generateButton');
-            button.text(fullUrl);
-            navigator.clipboard.writeText(fullUrl);
-            button.off('click').click(function() {
-                window.open(fullUrl, '_blank');
-            });
-        },
-        error: function(error) {
-            alert("Failed to create Link, try again later");
+        // Check if the reCAPTCHA has been completed
+        if (recaptchaResponse.length === 0) {
+            alert('Please complete the reCAPTCHA.');
+            return;
         }
+    
+        var dataToSend = {
+            bracketData: JSON.stringify({ teams: bracketFormat.teams, results: bracketFormat.results })
+        };
+
+        console.log("Sending data:", dataToSend);
+
+        $.ajax({
+            url: '/api/GuidAPI',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToSend),
+            success: function(data) {
+                var guidLink = data.guid;
+                var baseUrl = window.location.origin;
+                var fullUrl = baseUrl + '/bracket/guestbracketview?id=' + guidLink;
+                var button = $('#generateButton');
+                button.text(fullUrl);
+                navigator.clipboard.writeText(fullUrl);
+                button.off('click').click(function() {
+                    window.open(fullUrl, '_blank');
+                });
+            },
+            error: function(error) {
+                alert("Failed to create Link, try again later");
+            }
+        });
     });
 }
 

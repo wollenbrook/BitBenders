@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace BitBracket.Models;
 
-[Table("Announcements")]
 public partial class Announcement
 {
     [Key]
@@ -23,9 +24,7 @@ public partial class Announcement
     public string? Description { get; set; }
 
     public bool IsActive { get; set; }
-
     [Required]
     [StringLength(50)]
     public string? Author { get; set; }
-
 }

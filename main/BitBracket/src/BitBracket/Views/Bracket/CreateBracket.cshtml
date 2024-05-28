@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
@@ -77,6 +78,7 @@
         </div>
 
         <div class="ui segment">
+            <div id="captcha" class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
             <button id="generateButton" type="button" class="ui button primary">
                 Generate Bracket Link
                 <i class="clipboard icon"></i>

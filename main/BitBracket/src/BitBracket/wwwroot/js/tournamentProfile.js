@@ -1,3 +1,14 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const userId = document.getElementById('userId').value;
+    const tournamentId = document.getElementById('tournamentId').value;
+
+    checkParticipationStatus(tournamentId, userId);
+}
+);
+
+
+
+
 function sendParticipationRequest(tournamentId, userId) {
     fetch(`/api/TournamentAPI/SendRequest/${userId}/${tournamentId}`, {
         method: 'POST'
@@ -13,6 +24,12 @@ function sendParticipationRequest(tournamentId, userId) {
 }
 
 function checkParticipationStatus(tournamentId, userId) {
+    if (userId === -1) {
+        const button = document.getElementById('participateButton');
+        button.classList.add('disabled');
+        button.innerText = 'Log in to participate';
+        return;
+    }
     fetch(`/api/TournamentAPI/CheckParticipation/${userId}/${tournamentId}`)
         .then(response => response.json())
         .then(data => {

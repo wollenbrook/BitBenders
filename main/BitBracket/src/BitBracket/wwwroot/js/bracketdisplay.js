@@ -1,7 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const bracketId = urlParams.get('id');
 
-// Fetch bracket details CHANGE THIS
+// Fetch bracket details
 fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
     .then(response => response.json())
     .then(bracket => {
@@ -21,15 +21,14 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
         // Create bracketFormat object
         const bracketFormat = {
             "teams": teams,
-            "results": [results]  // Winners bracket
+            "results": results
         };
-        // needs fixing
+
         // Save function
         function saveFn(data) {
             var json = JSON.stringify(data);
             localStorage.setItem('bracketData', json);
             console.log(data);
-            // update bracket data here
         }
 
         $(function() {
@@ -40,4 +39,7 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
                 disableTeamEdit: true  // Not allowing editing teams
             });
         });
+
+        // Disable score editing
+        $('.score.editable').attr('contenteditable', 'false');
     });

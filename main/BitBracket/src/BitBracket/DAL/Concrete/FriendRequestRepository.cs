@@ -1,6 +1,5 @@
 ﻿using BitBracket.DAL.Abstract;
 using BitBracket.Models;
-using HW6.DAL.Concrete;
 using Microsoft.EntityFrameworkCore;
 
 namespace BitBracket.DAL.Concrete
