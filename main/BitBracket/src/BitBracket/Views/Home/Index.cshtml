@@ -5,9 +5,18 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+
+@{
+    var alert = TempData["Alert"] as string;
+    if (!string.IsNullOrEmpty(alert))
+    {
+        <div class="alert alert-warning">
+            @alert
+        </div>
+    }
+}
 <head>
     <link rel="stylesheet" href="~/css/site.css" />
-
 </head>
 <div class="section-gap"></div>
 <div class="section-gap"></div>
