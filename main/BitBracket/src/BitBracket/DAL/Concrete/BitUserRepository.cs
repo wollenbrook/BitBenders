@@ -1,4 +1,6 @@
-﻿using BitBracket.DAL.Abstract;
+﻿//DAL/Concrete/BitUserRepository.cs
+
+using BitBracket.DAL.Abstract;
 using BitBracket.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -309,6 +311,11 @@ namespace BitBracket.DAL.Concrete
                 skillLevel = 8;
             }
             return skillLevel;
+        }
+
+        public async Task<BitUser> GetByName(string username)
+        {
+            return await _bitUsers.FirstOrDefaultAsync(u => u.Username == username);
         }
     }
 
