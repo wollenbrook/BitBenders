@@ -587,3 +587,9 @@ function fetchBrackets() {
 
 // Fetch brackets on page load
 fetchBrackets();
+
+$(document).ready(function() {
+    $('#backButton').click(function() {
+      window.history.back();
+    });
+  });
