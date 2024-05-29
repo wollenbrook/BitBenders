@@ -4,7 +4,10 @@
 @{
     ViewData["Title"] = "Register";
 }
+<head>
+    <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
 
+</head>
 <body class="announcement-background">
     <div class="section-gap"></div>
     <div class="ui container">
@@ -44,8 +47,8 @@
                     <input asp-for="Input.ConfirmPassword" type="password" placeholder="Confirm Password">
                     <span asp-validation-for="Input.ConfirmPassword" class="ui red text"></span>
                 </div>
-
-                <button id="registerSubmit" type="submit" class="ui button primary fluid">Register</button>
+                <div id="captcha" class="g-recaptcha" data-sitekey="6Lfsr-kpAAAAALEMdy2Npn-5K8M1K6krwnlKEXil" data-callback="captchaCompleted"></div>
+                <button id="registerSubmit" type="submit" class="ui button primary fluid" disabled>Register</button>
             </form>
         </div>
     </div>
@@ -53,4 +56,7 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/captchaRegister.js"></script>
+
+
 }

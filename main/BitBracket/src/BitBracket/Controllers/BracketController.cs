@@ -72,8 +72,11 @@ public class BracketController : Controller
             TempData["Alert"] = "You've been moved to the front page as you are no longer on the account that created this tournament bracket, to revist this page you must log into the account that created this tournament bracket";
             return RedirectToAction("Index", "Home");
         }
-
-        return View((object)id);
+        TournamentViewModel tournamentViewModel = new TournamentViewModel
+        {
+            TournamentId = tournament.Id,
+        };
+        return View( tournamentViewModel);
     }
 
     public IActionResult BracketView(int id)
