@@ -14,7 +14,7 @@ function fetchAnnouncements() {
         .then(data => displayAnnouncements(data))
         .catch(error => {
             console.error('Fetch Error:', error);
-            alert('There is a problem with the application. It will be fixed soon!');
+            //alert('There is a problem with the application. It will be fixed soon!');
         });
 }
 
