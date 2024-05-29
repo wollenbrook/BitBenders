@@ -1,7 +1,6 @@
-// Get the tournament ID from the URL
-
-const urlParams = new URLSearchParams(window.location.search);
-const tournamentId = urlParams.get('id');
+// Get the tournament ID from the server-side model
+const pathSegments = window.location.pathname.split('/');
+const tournamentId = pathSegments[pathSegments.length - 1];
 
 // Fetch brackets function
 function fetchBrackets() {
@@ -39,3 +38,6 @@ function fetchBrackets() {
             });
         });
 }
+
+// Fetch brackets on page load
+fetchBrackets();
