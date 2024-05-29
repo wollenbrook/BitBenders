@@ -1,10 +1,10 @@
-@model BitBracket.Models.Announcement
+﻿@model BitBracket.Models.Announcement
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-@{
+@* @{
     var alert = TempData["Alert"] as string;
     if (!string.IsNullOrEmpty(alert))
     {
@@ -12,10 +12,8 @@
             @alert
         </div>
     }
-}
+} *@
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-    <link rel="stylesheet" href="~/css/site.css" />
     <style>
         body {
             margin: 0;
@@ -59,7 +57,7 @@
         }
         .title-styling {
             font-size: 2em;
-            white-space: nowrap; /* Ensure title stays on one line */
+            @* white-space: nowrap; /* Ensure title stays on one line */ *@
         }
         .text-styling {
             font-size: 1.2em;
@@ -128,7 +126,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <script src="~/js/modalswitcher.js"></script>
+    @* <script src="~/js/modalswitcher.js"></script> *@
     <script src="~/js/homeSlideshow.js"></script>
 </body>
 </html>

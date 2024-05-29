@@ -25,7 +25,8 @@ namespace BitBracket.DAL.Abstract
         public Task BlockUser(BitUser viewer, BitUser personBeingViewed);
         public Task UnBlockUser(BitUser viewer, BitUser personBeingViewed);
         public Task<IEnumerable<FriendRequest>> GetFriendRequests(int id);
+        Task<BitUser> GetUserByIdAsync(int userId);
+        Task UpdateUserAsync(BitUser user);
 
-        Task<BitUser> GetByName(string username);
     }
 }
