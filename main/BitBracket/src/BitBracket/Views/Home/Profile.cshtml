@@ -13,7 +13,6 @@
         <h1 class="title-styling">
             Welcome, @Model.Username, to your profile page!
             <button id="myBtn">i</button>
-
         </h1>
         <div id="myModal" class="modal">
             <!-- Modal content -->
@@ -36,7 +35,7 @@
                         <a class="ui teal ribbon label clickable">Profile Picture</a>
                     </div>
                     <div class="content">
-                        <a class="header">@Model.Username</a>
+                        <a class="header" id="username-thing">@Model.Username</a>
                         <div class="meta">
                             <span>@Model.Email</span>
                         </div>
@@ -47,6 +46,27 @@
                         <div class="extra">
                             <button id="saveTagButtonId" class="ui small primary button">Save Tag</button>
                             <button id="saveBioButtonId" class="ui small secondary button">Save Bio</button>
+                        </div>
+                      
+                    </div>
+                    <div>
+                        <h2>Estimated Skill Level
+                            <button id="mySkillBtn">i</button>
+                        </h2>
+                        <div id="myModalSkill" class="modal">
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <span class="close2">&times;</span>
+                                <p>The Estimated Skill Level is an estimation of your general skill level based on your previous 
+                                    tournament performances. We take into account streaks when calculating the skill level, and it is generally a little harder
+                                    to reach a higher skill level. This is to ensure that the skill level is accurate and not easily
+                                    manipulated. Please keep in mind that this is an estimation and not a definitive skill level, and 
+                                    a tournament organizer can choose to use it when seeding players in a tournament, or disregard it at their discretion. 
+                                </p>
+                            </div>
+                        </div>
+                        <div id="estimated-skill-level">
+                            
                         </div>
                     </div>
                 </div>
@@ -66,6 +86,7 @@
     </div>
     <script src="~/js/profilepage.js"></script>
     <script src="~/js/modalswitcher.js"></script>
+    <script src="~/js/extraModel.js"></script>
 
 </body>
 </html>

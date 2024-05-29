@@ -25,7 +25,7 @@ CREATE TABLE [Brackets] (
     [ID] INT PRIMARY KEY IDENTITY(1,1),
     [Name] NVARCHAR(50) NOT NULL,
     [Status] NVARCHAR(50) NOT NULL,
-    [UserBracket] BOOLEAN NULL,
+    [UserBracket] BIT NULL,
     [BracketData] NVARCHAR(4000) NOT NULL,
     [TournamentID] INT FOREIGN KEY REFERENCES [Tournaments]([ID])
 );

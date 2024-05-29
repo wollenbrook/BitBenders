@@ -35,6 +35,7 @@ function FillContentWithStandings() {
             data.forEach(user => {
                 var tr = document.createElement("tr");
                 var td = document.createElement("td");
+                td.textContent = user.tournament.name;
                 tr.appendChild(td);
                 td = document.createElement("td");
                 td.textContent = user.personNavigation.username;
