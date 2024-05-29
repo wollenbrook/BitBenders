@@ -400,3 +400,4 @@ FodyWeavers.xsd
 
 # Ignore all .DS_Store files (macOS)
 .DS_Store
+main/BitBracket/src/BitBracket/appsettings.json
