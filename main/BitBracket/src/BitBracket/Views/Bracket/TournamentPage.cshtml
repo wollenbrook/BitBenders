@@ -107,11 +107,11 @@
                             <button type="button" id="clearBtnBracketName" class="ui icon button"><i class="undo icon"></i></button>
                         </div>
                         <div class="field">
-                            <label id="playerNamesLabel" for="Names">Player Names (comma-delimited):</label>
+                            <label id="playerNamesLabel" for="Names">Player Names (comma-delimited, In-Order Seeding):</label>
                             <textarea id="playerNames" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
-                            <button type="button" id="recordBtnPlayerNames" class="ui icon button"><i class="microphone icon"></i></button>
-                            <button type="button" id="stopBtnPlayerNames" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
-                            <button type="button" id="clearBtnPlayerNames" class="ui icon button"><i the="undo icon"></i></button>
+                            <button type="button" id="recordBtnPlayerNames" class="ui icon button hidetempb"><i class="microphone icon"></i></button>
+                            <button type="button" id="stopBtnPlayerNames" class="ui icon button hidetempb" disabled><i class="microphone slash icon"></i></button>
+                            <button type="button" id="clearBtnPlayerNames" class="ui icon button hidetempb"><i the="undo icon"></i></button>
                         </div>
                         <div class="field">
                             <label for="Format">Format:</label>
@@ -120,10 +120,16 @@
                                 <option value="Double Elimination">Double Elimination</option>
                             </select>
                         </div>
+                        <div class="field hidetemp" style="display: none;">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="SmartSeedingAlgorithm" name="SmartSeedingAlgorithm" value="true"/>
+                                <label for="SmartSeedingAlgorithm">Use Smart Seeding Algorithm (Seed by Skill Level)</label>
+                            </div>
+                        </div>
                         <div class="field">
                             <div class="ui checkbox">
                                 <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" />
-                                <label for="RandomSeeding">Random Seeding (Seeding will be done in entered order otherwise)</label>
+                                <label for="RandomSeeding">Random Seeding (Overrides other Seeding methods)</label>
                             </div>
                         </div>
                     </div>
