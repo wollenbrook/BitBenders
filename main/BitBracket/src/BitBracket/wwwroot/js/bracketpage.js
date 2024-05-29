@@ -126,6 +126,7 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
         });
     });
 
+
 function singleElimination(data) {
     var teams = data.teams;
     var results = data.results;
@@ -217,3 +218,12 @@ function SavePlacements(dictionaryOfPlacemenets) {
         
     }
 }
+
+
+    $(document).ready(function() {
+        $('#backButton').click(function() {
+          window.history.back();
+        });
+      });
+
+
