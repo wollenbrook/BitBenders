@@ -110,3 +110,9 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
             });
         });
     });
+
+    $(document).ready(function() {
+        $('#backButton').click(function() {
+          window.history.back();
+        });
+      });

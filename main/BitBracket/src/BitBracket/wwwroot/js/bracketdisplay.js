@@ -49,3 +49,9 @@ function fetchBracketDetails() {
 // Fetch bracket details immediately and then every 15 seconds
 fetchBracketDetails();
 setInterval(fetchBracketDetails, 15000);
+
+$(document).ready(function() {
+    $('#backButton').click(function() {
+      window.history.back();
+    });
+  });
