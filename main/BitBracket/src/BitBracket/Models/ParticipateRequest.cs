@@ -1,4 +1,4 @@
-//Models/ParticipateRequest.cs
+﻿//Models/ParticipateRequest.cs
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,6 +18,6 @@ namespace BitBracket.Models
         public int TournamentId { get; set; }
         public virtual Tournament Tournament { get; set; }
 
-        public string Status { get; set; } = "Pending"; // Pending, Approved, Rejected
+        public string? Status { get; set; } = null; // Pending, Approved, Rejected
     }
 }

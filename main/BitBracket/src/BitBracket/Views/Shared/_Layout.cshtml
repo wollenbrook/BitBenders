@@ -32,16 +32,15 @@
         <div class="ui menu borderless navbar-background" id="navbar-background">
             <div class="ui container">
                 <a class="header item navbar-text" asp-area="" asp-controller="Home" asp-action="Index">BitBracket</a>
-                <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 @* <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="Announcement">Admin Announcements</a> *@
-                <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="UserAnnouncementForm">User Announcements</a>
+                <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="UserAnnouncementForm">Announcements</a>
                 <a class="item navbar-text" asp-area="" asp-controller="Bracket" asp-action="CreateBracket">Create Bracket</a>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="Profile">Profile</a>
                     <a class="item navbar-text" asp-area="" asp-controller="Bracket" asp-action="TournamentDashboard">Tournament Dashboard</a>
                     <!-- Friend Requests Dropdown -->
-                    <div class="dropdown" id="friendRequestsDropdown">
+                    /*<div class="dropdown" id="friendRequestsDropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Friend Requests
                         </button>
@@ -60,8 +59,8 @@
                             <!-- Friends will be populated here -->
                         </div>
                     </div>
+                    */
                 }
-                <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="Privacy">About</a>
                 
                 <div class="right menu">
                     <a class="item" asp-area="" asp-controller="Home" asp-action="Search">
@@ -99,9 +98,8 @@
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/themeSwitcher.js" asp-append-version="true"></script>
-    <script src="~/js/FriendRequest.js" asp-append-version="true"></script>
     <script>
-      //  $('.ui.dropdown').dropdown(); // Initialize Semantic UI dropdown
+      $('.ui.dropdown').dropdown(); // Initialize Semantic UI dropdown
       //  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     </script>
 

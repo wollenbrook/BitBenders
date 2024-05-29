@@ -1,4 +1,5 @@
 //wwwroot/js/tournament.js
+
 document.addEventListener('DOMContentLoaded', function() {
     setupWhisperControls('BracketName', 'recordBtnBracketName', 'stopBtnBracketName', 'clearBtnBracketName');
     setupWhisperControls('playerNames', 'recordBtnPlayerNames', 'stopBtnPlayerNames', 'clearBtnPlayerNames');
@@ -123,7 +124,7 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                 BroadcastType: broadcastType,
                 TournamentId: tournamentId
             };
-            console.log(dataToSend);
+            //console.log(dataToSend);
     
             // Send the broadcastLink to the server
             $.ajax({
@@ -143,10 +144,31 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
             });
         });
     });
-
+    /*
+    function sortUsersBySkillLevel(users) {
+        // Sort the users by skill level in descending order
+        // Randomly order users with the same skill level
+        users.sort((a, b) => {
+            if (a.skillLevels === b.skillLevels) {
+                // Randomly return -1 or 1
+                return 0.5 - Math.random();
+            }
+            return b.skillLevels - a.skillLevels;
+        });
+    
+        // Create a new list of usernames
+        const usernames = users.map(user => user.username);
+    
+        // Return the list of usernames
+        return usernames;
+    }
+    */
 
     // Get the BracketType select element
     const bracketTypeSelect = document.getElementById('BracketType');
+
+    // Get the buttons
+    const buttons = document.getElementsByClassName('hidetempb');
 
     // Add a hidden input field to the form
     let hiddenInput = document.createElement('input');
@@ -158,6 +180,12 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
     bracketTypeSelect.addEventListener('change', function() {
         // Check if the selected option is 'Registered User Bracket'
         if (this.value === 'Registered User Bracket') {
+            // Show Smart Seeding checkbox
+            document.querySelector('.hidetemp').style.display = 'block';
+             // Hide the Whisper buttons
+            for(let button of buttons) {
+                button.style.display = 'none';
+            }
             // Fetch the registered users
             fetch(`/api/TournamentAPI/GetParticipates/${tournamentId}`)
                 .then(response => response.json())
@@ -166,7 +194,7 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                     const playerNamesTextarea = document.getElementById('playerNames');
 
                     // Change the label text
-                    playerNamesLabel.textContent = 'Registered Users (Descending Order):';
+                    playerNamesLabel.textContent = 'Registered Users (Seeded in Descending Order):';
 
                     // Clear the textarea
                     playerNamesTextarea.value = '';
@@ -193,14 +221,38 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                     playerNamesContainer.id = 'playerNamesContainer';
                     playerNamesContainer.style.display = 'flex'; // Add this line
                     playerNamesContainer.style.flexDirection = 'column'; // Add this line
+                    const dictionaryThatHasNameAndWeight = {};
+
                     names.forEach(name => {
                         let span = document.createElement('span');
                         span.draggable = true;
                         span.textContent = name;
                         span.className = 'ui label ui-widget-content ui-corner-all'; // Add classes for jQuery UI styling
+                        fetch(`/api/BitUserApi/GetEstimatedSkillLevel/${name}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                span.title = 'Estimated Skill Level:  ' + data;
+                                dictionaryThatHasNameAndWeight[name] = data;
+                            });
+                        //this is the dictionary that has the name and weight associated with the user based on performance, not input from user
+                        //console.log(dictionaryThatHasNameAndWeight);
+                        // Create an input box for skill level
+                        let input = document.createElement('input');
+                        // Add CSS styles to the input box
+                        input.style.width = '75px'; // Set the width of the input box
+                        input.style.verticalAlign = 'middle'; // Align the input box vertically with the span
+                        input.style.alignItems = 'right';
+                        input.type = 'number';
+                        input.min = 1;
+                        input.max = 8;
+                        input.value = 1;  // Default value
+                        input.style.marginLeft = '10px';  // Add some space between the name and the input box
+                        input.id = name;  // Set the id of the input box to the name of the player
+                        // Append the input box to the span
+                        span.appendChild(input);
+
                         playerNamesContainer.appendChild(span);
                     });
-
                     // Replace the textarea with the new container
                     playerNamesTextarea.replaceWith(playerNamesContainer);
 
@@ -214,7 +266,7 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                             // You can update your data or a hidden input field with this new order
                             hiddenInput.value = updatedOrder.join(', ');
                             playerNamesTextarea.value = hiddenInput.value;
-                            console.log(playerNamesTextarea.value)
+                            //console.log(playerNamesTextarea.value)
                         }
                     });
 
@@ -228,8 +280,16 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                     });
                 });
         } else {
+            // Hide Smart Seeding checkbox
+            document.querySelector('.hidetemp').style.display = 'none';
+
+            // Show the Whisper buttons
+            for(let button of buttons) {
+                button.style.display = 'inline-block';
+            }
+
             // Change the label text back
-            playerNamesLabel.textContent = 'Player Names (comma-delimited):';
+            playerNamesLabel.textContent = 'Player Names (comma-delimited, In-Order Seeding):';
 
             // Get the playerNamesContainer
             const playerNamesContainer = document.getElementById('playerNamesContainer');
@@ -243,12 +303,52 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
         }
     });
 
-    $(document).ready(function() {
+
+    function sortUsersBySkillLevel(dictionaryWithPlayerNameAndWeight) {
+        // Convert the dictionary to an array of objects
+        const users = Object.keys(dictionaryWithPlayerNameAndWeight).map(username => {
+            return {
+                username: username,
+                skillLevels: dictionaryWithPlayerNameAndWeight[username]
+            };
+        });
+    
+        // Sort the users by skill level in descending order
+        // Randomly order users with the same skill level
+        users.sort((a, b) => {
+            if (a.skillLevels === b.skillLevels) {
+                // Randomly return -1 or 1
+                return 0.5 - Math.random();
+            }
+            return b.skillLevels - a.skillLevels;
+        });
+    
+        // Create a new list of usernames
+        const usernames = users.map(user => user.username);
+    
+        // Return the list of usernames
+        return usernames;
+    }
+
+
+$(document).ready(function () {
+        //var numAssociatedWithPlayerName = getElementById.name; This is the number associated with the player name based on input from user, which could be the recommended weight, or inputed weight
+        dictionaryWithPlayerNameAndWeight = {};
         $('#createBracketForm').on('submit', function(e) {
             e.preventDefault();  // Prevent the form from being submitted in the traditional way
             // Create an array of player names
             if ($('#BracketType').val() === 'Registered User Bracket') {
+                //var names = $('#hiddenInput').val().split(', ');
+                if ($('#SmartSeedingAlgorithm').is(':checked')) {
                 var names = $('#hiddenInput').val().split(', ');
+                names.forEach(name => {
+                    dictionaryWithPlayerNameAndWeight[name] = document.getElementById(name).value;
+                })
+                names = sortUsersBySkillLevel(dictionaryWithPlayerNameAndWeight);
+                }
+                else {
+                    var names = $('#hiddenInput').val().split(', ');
+                }
             }
             else {
             var names = $('#playerNames').val().split(',');
@@ -324,7 +424,7 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
             // Initialize an empty array to hold the teams
             const teams = [];
 
-            // Split the players into teams for the first round of matches
+            // Split the players into teams for the first round of matches 
             // Each team consists of two players, and the order of the teams is determined by the order array
             for (let i = 0; i < powerOfTwo / 2; i++) {
                 // Get the two players for this team from the paddedPlayers array
@@ -422,7 +522,7 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                 bracketData: JSON.stringify(bracketData),
                 isUserBracket: isRegisteredUserBracket
             };
-            console.log(dataToSend);
+            //console.log(dataToSend);
 
             // Send the bracketFormat to the server
             $.ajax({
@@ -487,3 +587,9 @@ function fetchBrackets() {
 
 // Fetch brackets on page load
 fetchBrackets();
+
+$(document).ready(function() {
+    $('#backButton').click(function() {
+      window.history.back();
+    });
+  });

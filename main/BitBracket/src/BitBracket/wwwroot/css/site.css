@@ -225,7 +225,7 @@ body.dark-theme {
   font-family: 'Copperplate', 'Copperplate Gothic Light', sans-serif;
   color: var(--title-color);
   font-weight: bold; 
-  font-size: 70px; 
+  font-size: 40px; 
   text-align: center; 
 }
 
@@ -251,6 +251,10 @@ body.dark-theme {
 }
 
 #generateButton {
+  display: none;
+}
+
+#captcha {
   display: none;
 }
 
@@ -313,7 +317,72 @@ close:focus {
     border-radius: 50%;
     cursor: pointer;
 }
+#mySkillBtn {
+    background-color: #007bff; /* Bootstrap primary color */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
     #myBtn:hover {
         background-color: #0056b3; /* Darker shade for hover */
     }
+
+    .ui.large.images {
+      text-align: center; /* Center-align the image container */
+      width: 100%; /* Use full width */
+      height: 500px; /* Set a fixed height to make images larger */
+      margin: 20px auto; /* Center-align the container block, add some vertical space */
+      position: relative; /* Set position context for images */
+      overflow: hidden; /* Hide anything outside the container */
+  }
+  
+  .ui.large.images .ui.image {
+      display: none; /* Ensure images are hidden initially */
+      width: 100%; /* Stretch images to fill the container */
+      height: 100%; /* Stretch height to fill container */
+      object-fit: cover; /* Ensure images cover the area without distortion */
+      transition: opacity 1s ease-in-out; /* Smooth transition for the opacity change */
+  }
+  
+  .ui.image.blur {
+      filter: blur(5px); /* Apply blur effect */
+  }
+  
+  .ui.segment.center.aligned2 {
+    padding: 5px; /* Adjusted padding to provide a visual buffer around the image */
+    max-width: calc(100% - 40px); /* Adjust the width to account for padding */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    background-color: #fff; /* Ensure background color is white for visibility */
+    margin: auto; /* Center the segment */
+    display: block; /* Ensures that the segment is properly block displayed */
+}
+
+.ui.segment.center.aligned {
+    padding: 5px 0; /* Add more padding for better visual spacing */
+}
+
+#myBtn:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+}
+
+.skill-level-bar {
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+  
+.white-label {
+  color: white !important;
+}

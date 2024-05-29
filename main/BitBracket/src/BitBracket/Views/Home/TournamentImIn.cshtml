@@ -1,47 +1,57 @@
-@{
-    ViewBag.Title = "Tournaments I'm Participating In";
-}
+@model IEnumerable<BitBracket.Models.Tournament>
 
+@{
+    ViewData["Title"] = "Tournaments I'm In";
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        #tournaments-container {
+            margin-top: 20px;
+        }
+        .tournament-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .tournament-item h3 {
+            margin-top: 0;
+        }
+        .tournament-item p {
+            margin: 5px 0;
+        }
+        .tournament-item button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body class="announcement-background">
     <div class="ui container">
-        <h1 class="title-styling">Registered Tournaments
-            <button id="myBtn">i</button>
-        </h1>
-<div id="myModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>This page allows you to view all the tournaments you are registered for, along with the option to withdraw.</p>
-            </div>
-</div>
+        <h2 class="title-styling">@ViewData["Title"]</h2>
 
-        <div class="ui very padded segment">
-            <div class="ui divided items" id="tournaments-container">
-                <!-- Tournament items will be dynamically populated here -->
-                <!-- Placeholder for empty state -->
-                <div class="item" id="empty-placeholder" style="display: none;">
-                    <div class="content">
-                        <h3 class="ui header">No registered tournaments found.</h3>
-                        <div class="description">
-                            <p>You are currently not registered in any tournaments.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="tournaments-container" class="ui segment">
+            @if (Model == null || !Model.Any())
+            {
+                <p id="empty-placeholder">You are not participating in any tournaments.</p>
+            }
         </div>
     </div>
 
-    @section Scripts {
-        <script src="~/js/TournamentImIn.js"></script>
-        <script src="~/js/modalswitcher.js"></script>
-    }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="~/js/TournamentImIn.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userId = '@ViewBag.UserId'; // Ensure you get the correct user ID
+            fetchTournaments(userId);
+        });
+    </script>
 </body>
 </html>

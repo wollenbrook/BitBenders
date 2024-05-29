@@ -1,4 +1,6 @@
-﻿using BitBracket.DAL.Abstract;
+﻿//DAL/Concrete/BitUserRepository.cs
+
+using BitBracket.DAL.Abstract;
 using BitBracket.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,8 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using EllipticCurve.Utils;
-using BitBracket.DAL.Concrete;
-using HW6.DAL.Concrete;
+using BitBracket.DAL.Abstract;
 using NuGet.Protocol.Plugins;
 using System.Reflection;
 using Twilio.TwiML.Fax;
@@ -39,6 +40,7 @@ namespace BitBracket.DAL.Concrete
 
         public BitUser GetBitUserByEntityId(string id)
         {
+
             return _bitUsers.FirstOrDefault(u => u.AspnetIdentityId == id);
         }
 
@@ -183,7 +185,7 @@ namespace BitBracket.DAL.Concrete
         {
             if (Sender == null || Reciver == null)
             {
-                throw new WebException("User not found");
+                throw new Exception("User not found");
             }
             return Sender.FriendUsers.Any(f => f.FriendId == Reciver.Id);
 
@@ -192,7 +194,7 @@ namespace BitBracket.DAL.Concrete
         {
             if (Sender == null || Reciever == null)
             {
-                throw new WebException("User not found");
+                throw new Exception("User not found");
             }
             return Sender.FriendRequestSenders.Any(fr => fr.ReceiverId == Reciever.Id && fr.Status == "Pending");
         }
@@ -221,9 +223,106 @@ namespace BitBracket.DAL.Concrete
             }
             return Task.FromResult(user.FriendRequestReceivers.AsEnumerable());
         }
+        public Task<IEnumerable<BlockedUser>> GetAllBlockedUsers(int id)
+        {
+            BitUser user = _bitUsers.FirstOrDefault(u => u.Id == id);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            return Task.FromResult(user.BlockedUserBlockeds.AsEnumerable());
+
+        }
+        
+        public Task BlockUser(BitUser viewer, BitUser personBeingViewed)
+        {
+            bool areTheyFriends = CheckIfFriends(viewer, personBeingViewed);
+            if (areTheyFriends)
+            {
+                RemoveFriend(viewer, personBeingViewed);
+            }
+            BlockedUser blockedUser = new BlockedUser { BlockedId = viewer.Id, BlockedUserId = personBeingViewed.Id };
+             viewer.BlockedUserBlockeds.Add(blockedUser);
+             _bitUsers.Update(viewer);
+             _context.SaveChanges(); 
+             
+            return Task.CompletedTask;
+        }
+        public Task UnBlockUser(BitUser viewer, BitUser personBeingViewed)
+        {
+            BlockedUser blockedUser = viewer.BlockedUserBlockeds.FirstOrDefault(b => b.BlockedUserId == personBeingViewed.Id);
+            if (blockedUser == null)
+            {
+                throw new WebException("User not found");
+            }
+            viewer.BlockedUserBlockeds.Remove(blockedUser);
+            _bitUsers.Update(viewer);
+            _context.SaveChanges();
+            return Task.CompletedTask;
+        }
         public IEnumerable<BitUser> GetOptedInUsers()
         {
             return _bitUsers.Where(u => u.OptInConfirmation).ToList();
+        }
+        public int GetEstimatedSkillLevel(BitUser user)
+        {
+            if (user.Standings.Count == 0)
+            {
+                return 0;
+            }
+            int totalPoints = 0;
+            List<int> placementList = [];
+            Dictionary<int, int> dictionaryOfPoints = new Dictionary<int, int>()
+            {
+            {1, 80},
+            {2, 70},
+            {3, 60},
+            {4, 50},
+            {5, 40},
+            {6, 30},
+            {7, 20},
+            {8, 10}
+            };
+            // Calculate placement points
+
+            foreach (Standing standings in user.Standings)
+            {
+                if (standings.Placement > 8)
+                {
+                    totalPoints += 5;
+                }
+                else
+                {
+                    totalPoints += dictionaryOfPoints[standings.Placement];
+                }
+                placementList.Add(standings.Placement);
+            }
+            totalPoints = totalPoints / placementList.Count;
+            placementList.Sort();
+            // Calculate bonus points based on consistency
+            if (placementList.Take(3).All(p => p - placementList.Min() <= 2))
+            {
+                totalPoints += 10; 
+            }
+            int skillLevel = totalPoints / 10;  // Adjust divisor as needed
+            float skillLevelFloat = totalPoints / 10;
+            skillLevel =  (int)Math.Floor(skillLevelFloat);
+            if (skillLevel > 8)
+            {
+                skillLevel = 8;
+            }
+            return skillLevel;
+        }
+
+        public async Task<BitUser> GetUserByIdAsync(int id)
+        {
+            return await _bitUsers.FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task UpdateUserAsync(BitUser user)
+        {
+            _bitUsers.Update(user);
+            await _context.SaveChangesAsync();
         }
     }
 

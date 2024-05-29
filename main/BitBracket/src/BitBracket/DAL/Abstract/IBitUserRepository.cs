@@ -21,7 +21,12 @@ namespace BitBracket.DAL.Abstract
         public bool CheckIfRequestSent(BitUser sender, BitUser reciver);
         public Task<IEnumerable<BitUser>> GetFriends(int id);
         IEnumerable<BitUser> GetOptedInUsers();
-
+        public Task<IEnumerable<BlockedUser>> GetAllBlockedUsers(int id);
+        public Task BlockUser(BitUser viewer, BitUser personBeingViewed);
+        public Task UnBlockUser(BitUser viewer, BitUser personBeingViewed);
         public Task<IEnumerable<FriendRequest>> GetFriendRequests(int id);
+        Task<BitUser> GetUserByIdAsync(int userId);
+        Task UpdateUserAsync(BitUser user);
+        public int GetEstimatedSkillLevel(BitUser user);
     }
 }

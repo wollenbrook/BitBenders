@@ -2,11 +2,21 @@
 @model TournamentViewModel
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+    <link rel="stylesheet" href="~/css/broadcast.css" />
+</head>
 <body class="announcement-background">
     <div class="ui container">
-        <h1 class="title-styling">Tournament: @Model.Name 
+
+        <div  id="tournament-name" style="visibility: hidden;">@Model.Name</div>
+        </p>
+        <h1 id="tournament-name" class="title-styling">
+            Tournament - @Model.Name
             <button id="myBtn">i</button>
         </h1>
+
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -15,27 +25,50 @@
         </div>
 
     </div>
-
     <div class="ui very padded segment">
         <div class="ui divided items">
             <div class="item">
-                
-                <div class="content">
-                    <a class="header"> Owner:  @Model.Owner</a>
-
-                    <div class="meta">
-                        <p><strong>Location:</strong> <div id="bioId" class="ui small fluid input">@Model.Location</div></p>
-                        <p><strong>Status:</strong> <div id="bioId" class="ui small fluid input">@Model.Status</div></p>
+                <div class="image">
+                    <div>
+                        <div id="stream-embed"></div>
                     </div>
-
+                    <a class="ui teal ribbon label">Broadcast Channel</a>
+                </div>
+                <div class="content">
+                    <a class="header">Owner</a>
+                    <div class="meta">
+                        <span>@Model.Owner</span>
+                    </div>
+                    <div class="description">
+                        <p><strong>Location</strong> <div id="tagId" class="ui small fluid">@Model.Location</div></p>
+                        <p><strong>Status</strong> <div id="bioId" class="ui small fluid input">@Model.Status</div></p>
+                    </div>
+                    <div class="extra">
+                        <button id="participateButton" class="ui small primary button">Register</button>
+                        <button id="openChatButton" class="ui small secondary button">Open Chat</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-            <div class="row p-1">
-                <div class="col-1">User</div>
+    @*<div class="ui very padded segment">
+        <div class="ui divided items">
+            <div class="item">
+                
+                <div class="content">
+
+                    <div class="meta">
+                          </div>
+
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+    <div class="message-container" id="message-container" style="display: none;">
+        <div class="row p-1 ui very padded segment">
+                <div class="col-1 ui">User</div>
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="col-5">
@@ -49,7 +82,7 @@
             }
 
             </div>
-            <div class="row p-1">
+            <div class="row p-1 ui very padded segment">
                 <div class="col-1">Message</div>
                 <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
             </div>
@@ -66,19 +99,37 @@
                 </div>
 
             </div>
-        </div>
         <div class="row p-1">
-            <div class="col-6">
-                <p>Message Board</p>
-                <hr />
+            <div class="row p-1">
+                <div class="col-6 ui very padded segment">
+                    <h2>Message Board</h2>
+                    <hr />
+                    <ul id="messagesList" class="message-board"></ul>
+                </div>
             </div>
+
         </div>
         <div class="row p-1">
             <div class="col-6">
                 <ul id="messagesList"></ul>
             </div>
         </div>
+    </div>
+
+    <div>
+        <h2>Tournament Brackets:</h2>
+    </div>
+
+    <!-- Bracket display -->
+    <div id="bracketsList"></div>
+
+ 
+    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+    <script src="~/js/bracketList.js"></script>
     <script src="~/js/signlar/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>
     <script src="~/js/modalswitcher.js"></script>
+    <script src="~/js/broadcastSet.js"></script>
+    <script src="~/js/tournamentProfile.js"></script>
+
 </body>

@@ -9,7 +9,6 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using EllipticCurve.Utils;
 using BitBracket.DAL.Concrete;
-using HW6.DAL.Concrete;
 
 namespace BitBracket.DAL.Concrete
 {
@@ -68,7 +67,7 @@ namespace BitBracket.DAL.Concrete
         }
     //
 
-        public async Task<bool> SendParticipateRequest(int userId, int tournamentId)
+        public async Task<bool> SendParticipationRequestAsync(int userId, int tournamentId)
         {
             var exists = await _context.ParticipateRequests.AnyAsync(r => r.SenderId == userId && r.TournamentId == tournamentId);
             if (!exists)
@@ -85,7 +84,7 @@ namespace BitBracket.DAL.Concrete
             return false;
         }
 
-        public async Task<bool> AcceptParticipateRequest(int requestId)
+        public async Task<bool> AcceptParticipationRequestAsync(int requestId)
         {
             var request = await _context.ParticipateRequests.FindAsync(requestId);
             if (request != null && request.Status == "Pending")
@@ -102,71 +101,90 @@ namespace BitBracket.DAL.Concrete
             return false;
         }
 
-        public async Task<bool> DeclineParticipateRequest(int requestId)
+        public async Task<bool> DenyOrRemoveParticipationRequestAsync(int requestId)
         {
             var request = await _context.ParticipateRequests.FindAsync(requestId);
-            if (request != null && request.Status == "Pending")
+            if (request != null)
             {
-                request.Status = "Rejected";
+                _context.ParticipateRequests.Remove(request);
                 await _context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public async Task<bool> RemoveParticipate(int userId, int tournamentId)
+        public async Task<bool> RemoveParticipantAsync(int userId, int tournamentId)
         {
-            var participate = await _context.Participates.FirstOrDefaultAsync(p => p.UserId == userId && p.TournamentId == tournamentId);
+            var participate = await _context.Participates
+                .FirstOrDefaultAsync(p => p.UserId == userId && p.TournamentId == tournamentId);
             if (participate != null)
             {
+                // Remove the Participate entry
                 _context.Participates.Remove(participate);
+
+                // Also remove the corresponding ParticipateRequest entry
+                var participateRequest = await _context.ParticipateRequests
+                    .FirstOrDefaultAsync(pr => pr.SenderId == userId && pr.TournamentId == tournamentId && pr.Status == "Approved");
+                if (participateRequest != null)
+                {
+                    _context.ParticipateRequests.Remove(participateRequest);
+                }
+
                 await _context.SaveChangesAsync();
                 return true;
             }
             return false;
         }
 
-        public async Task<bool> CheckIfParticipates(int userId, int tournamentId)
+        public async Task<bool> CheckIfParticipatesAsync(int userId, int tournamentId)
         {
-            return await _context.Participates.AnyAsync(p => p.UserId == userId && p.TournamentId == tournamentId);
+            return await _context.ParticipateRequests.AnyAsync(p => p.SenderId == userId && p.TournamentId == tournamentId && (p.Status == "Approved" || p.Status == "Pending"));
         }
 
-        public async Task<IEnumerable<ParticipateRequest>> GetParticipateRequests(int tournamentId)
-        {
-            return await _context.ParticipateRequests
-                .Where(p => p.TournamentId == tournamentId)
-                .Include(p => p.Sender)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Participate>> GetParticipates(int tournamentId)
-        {
-            return await _context.Participates
-                .Where(p => p.TournamentId == tournamentId)
-                .Include(p => p.User)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Tournament>> GetTournamentsByUserId(int userId)
+        public async Task<IEnumerable<Tournament>> GetTournamentsUserParticipatesInAsync(int userId)
         {
             return await _context.Participates
                 .Where(p => p.UserId == userId)
                 .Select(p => p.Tournament)
-                .Include(t => t.OwnerNavigation)
                 .ToListAsync();
         }
 
-        public async Task<bool> WithdrawFromTournament(int userId, int tournamentId)
+        public async Task<bool> WithdrawFromTournamentAsync(int userId, int tournamentId)
         {
             var participation = await _context.Participates
                 .FirstOrDefaultAsync(p => p.UserId == userId && p.TournamentId == tournamentId);
             if (participation != null)
             {
+                // Remove the Participate entry
                 _context.Participates.Remove(participation);
+
+                // Also remove the corresponding ParticipateRequest entry
+                var participateRequest = await _context.ParticipateRequests
+                    .FirstOrDefaultAsync(pr => pr.SenderId == userId && pr.TournamentId == tournamentId && pr.Status == "Approved");
+                if (participateRequest != null)
+                {
+                    _context.ParticipateRequests.Remove(participateRequest);
+                }
+
                 await _context.SaveChangesAsync();
                 return true;
             }
             return false;
+        }
+        public async Task<IEnumerable<ParticipateRequest>> GetAllParticipationRequests(int tournamentId)
+        {
+            return await _context.ParticipateRequests
+                                 .Where(pr => pr.TournamentId == tournamentId)
+                                 .Include(pr => pr.Sender)
+                                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Participate>> GetApprovedParticipates(int tournamentId)
+        {
+            return await _context.Participates
+                                 .Where(p => p.TournamentId == tournamentId)
+                                 .Include(p => p.User)
+                                 .ToListAsync();
         }
 
     }

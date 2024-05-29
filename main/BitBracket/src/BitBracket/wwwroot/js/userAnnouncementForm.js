@@ -14,7 +14,7 @@ function fetchAnnouncements() {
         .then(data => displayAnnouncements(data))
         .catch(error => {
             console.error('Fetch Error:', error);
-            alert('There is a problem with the application. It will be fixed soon!');
+            //alert('There is a problem with the application. It will be fixed soon!');
         });
 }
 
@@ -26,6 +26,9 @@ function displayAnnouncements(data) {
         return;
     }
     
+    // Sort announcements by creation date in descending order
+    data.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+
     data.forEach(announcement => {
         announcementsList2.appendChild(createAnnouncementCard(announcement));
     });
@@ -65,14 +68,14 @@ function getColorSchemes(theme) {
             backgroundColors: ['#ff6761', '#ff9a20', '#ffe00e', '#97db24', '#49d271'],
             titleColors: ['#3243cf', '#8f2db1', '#0c91a7', '#19bcd2', '#cb54eb'],
             descriptionColor: '#1b5372',
-            authorColor: '#4c5c16',
+            authorColor: '#00b4c5',
             strokeColors: ['#fff2b7', '#ffec95', '#e7c209', '#d0a604']
         },
         dark: {
             backgroundColors: ['#131c6a', '#2e1467', '#4b1358', '#601736', '#6f1f1a'],
             titleColors: ['#b6aabb', '#e4dbe7', '#a8b4aa', '#a4807f', '#8c7a93'],
             descriptionColor: '#c5c0ac',
-            authorColor: '#a3b2b6',
+            authorColor: '#d9e4ff',
             strokeColors: ['#e4dbe7', '#b6aabb', '#8c7a93', '#9a7c85']
         }
     }[theme];

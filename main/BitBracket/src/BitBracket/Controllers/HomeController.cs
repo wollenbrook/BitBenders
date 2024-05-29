@@ -93,11 +93,26 @@ public class HomeController : Controller
     //         return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     //     }
     // }
-    public IActionResult TournamentImIn()
+    public async Task<IActionResult> TournamentImIn()
     {
-        return View();
-    }
+        var userId = _userManager.GetUserId(User); // Get the current user's ID from UserManager
+        if (string.IsNullOrEmpty(userId))
+        {
+            return NotFound("User not found");
+        }
 
+        var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+        if (bitUser == null)
+        {
+            return NotFound("Bit user not found");
+        }
+
+        ViewBag.UserId = bitUser.Id; // Pass the user ID to the view through ViewBag
+
+        var tournaments = await _tournamentRepository.GetTournamentsUserParticipatesInAsync(bitUser.Id);
+
+        return View(tournaments ?? new List<Tournament>()); // Pass the list of tournaments to the view
+    }
     public IActionResult AllTournaments()
     {
         return View();
@@ -130,10 +145,22 @@ public class HomeController : Controller
         return View(tournament);
     }
 
-    public IActionResult OptInConfirmation()
-    {
-        return View();
-    }
+        public async Task<IActionResult> OptInConfirmation()
+        {
+            var userId = _userManager.GetUserId(User);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User not logged in.");
+            }
+
+            var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+            if (bitUser == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            return View(bitUser);
+        }
     public IActionResult WhisperTest()
     {
         return View();
@@ -171,6 +198,17 @@ public class HomeController : Controller
     public async Task<IActionResult> Tournaments(int id)
     {
         string name = User?.Identity?.Name ?? "Not signed in";
+        string userId = _userManager.GetUserId(User);
+        BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+        var bitId = 0;
+        if (bitUser == null)
+        {
+            bitId = -1;
+        }
+        else
+        {
+            bitId = bitUser.Id;
+        }
 
         Tournament tournament = await _tournamentRepository.Get(id);
         BitUser Owner = _bitUserRepository.GetBitUserByRegularId(tournament.Owner);
@@ -181,7 +219,11 @@ public class HomeController : Controller
             Location = tournament.Location,
             Owner = Owner.Username,
             Status = tournament.Status,
-            CurrentUserName = name
+            CurrentUserName = name, 
+            Brackets = bracket,
+            TournamentId = tournament.Id,
+            UserId = bitId
+
         };
         return View(tournamentView);
     }
@@ -194,6 +236,8 @@ public class HomeController : Controller
         BitUser bitUser1 = _bitUserRepository.GetBitUserByName(bitUser.Username);
         var user = await _userManager.FindByIdAsync(bitUser1.AspnetIdentityId);
         var userEmail = _userManager.GetEmailAsync(user);
+
+
         if (bitUser == null)
         {
             UserViewModel userViewModelfail = new UserViewModel
@@ -204,23 +248,64 @@ public class HomeController : Controller
         }
         else
         {
-            UserViewModel userViewModel = new UserViewModel
+            if (sender != null)
             {
-                Username = bitUser.Username,
-                Email = userEmail.Result,
-                Bio = bitUser.Bio,
-                Tag = bitUser.Tag,
-                ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png",
-                Friends = _bitUserRepository.CheckIfFriends(sender, bitUser),
-                FriendRequestSent = _bitUserRepository.CheckIfRequestSent(sender, bitUser),
-                ProfileID = bitUser.Id
-            };
-            return View(userViewModel);
+                UserViewModel userViewModel = new UserViewModel
+                {
+                    Username = bitUser.Username,
+                    Email = userEmail.Result,
+                    Bio = bitUser.Bio,
+                    Tag = bitUser.Tag,
+                    ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png",
+                    Friends = _bitUserRepository.CheckIfFriends(sender, bitUser),
+                    FriendRequestSent = _bitUserRepository.CheckIfRequestSent(sender, bitUser),
+                    ProfileID = bitUser.Id,
+                    PersonID = id
+                };
+                return View(userViewModel);
+            } else
+            {
+                UserViewModel userViewModel = new UserViewModel
+                {
+                    Username = bitUser.Username,
+                    Email = userEmail.Result,
+                    Bio = bitUser.Bio,
+                    Tag = bitUser.Tag,
+                    ProfilePictureUrl = bitUser.ProfilePicture != null ? "data:image/png;base64," + Convert.ToBase64String(bitUser.ProfilePicture) : "https://bitbracketimagestorage.blob.core.windows.net/images/Blank_Profile.png",
+                    Friends = false,
+                    FriendRequestSent = false,
+                    ProfileID = bitUser.Id
+                };
+                return View(userViewModel);
+            }
+            
         }
     }
     public IActionResult Test()
     {
         return View();
+    }
+    public IActionResult friendly()
+    {
+        return View();
+    }
+    public IActionResult FriendsPage()
+    {
+        return View();
+    }
+    public IActionResult Standings()
+    {
+        string userId = _userManager.GetUserId(User);
+        BitUser bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+        if (bitUser == null)
+        {
+            return NotFound("User not found");
+        }
+        UserViewModel simpleModel = new UserViewModel
+        {
+            Username = bitUser.Username
+        };
+        return View(simpleModel);
     }
     public IActionResult Privacy()
     {

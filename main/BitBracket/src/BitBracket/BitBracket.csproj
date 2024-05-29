@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\FriendsPage.cshtml" />
     <Content Remove="Views\Home\test.cshtml" />
     <Content Remove="wwwroot\js\ProfilePage.js" />
     <Content Remove="wwwroot\js\UsersPage.js" />
@@ -20,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Home\FriendsPage.cshtml" />
     <None Include="Views\Home\Test.cshtml" />
     <None Include="wwwroot\js\profilepage.js" />
     <None Include="wwwroot\js\UsersPage.js" />

@@ -5,7 +5,6 @@ using BitBracket.Models;
 using BitBracket.DAL.Abstract;
 using BitBracket.DAL.Concrete;
 using MyApplication.Data;
-using HW6.DAL.Concrete;
 using Microsoft.Extensions.DependencyInjection;
 using SignalRChat.Hubs; 
 using System.Text.Json.Serialization;
@@ -34,6 +33,8 @@ builder.Services.AddScoped<IGuidBracketRepository, GuidBracketRepository>();
 builder.Services.AddScoped<IFriendRequestRepository, FriendRequestRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IWhisperService, WhisperService>();
+builder.Services.AddScoped<IStandingRepository, StandingRepository>();
+builder.Services.AddScoped<IBlockedUsersRepository, BlockedUsersRepository>();
 // Register IWhisperService with HttpClientFactory
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IWhisperService, WhisperService>();

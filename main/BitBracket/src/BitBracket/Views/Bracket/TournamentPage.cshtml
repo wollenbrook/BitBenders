@@ -4,21 +4,24 @@
 <html>
 <head>
     <title>Tournament Page</title>
-@*<link rel="stylesheet" href="~/css/site.css" />*@
+@* <link rel="stylesheet" href="~/css/site.css" /> *@
 </head>
 <body class="announcement-background">
+    <button class="ui icon button" id="backButton" style="margin-top: 20px;">
+        <i class="arrow left icon"></i>
+    </button>
     <h1 class="title-styling">
         Tournament Page
         <button id="myBtn">i</button>
     </h1>
-    @*
+    
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Welcome to the tournament page, where you can create a new bracket, set a broadcast link, and manage participation requests! You can also view your created brackets and see them in more detail there.</p>
         </div>
     </div>
-    *@
+    
     <div class="ui container mb-3">
         <div class="ui segment">
             <h1 class="ui sub header" id="tournamentName">Tournament Name</h1>
@@ -107,11 +110,11 @@
                             <button type="button" id="clearBtnBracketName" class="ui icon button"><i class="undo icon"></i></button>
                         </div>
                         <div class="field">
-                            <label id="playerNamesLabel" for="Names">Player Names (comma-delimited):</label>
+                            <label id="playerNamesLabel" for="Names">Player Names (comma-delimited, In-Order Seeding):</label>
                             <textarea id="playerNames" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
-                            <button type="button" id="recordBtnPlayerNames" class="ui icon button"><i class="microphone icon"></i></button>
-                            <button type="button" id="stopBtnPlayerNames" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
-                            <button type="button" id="clearBtnPlayerNames" class="ui icon button"><i the="undo icon"></i></button>
+                            <button type="button" id="recordBtnPlayerNames" class="ui icon button hidetempb"><i class="microphone icon"></i></button>
+                            <button type="button" id="stopBtnPlayerNames" class="ui icon button hidetempb" disabled><i class="microphone slash icon"></i></button>
+                            <button type="button" id="clearBtnPlayerNames" class="ui icon button hidetempb"><i the="undo icon"></i></button>
                         </div>
                         <div class="field">
                             <label for="Format">Format:</label>
@@ -120,10 +123,16 @@
                                 <option value="Double Elimination">Double Elimination</option>
                             </select>
                         </div>
+                        <div class="field hidetemp" style="display: none;">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="SmartSeedingAlgorithm" name="SmartSeedingAlgorithm" value="true"/>
+                                <label for="SmartSeedingAlgorithm">Use Smart Seeding Algorithm (Seed by Skill Level)</label>
+                            </div>
+                        </div>
                         <div class="field">
                             <div class="ui checkbox">
                                 <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" />
-                                <label for="RandomSeeding">Random Seeding (Seeding will be done in entered order otherwise)</label>
+                                <label for="RandomSeeding">Random Seeding (Overrides other Seeding methods)</label>
                             </div>
                         </div>
                     </div>
@@ -135,13 +144,13 @@
             </div>
         </div>
     </div>
+    <div class="section-gap"></div>
     <div>
-        <h2>Created Brackets</h2>
+        <h2 class="white-label">Created Brackets</h2>
     </div>
 
     <!-- Bracket display -->
-    <div id="bracketsList">
-    </div>
+    <div id="bracketsList"></div>
 
 </body>
 </html>
@@ -150,4 +159,4 @@
 <script src="https://player.twitch.tv/js/embed/v1.js"></script>
  <script src="~/js/tournament.js"></script>
  <script src="~/js/participateRequest.js"></script>
-@*<script src="~/js/modalswitcher.js"></script>*@
+<script src="~/js/modalswitcher.js"></script>

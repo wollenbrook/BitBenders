@@ -1,11 +1,30 @@
 using BitBracket.Models;
 using BitBracket.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using BitBracket.DAL.Abstract;
+
 
 namespace BitBracket.Controllers;
 
 public class BracketController : Controller
 {
+
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly IBitUserRepository _bitUserRepository;
+    private readonly ITournamentRepository _tournamentRepository;
+    private readonly IBracketRepository _bracketRepository;
+
+    public BracketController(UserManager<IdentityUser> userManager, IBitUserRepository bitUserRepository, ITournamentRepository tournamentRepository, IBracketRepository bracketRepository)
+    {
+        _userManager = userManager;
+        _bitUserRepository = bitUserRepository;
+        _tournamentRepository = tournamentRepository;
+        _bracketRepository = bracketRepository;
+    }
     [HttpGet]
     public IActionResult CreateBracket()
     {
@@ -13,17 +32,54 @@ public class BracketController : Controller
         return View(model);
     }
 
+    [Authorize]
     public IActionResult TournamentDashboard()
     {
+        if (!User.Identity.IsAuthenticated)
+        {
+                TempData["Alert"] = "You need to be logged in to access this page.";
+                return RedirectToAction("Index", "Home");
+        }
         return View();
     }
 
-    public IActionResult TournamentPage(int id)
+    [Authorize]
+    public async Task<IActionResult> TournamentPage(int id)
     {
+        string userId = _userManager.GetUserId(User);
+        var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+        Tournament tournament = await _tournamentRepository.Get(id);
+
+        if (tournament.Owner != bitUser.Id)
+        {
+            TempData["Alert"] = "You've been moved to the front page as you are no longer on the account that created this tournament, to revist this page you must log into the account that created this tournament.";
+            return RedirectToAction("Index", "Home");
+        }
+
         return View((object)id);
     }
 
-    public IActionResult BracketPage(int id)
+    [Authorize]
+    public async Task<IActionResult> BracketPage(int id)
+    {
+        var userId = _userManager.GetUserId(User);
+        var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+        Bracket bracket = await _bracketRepository.Get(id);
+        Tournament tournament = await _tournamentRepository.Get(bracket.TournamentID.Value); // Convert nullable int to non-nullable int
+
+        if (tournament.Owner != bitUser.Id)
+        {
+            TempData["Alert"] = "You've been moved to the front page as you are no longer on the account that created this tournament bracket, to revist this page you must log into the account that created this tournament bracket";
+            return RedirectToAction("Index", "Home");
+        }
+        TournamentViewModel tournamentViewModel = new TournamentViewModel
+        {
+            TournamentId = tournament.Id,
+        };
+        return View( tournamentViewModel);
+    }
+
+    public IActionResult BracketView(int id)
     {
         return View((object)id);
     }

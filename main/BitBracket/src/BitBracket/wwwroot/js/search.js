@@ -32,7 +32,6 @@ async function getSearchTournaments(type) {
 }
 async function AnySearch() {
     const searchInput = document.getElementById("searchInputId");
-    console.log('searching for anything');
 
     const searchValue = searchInput.value;
     try {
