@@ -225,7 +225,7 @@ body.dark-theme {
   font-family: 'Copperplate', 'Copperplate Gothic Light', sans-serif;
   color: var(--title-color);
   font-weight: bold; 
-  font-size: 70px; 
+  font-size: 40px; 
   text-align: center; 
 }
 
@@ -383,4 +383,6 @@ close:focus {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
   
-  
+.white-label {
+  color: white !important;
+}

@@ -1,6 +1,6 @@
-<form id="createAnnouncementForm" class="ui form" style="padding: 20px; background-color: #93a86d; border-radius: 10px;">
+<form id="createAnnouncementForm" class="ui form">
     <div class="field">
-        <label>Title</label>
+        <label class="white-label">Title</label>
         <div class="ui action input">
             <input type="text" id="title" placeholder="Announcement Title" required>
             <button type="button" id="recordTitleBtn" class="ui icon button"><i class="microphone icon"></i></button>
@@ -9,25 +9,25 @@
         </div>
     </div>
     <div class="field">
-        <label>Description</label>
+        <label class="white-label">Description</label>
         <div class="ui action input">
             <textarea id="description" placeholder="Detailed Description" required></textarea>
             <button type="button" id="recordDescBtn" class="ui icon button"><i class="microphone icon"></i></button>
             <button type="button" id="stopDescBtn" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
-            <button type="button" id="clearDescBtn" class="ui icon button"><i the="undo icon"></i></button>
+            <button type="button" id="clearDescBtn" class="ui icon button"><i class="undo icon"></i></button>
         </div>
     </div>
     <div class="field">
-        <label>Author</label>
+        <label class="white-label">Author</label>
         <div class="ui action input">
             <input type="text" id="author" placeholder="Your Name" required>
             <button type="button" id="recordAuthorBtn" class="ui icon button"><i class="microphone icon"></i></button>
-            <button type="button" id="stopAuthorBtn" class="ui icon button" disabled><i the="microphone slash icon"></i></button>
-            <button type="button" id="clearAuthorBtn" class="ui icon button"><i the="undo icon"></i></button>
+            <button type="button" id="stopAuthorBtn" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+            <button type="button" id="clearAuthorBtn" class="ui icon button"><i class="undo icon"></i></button>
         </div>
     </div>
     <div class="field">
-        <label>Admin Key</label>
+        <label class="white-label">Admin Key</label>
         <div class="ui left icon input">
             <input type="password" id="adminKey" placeholder="Admin Verification Key" required>
             <i class="lock icon"></i>

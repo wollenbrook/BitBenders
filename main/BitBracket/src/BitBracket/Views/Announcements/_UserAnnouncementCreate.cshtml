@@ -1,5 +1,4 @@
 <div class="ui segment">
-    <h2 class="ui header">@ViewData["Title"]</h2>
 
     <form id="createAnnouncementForm" class="ui form">
         <div class="field">
@@ -22,7 +21,7 @@
         </div>
                 <div class="field">
             <label>Author</label>
-            <input type="text" id="author" name="author" value="@User.Identity.Name" readonly>
+            <input type="text" id="author" name="author" value="@User.Identity.Name" disabled>
         </div>
         <div class="field">
             <label>Tournament</label>
