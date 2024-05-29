@@ -6,10 +6,10 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <a class="item navbar-text" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-            <i class="user circle icon navbar-text"></i>Hello @User.Identity?.Name!
+            <i class="navbar-text"></i>@User.Identity?.Name!
         </a>
         <form class="item navbar-text" asp-area="Identity" asp-page="/Account/Logout" method="post" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button type="submit navbar-text" class="ui button basic">Logout</button>
+            <button type="submit navbar-text" class="ui button basic navbar-text">Logout</button>
         </form>
     }
     else
