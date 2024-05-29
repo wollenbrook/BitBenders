@@ -21,7 +21,7 @@ $(document).ready(function() {
             RandomSeeding: $('#RandomSeeding').is(':checked')
         };
 
-        var names = randomSeedNames(formData.RandomSeeding, names);
+        names = randomSeedNames(formData.RandomSeeding, names);
         var teams = roundToPowerOfTwo(names);
 
         if (teams.length > 0) {
@@ -208,7 +208,7 @@ function initializeBracket(bracketFormat, teams) {
     teams.flat().forEach(player => {
         if (player && !avatarAssignments[player]) {
             const randomAvatar = avatarLinks[Math.floor(Math.random() * avatarLinks.length)];
-            avatarAssignments[player] = `${avatarFolder}${randomAvatar}`;
+            avatarAssignments[player] = randomAvatar;
         }
     });
 
@@ -236,7 +236,7 @@ function initializeBracket(bracketFormat, teams) {
             },
             render: function(container, data, score) {
                 if (data) {
-                    const avatar = avatarAssignments[data] ? avatarAssignments[data] : `${avatarFolder}${avatarLinks[Math.floor(Math.random() * avatarLinks.length)]}`;
+                    const avatar = avatarAssignments[data] ? avatarAssignments[data] : avatarLinks[Math.floor(Math.random() * avatarLinks.length)];
                     container.html(`<div class="team"><img src="${avatar}" class="avatar"/><span class="name">${data}</span></div>`);
                 } else {
                     container.html('');
