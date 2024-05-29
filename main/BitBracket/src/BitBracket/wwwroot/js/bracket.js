@@ -182,20 +182,32 @@ function generateBracketLink(bracketFormat) {
 }
 
 function initializeBracket(bracketFormat, teams) {
-    const avatarFolder = '/avatars/';
-    const avatars = [
-        'joe.jpg', 'justen.jpg', 'chris.jpg', 'christian.jpg',
-        'daniel.jpg', 'elliot.jpg', 'elyse.png', 'jenny.jpg',
-        'laura.jpg', 'molly.png', 'nan.jpg', 'patrick.png',
-        'rachel.png', 'steve.jpg', 'stevie.jpg', 'tom.jpg',
-        'veronika.jpg'
-    ];
+        // Avatar configuration with links
+        const avatarLinks = [
+            'https://bitbracketimagestorage.blob.core.windows.net/images/joe.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/justen.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/chris.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/christian.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/daniel.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/elliot.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/elyse.png',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/jenny.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/laura.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/molly.png',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/nan.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/patrick.png',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/rachel.png',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/steve.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/stevie.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/tom.jpg',
+            'https://bitbracketimagestorage.blob.core.windows.net/images/veronika.jpg'
+        ];
 
     // Ensure avatar assignment
     let avatarAssignments = {};
     teams.flat().forEach(player => {
         if (player && !avatarAssignments[player]) {
-            const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+            const randomAvatar = avatarLinks[Math.floor(Math.random() * avatarLinks.length)];
             avatarAssignments[player] = `${avatarFolder}${randomAvatar}`;
         }
     });
@@ -224,7 +236,7 @@ function initializeBracket(bracketFormat, teams) {
             },
             render: function(container, data, score) {
                 if (data) {
-                    const avatar = avatarAssignments[data] ? avatarAssignments[data] : `${avatarFolder}${avatars[Math.floor(Math.random() * avatars.length)]}`;
+                    const avatar = avatarAssignments[data] ? avatarAssignments[data] : `${avatarFolder}${avatarLinks[Math.floor(Math.random() * avatarLinks.length)]}`;
                     container.html(`<div class="team"><img src="${avatar}" class="avatar"/><span class="name">${data}</span></div>`);
                 } else {
                     container.html('');

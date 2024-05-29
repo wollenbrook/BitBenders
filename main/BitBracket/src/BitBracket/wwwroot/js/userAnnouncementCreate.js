@@ -109,7 +109,7 @@ function createAnnouncement() {
     .then(data => {
         console.log(data); // Check server response
         alert('Announcement created successfully!');
-        form.reset();
+        // form.reset();
         window.location.href = '/Home/UserAnnouncementForm'; // Redirect back to UserAnnouncementForm
     })
     .catch(error => {
