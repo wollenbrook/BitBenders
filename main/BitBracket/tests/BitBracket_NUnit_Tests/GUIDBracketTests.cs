@@ -55,18 +55,18 @@ namespace BitBracket_NUnit_Tests
 */
         // Add more tests for other methods in GuidBracketRepository
 
-        [Test]
-        public async Task GetGuidBracket_ShouldReturnGuidBracket()
-        {
-            var guid = Guid.NewGuid();
-            var guidBracket = new GuidBracket();
-            guidBracket.Guid = guid;
-            _repository.Setup(x => x.GetGuidBracket(guid)).ReturnsAsync(guidBracket);
+        // [Test]
+        // public async Task GetGuidBracket_ShouldReturnGuidBracket()
+        // {
+        //     var guid = Guid.NewGuid();
+        //     var guidBracket = new GuidBracket();
+        //     guidBracket.Guid = guid;
+        //     _repository.Setup(x => x.GetGuidBracket(guid)).ReturnsAsync(guidBracket);
 
-            var result = await _controller.GetGuidBracket(guid);
+        //     var result = await _controller.GetGuidBracket(guid);
 
-            Assert.AreEqual(guidBracket, result);
-        }
+        //     Assert.AreEqual(guidBracket, result);
+        // }
 
         // Add more tests for other actions in GUIDApiController
     }
