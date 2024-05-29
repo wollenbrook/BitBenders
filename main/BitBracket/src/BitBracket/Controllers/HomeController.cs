@@ -277,6 +277,14 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult friendly()
+    {
+        return View();
+    }
+    public IActionResult FriendsPage()
+    {
+        return View();
+    }
     public IActionResult Standings()
     {
         string userId = _userManager.GetUserId(User);

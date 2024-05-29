@@ -373,7 +373,7 @@ $(document).ready(function () {
             // Initialize an empty array to hold the teams
             const teams = [];
 
-            // Split the players into teams for the first round of matches
+            // Split the players into teams for the first round of matches 
             // Each team consists of two players, and the order of the teams is determined by the order array
             for (let i = 0; i < powerOfTwo / 2; i++) {
                 // Get the two players for this team from the paddedPlayers array
