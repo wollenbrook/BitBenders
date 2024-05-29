@@ -107,6 +107,7 @@ function handleFormSubmission() {
         .then(() => {
             alert('Announcement created successfully!');
             form.reset();
+            window.location.href = '/Home/Announcement'; // Redirect back to UserAnnouncementForm
         })
         .catch(error => {
             console.error('Submission Error:', error);

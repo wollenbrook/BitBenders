@@ -3,7 +3,7 @@ function fetchTournaments(userId) {
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('tournaments-container');
-            if (data.length === 0) {
+            if (!data || data.length === 0) {
                 document.getElementById('empty-placeholder').style.display = 'block';
             } else {
                 data.forEach(tournament => {
@@ -26,6 +26,7 @@ function createTournamentElement(tournament, userId) {
             <h3 class="ui header">${tournament.name || 'Unnamed Tournament'}</h3>
             <p>${tournament.location || 'No location specified'}</p>
             <button onclick="withdraw(${tournament.id}, ${userId})" class="ui red button">Withdraw</button>
+            <p>-------------------------</p>
         </div>
     `;
     return div;

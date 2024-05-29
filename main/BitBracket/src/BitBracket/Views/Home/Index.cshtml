@@ -1,10 +1,10 @@
-@model BitBracket.Models.Announcement
+﻿@model BitBracket.Models.Announcement
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-@{
+@* @{
     var alert = TempData["Alert"] as string;
     if (!string.IsNullOrEmpty(alert))
     {
@@ -12,10 +12,8 @@
             @alert
         </div>
     }
-}
+} *@
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-    <link rel="stylesheet" href="~/css/site.css" />
     <style>
         body {
             margin: 0;
@@ -59,7 +57,7 @@
         }
         .title-styling {
             font-size: 2em;
-            white-space: nowrap; /* Ensure title stays on one line */
+            @* white-space: nowrap; /* Ensure title stays on one line */ *@
         }
         .text-styling {
             font-size: 1.2em;
@@ -77,20 +75,20 @@
 </head>
 <body>
     <div class="background-container">
-        <img class="ui image" src="/images/Image1.JPG" alt="Image 1">
-        <img class="ui image" src="/images/Image2.JPG" alt="Image 2">
-        <img class="ui image" src="/images/Image3.JPG" alt="Image 3">
-        <img class="ui image" src="/images/Image4.JPG" alt="Image 4">
-        <img class="ui image" src="/images/Image5.JPG" alt="Image 5">
-        <img class="ui image" src="/images/Image6.JPG" alt="Image 6">
-        <img class="ui image" src="/images/Image7.JPG" alt="Image 7">
-        <img class="ui image" src="/images/Image8.JPG" alt="Image 8">
-        <img class="ui image" src="/images/Image9.JPG" alt="Image 9">
-        <img class="ui image" src="/images/Image10.JPG" alt="Image 10">
-        <img class="ui image" src="/images/Image11.JPG" alt="Image 11">
-        <img class="ui image" src="/images/Image12.JPG" alt="Image 12">
-        <img class="ui image" src="/images/Image13.JPG" alt="Image 13">
-        <img class="ui image" src="/images/Image14.JPG" alt="Image 14">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image1.JPG" alt="Image 1">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image2.JPG" alt="Image 2">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image3.JPG" alt="Image 3">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image4.JPG" alt="Image 4">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image5.JPG" alt="Image 5">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image6.JPG" alt="Image 6">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image7.JPG" alt="Image 7">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image8.JPG" alt="Image 8">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image9.JPG" alt="Image 9">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image10.JPG" alt="Image 10">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image11.JPG" alt="Image 11">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image12.JPG" alt="Image 12">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image13.JPG" alt="Image 13">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image14.JPG" alt="Image 14">
     </div>
 
     <div class="overlay">
@@ -128,7 +126,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <script src="~/js/modalswitcher.js"></script>
+    @* <script src="~/js/modalswitcher.js"></script> *@
     <script src="~/js/homeSlideshow.js"></script>
 </body>
 </html>

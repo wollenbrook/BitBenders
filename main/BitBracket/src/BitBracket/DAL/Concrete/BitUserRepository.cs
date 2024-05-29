@@ -314,9 +314,15 @@ namespace BitBracket.DAL.Concrete
             return skillLevel;
         }
 
-        public async Task<BitUser> GetByName(string username)
+        public async Task<BitUser> GetUserByIdAsync(int id)
         {
-            return await _bitUsers.FirstOrDefaultAsync(u => u.Username == username);
+            return await _bitUsers.FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task UpdateUserAsync(BitUser user)
+        {
+            _bitUsers.Update(user);
+            await _context.SaveChangesAsync();
         }
     }
 

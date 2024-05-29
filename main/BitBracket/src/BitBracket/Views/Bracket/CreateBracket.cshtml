@@ -58,7 +58,7 @@
                     <button type="button" id="recordBtn" class="ui icon button"><i class="microphone icon"></i></button>
                     <button type="button" id="stopBtn" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
                     <button type="button" id="clearBtn" class="ui icon button"><i class="undo icon"></i></button>
-                    <div asp-validation-for="Names" class="ui pointing red basic label"></div>
+                    @* <div asp-validation-for="Names" class="ui pointing red basic label"></div> *@
                 </div>
                 <div class="field">
                     <label for="Format">Format:</label>
@@ -72,22 +72,21 @@
                         <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" checked="@Model.RandomSeeding" />
                         <label for="RandomSeeding">Random Seeding (Seeding will be done in entered order otherwise)</label>
                     </div>
-                </div>
-                <button type="submit" class="ui button primary">Generate Bracket</button>
-            </form>
-        </div>
-
-        <div class="ui segment">
-            <div id="captcha" class="g-recaptcha" data-sitekey="6Lfsr-kpAAAAALEMdy2Npn-5K8M1K6krwnlKEXil"></div>
-            <button id="generateButton" type="button" class="ui button primary">
-                Generate Bracket Link
-                <i class="clipboard icon"></i>
-            </button>
-        </div>
-
-        <div id="minimal" class="row">
-            <div class="col demo"></div>
-        </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Generate Bracket</button>
+                    </div>
+                </form>
+         
+    </div>
+    <div class="d-grid gap-2">
+        <div id="captcha" class="g-recaptcha" data-sitekey="6Lfsr-kpAAAAALEMdy2Npn-5K8M1K6krwnlKEXil"></div>
+        <button id="generateButton" type="button" class="btn btn-primary">
+            Generate Bracket Link
+            <i class="clipboard icon"></i>
+        </button>     
+    </div>
+    <div id="minimal" class="row">
+        <div class="col demo"></div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

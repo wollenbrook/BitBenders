@@ -110,12 +110,8 @@ public class HomeController : Controller
         ViewBag.UserId = bitUser.Id; // Pass the user ID to the view through ViewBag
 
         var tournaments = await _tournamentRepository.GetTournamentsUserParticipatesInAsync(bitUser.Id);
-        if (tournaments == null || !tournaments.Any())
-        {
-            return NotFound(); // You could have a view to display when there are no tournaments
-        }
 
-        return View(tournaments); // Pass the list of tournaments to the view
+        return View(tournaments ?? new List<Tournament>()); // Pass the list of tournaments to the view
     }
     public IActionResult AllTournaments()
     {
@@ -149,10 +145,22 @@ public class HomeController : Controller
         return View(tournament);
     }
 
-    public IActionResult OptInConfirmation()
-    {
-        return View();
-    }
+        public async Task<IActionResult> OptInConfirmation()
+        {
+            var userId = _userManager.GetUserId(User);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User not logged in.");
+            }
+
+            var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+            if (bitUser == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            return View(bitUser);
+        }
     public IActionResult WhisperTest()
     {
         return View();

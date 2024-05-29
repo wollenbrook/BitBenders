@@ -253,36 +253,40 @@ namespace BitBracket.Controllers
             return Ok("Announcement deleted successfully.");
         }
 
-        [HttpGet("GetOptInConfirmation")]
-        [Authorize]
-        public async Task<IActionResult> GetOptInConfirmation()
+        [HttpPost("OptIn")]
+        public async Task<IActionResult> OptIn()
         {
             var userId = _userManager.GetUserId(User);
-            var user = _bitUserRepository.GetBitUserByEntityId(userId);
-            if (user == null)
+            var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+
+            if (bitUser == null)
             {
-                return NotFound("User not found.");
+                return Unauthorized("User not found.");
             }
 
-            return Ok(new { OptInConfirmation = user.OptInConfirmation });
+            bitUser.OptInConfirmation = true;
+            await _bitUserRepository.UpdateUserAsync(bitUser);
+
+            return Ok(bitUser);
         }
 
-        [HttpPost("UpdateOptInConfirmation")]
-        [Authorize]
-        public async Task<IActionResult> UpdateOptInConfirmation([FromBody] bool optIn)
+        [HttpPost("OptOut")]
+        public async Task<IActionResult> OptOut()
         {
             var userId = _userManager.GetUserId(User);
-            var user = _bitUserRepository.GetBitUserByEntityId(userId);
-            if (user == null)
+            var bitUser = _bitUserRepository.GetBitUserByEntityId(userId);
+
+            if (bitUser == null)
             {
-                return NotFound("User not found.");
+                return Unauthorized("User not found.");
             }
 
-            user.OptInConfirmation = optIn;
-             _bitUserRepository.AddOrUpdate(user);
+            bitUser.OptInConfirmation = false;
+            await _bitUserRepository.UpdateUserAsync(bitUser);
 
-            return Ok("Opt-In confirmation updated successfully.");
+            return Ok(bitUser);
         }
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAnnouncementById(int id)
         {

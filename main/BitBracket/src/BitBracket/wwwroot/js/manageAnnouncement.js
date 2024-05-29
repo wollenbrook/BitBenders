@@ -13,7 +13,8 @@ function fetchAnnouncements(type, elementId) {
         })
         .catch(error => console.error(`Error fetching ${type}:`, error));
 }
-
+// <button class="ui blue button" onclick="updateAnnouncement(${a.id})">Update</button>
+// <div class="author">${a.author}</div>
 function displayAnnouncements(announcements, elementId, type) {
     const container = document.getElementById(elementId);
     container.innerHTML = '';
@@ -21,15 +22,16 @@ function displayAnnouncements(announcements, elementId, type) {
         let buttonsHtml = `<button class="ui red button" onclick="deleteAnnouncement(${a.id})">Delete</button>`;
         if (type === 'Drafts') {
             buttonsHtml = `
-                <button class="ui blue button" onclick="updateAnnouncement(${a.id})">Update</button>
+
                 <button class="ui primary button" onclick="publishAnnouncement(${a.id})">Publish</button>` + buttonsHtml;
         }
         const card = document.createElement('div');
         card.className = 'ui card';
         card.innerHTML = `
             <div class="content">
-                <div class="header">${a.title}</div>
-                <div class="description">${a.description}</div>
+                <div class="header">Title: ${a.title}</div>
+                <div class="description">Description: ${a.description}</div>
+
             </div>
             <div class="extra content">${buttonsHtml}</div>
         `;
@@ -45,6 +47,7 @@ function updateAnnouncement(id) {
             document.getElementById('announcementId').value = data.id;
             document.getElementById('announcementTitle').value = data.title;
             document.getElementById('announcementDescription').value = data.description;
+            document.getElementById('announcementAuthor').value = data.author;
             $('#updateModal').modal('show');
         })
         .catch(error => console.error('Error:', error));
@@ -54,11 +57,13 @@ function saveUpdatedAnnouncement() {
     const id = document.getElementById('announcementId').value;
     const title = document.getElementById('announcementTitle').value;
     const description = document.getElementById('announcementDescription').value;
+    const author = document.getElementById('announcementAuthor').value;
 
     const announcement = {
         id,
         title,
         description,
+        author,
         isDraft: true
     };
 
