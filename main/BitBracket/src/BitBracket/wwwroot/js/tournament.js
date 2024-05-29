@@ -186,26 +186,18 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
             for(let button of buttons) {
                 button.style.display = 'none';
             }
-            // Change the label text
-            playerNamesLabel.textContent = 'Registered Users (Seeded in Descending Order):';
-
-            // Get the playerNames textarea
-            const playerNamesTextarea = document.getElementById('playerNames');
-
-            // Clear the textarea
-            playerNamesTextarea.value = '';
-
-            // Make the textarea read-only
-            playerNamesTextarea.readOnly = true;
-
             // Fetch the registered users
             fetch(`/api/TournamentAPI/GetParticipates/${tournamentId}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Check if data is not empty
-                    if (data && data.length > 0) {
                     // Get the playerNames textarea
                     const playerNamesTextarea = document.getElementById('playerNames');
+
+                    // Change the label text
+                    playerNamesLabel.textContent = 'Registered Users (Seeded in Descending Order):';
+
+                    // Clear the textarea
+                    playerNamesTextarea.value = '';
 
                     // Populate the textarea with the fetched data
                     data.forEach(participant => {
@@ -218,6 +210,9 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                     // Update the hidden input value with the participant usernames
                     hiddenInput.value = playerNamesTextarea.value;
                     //console.log(hiddenInput.value);
+
+                    // Make the textarea read-only
+                    playerNamesTextarea.readOnly = true;
 
                     // Add draggable attribute to each name
                     let names = playerNamesTextarea.value.split(', ');
@@ -283,18 +278,10 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
                             'cursor': 'grab'
                         });
                     });
-                }
-                else {
-                    // Display a message if there are no participants
-                    playerNamesTextarea.value = 'No participants found.';
-                }
                 });
         } else {
             // Hide Smart Seeding checkbox
             document.querySelector('.hidetemp').style.display = 'none';
-
-            // Clear the textarea
-            playerNamesTextarea.value = '';
 
             // Show the Whisper buttons
             for(let button of buttons) {
