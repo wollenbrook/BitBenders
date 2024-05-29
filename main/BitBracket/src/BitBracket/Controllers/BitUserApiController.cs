@@ -370,15 +370,15 @@ namespace BitBracket.Controllers
             return Ok(standings);
         }
         // PUT: api/BitUserApi/AddOrUpdatePlacement/{BitUserId}/{TournamentId}/{Placement}
-        [HttpPut("AddOrUpdatePlacement/{BitUserId}/{TournamentId}/{Placement}")]
-        public async Task<IActionResult> AddOrUpdatePlacement(int BitUserId, int TournamentId, int Placement)
+        [HttpPut("AddOrUpdatePlacement/{BitUserName}/{TournamentId}/{Placement}")]
+        public async Task<IActionResult> AddOrUpdatePlacement(string BitUserName, int TournamentId, int Placement)
         {
-            BitUser user = _bitUserRepository.GetBitUserByRegularId(BitUserId);
+            BitUser user = _bitUserRepository.GetBitUserByName(BitUserName);
             if (user == null)
             {
                 return NotFound();
             }
-            await _standingRepository.InsertOrUpdatePlacement(BitUserId, TournamentId, Placement);
+            await _standingRepository.InsertOrUpdatePlacement(user.Id, TournamentId, Placement);
             return Ok();
         }
         //GET: api/BitUserApi/GetEstimatedSkillLevel/{name}

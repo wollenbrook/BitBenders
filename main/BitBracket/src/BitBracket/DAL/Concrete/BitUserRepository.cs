@@ -293,7 +293,7 @@ namespace BitBracket.DAL.Concrete
                 }
                 else
                 {
-                    totalPoints += dictionaryOfPoints[(standings.Placement)];
+                    totalPoints += dictionaryOfPoints[standings.Placement];
                 }
                 placementList.Add(standings.Placement);
             }
@@ -304,8 +304,9 @@ namespace BitBracket.DAL.Concrete
             {
                 totalPoints += 10; 
             }
-            //int skillLevel = totalPoints / 10;  // Adjust divisor as needed
-            int skillLevel = totalPoints / 10;
+            int skillLevel = totalPoints / 10;  // Adjust divisor as needed
+            float skillLevelFloat = totalPoints / 10;
+            skillLevel =  (int)Math.Floor(skillLevelFloat);
             if (skillLevel > 8)
             {
                 skillLevel = 8;

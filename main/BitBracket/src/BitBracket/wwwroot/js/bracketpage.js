@@ -54,6 +54,10 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
             var json = JSON.stringify(data);
             localStorage.setItem('bracketData', json);
             console.log(data);
+            var dict = calculateTypeOfBracket(data);
+            console.log(dict);
+            SavePlacements(dict);
+            
 
             // Prepare the data to send
             var dataToSend = {
@@ -110,3 +114,95 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
             });
         });
     });
+
+function singleElimination(data) {
+    var teams = data.teams;
+    var results = data.results;
+    var numberOfRounds = Math.log2(teams.length);
+    var dictOfPlayerStandings = {};
+    console.log(numberOfRounds);
+    if (numberOfRounds === 0) {
+        if (results[0][0][0][0] > results[0][0][0][1]) {
+            winner = teams[0][0];
+            second = teams[0][1];
+        } else {
+            winner = teams[0][1];
+            second = teams[0][0];
+        }
+        dictOfPlayerStandings[1] = winner;
+        dictOfPlayerStandings[2] = second;
+        return dictOfPlayerStandings;
+
+    }
+    if (numberOfRounds === 1) {
+        var finals = {};
+        if (results[0][0][0][0] > results[0][0][0][1]) {
+            var finalsR1 = teams[0][0];
+            var fith = teams[0][1];
+        }
+        else {
+            var finalsR1 = teams[0][1];
+            var fith = teams[0][0];
+        }
+        if (results[0][0][1][0] > results[0][0][1][1]) {
+            var finalsR2 = teams[1][0];
+            var fourth = teams[1][1];
+        } else {
+            var finalsR2 = teams[1][1];
+            var fourth = teams[1][0];
+        }
+        if (results[0][1][0][0] > results[0][1][0][1]) {
+            var firstPlace = finalsR1;
+            var secondPlace = finalsR2;
+        } else {
+            var firstPlace = finalsR2;
+            var secondPlace = finalsR1;
+        }
+        if (results[0][1][1][0] > results[0][1][1][1]) {
+            var thirdPlace = fith;
+            var fourthPlace = fourth;
+        } else {
+            var thirdPlace = fourth;
+            var fourthPlace = fith;
+        }
+        dictOfPlayerStandings[1] = firstPlace;
+        dictOfPlayerStandings[2] = secondPlace;
+        dictOfPlayerStandings[3] = thirdPlace;
+        dictOfPlayerStandings[4] = fourthPlace;
+        return dictOfPlayerStandings;
+    }
+    return 'nothing yet';
+
+
+}
+function calculateTypeOfBracket(data) {
+    if (data.results.length === 1) {
+        var dictOfStandings = singleElimination(data);
+        return dictOfStandings;
+    }
+    else {
+        return "Double Elimination";
+    }
+    var dictOfPlayers = {};
+    return 'nothing';
+}
+
+function SavePlacements(dictionaryOfPlacemenets) {
+    for (var key in dictionaryOfPlacemenets) {
+        var Placement = key;
+        const TournamentId = document.getElementById('TournyId').textContent;
+        var BitUserName = dictionaryOfPlacemenets[key];
+        console.log(Placement, TournamentId, BitUserName);
+        $.ajax({
+            url: `/api/BitUserApi/AddOrUpdatePlacement/${BitUserName}/${TournamentId}/${Placement}`,
+            type: 'PUT',
+            success: function(response) {
+                console.log('Placement added successfully');
+            },
+            error: function(error) {
+                console.error('Failed to add placement');
+            }
+        });
+        
+    }
+}
