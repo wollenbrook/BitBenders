@@ -1,4 +1,5 @@
-@model BitBracket.Models.Tournament
+@using BitBracket.ViewModels
+@model TournamentViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,9 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@Model.Name</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-<link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body class="announcement-background">
+    <p></p>
     <h1 class="title-styling">Tournament Page
         <button id="myBtn">i</button>
     </h1>
@@ -28,10 +30,12 @@
             <button id="participateButton" class="ui button primary">Send Request</button>
         </div>
     </div>
+    <p id="userId">@Model.UserId</p>
+    <p id="tournamentId">@Model.TournamentId</p>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const tournamentId = @Model.Id;
-            const userId = @ViewBag.UserId; // Correctly retrieve userId from ViewBag
+            const tournamentId = @Model.TournamentId;
+            const userId = @Model.UserId; // Correctly retrieve userId from ViewBag
             checkParticipationStatus(tournamentId, userId); // Check participation status on load
         });
     </script>

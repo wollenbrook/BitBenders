@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const userId = document.getElementById('userId').value;
-    const tournamentId = document.getElementById('tournamentId').value;
+    const userId = document.getElementById('userId').textContent;
+    const tournamentId = document.getElementById('tournamentId').textContent;
 
     checkParticipationStatus(tournamentId, userId);
+    $('.ui.icon .info.circle.icon').popup();
+
 }
 );
 
