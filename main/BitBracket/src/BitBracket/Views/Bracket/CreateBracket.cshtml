@@ -35,6 +35,15 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .g-recaptcha {
+            transform:scale(0.77);
+            transform-origin:0 0;
+        }
     </style>
 </head>
 <body class="announcement-background">
@@ -72,19 +81,25 @@
                         <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" checked="@Model.RandomSeeding" />
                         <label for="RandomSeeding">Random Seeding (Seeding will be done in entered order otherwise)</label>
                     </div>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Generate Bracket</button>
-                    </div>
+                </div>
+                <div class="d-grid gap-2 mb-3">
+                    <button type="submit" class="btn btn-primary">Generate Bracket</button>
+                </div>
+
+                <div class="form-actions">
+                    <div id="captcha" class="g-recaptcha" data-sitekey="6Lfsr-kpAAAAALEMdy2Npn-5K8M1K6krwnlKEXil"></div>
+                    <button id="generateButton" type="button" class="btn btn-primary">
+                        Generate Bracket Link
+                        <i class="clipboard icon"></i>
+                    </button> 
+                </div>   
                 </form>
+                 
+        </div>
+    </div>
          
     </div>
-    <div class="d-grid gap-2">
-        <div id="captcha" class="g-recaptcha" data-sitekey="6Lfsr-kpAAAAALEMdy2Npn-5K8M1K6krwnlKEXil"></div>
-        <button id="generateButton" type="button" class="btn btn-primary">
-            Generate Bracket Link
-            <i class="clipboard icon"></i>
-        </button>     
-    </div>
+    
     <div id="minimal" class="row">
         <div class="col demo"></div>
     </div>
