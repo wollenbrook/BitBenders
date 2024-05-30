@@ -4,7 +4,88 @@
 <html>
 <head>
     <title>Tournament Page</title>
-@* <link rel="stylesheet" href="~/css/site.css" /> *@
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .title-styling {
+            color: #d35400;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .ui.container.mb-3, .ui.segment {
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .ui.icon.button {
+            background-color: #3498db;
+            color: #fff;
+        }
+        .btn-primary {
+            background-color: #3498db;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        .ui.sub.header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        .accordion .title, .accordion .content {
+            padding: 10px;
+            background-color: #ecf0f1;
+            border: none;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        .accordion .title {
+            cursor: pointer;
+        }
+        .accordion .title:hover {
+            background-color: #dcdde1;
+        }
+        .section-gap {
+            margin-top: 40px;
+        }
+        .white-label {
+            color: #fff;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        .modal-header, .modal-footer {
+            border: none;
+        }
+        .modal-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body class="announcement-background">
     <button class="ui icon button" id="backButton" style="margin-top: 20px;">
@@ -114,7 +195,7 @@
                             <textarea id="playerNames" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
                             <button type="button" id="recordBtnPlayerNames" class="ui icon button hidetempb"><i class="microphone icon"></i></button>
                             <button type="button" id="stopBtnPlayerNames" class="ui icon button hidetempb" disabled><i class="microphone slash icon"></i></button>
-                            <button type="button" id="clearBtnPlayerNames" class="ui icon button hidetempb"><i the="undo icon"></i></button>
+                            <button type="button" id="clearBtnPlayerNames" class="ui icon button hidetempb"><i class="undo icon"></i></button>
                         </div>
                         <div class="field">
                             <label for="Format">Format:</label>
@@ -155,8 +236,7 @@
 </body>
 </html>
 
-
 <script src="https://player.twitch.tv/js/embed/v1.js"></script>
- <script src="~/js/tournament.js"></script>
- <script src="~/js/participateRequest.js"></script>
+<script src="~/js/tournament.js"></script>
+<script src="~/js/participateRequest.js"></script>
 <script src="~/js/modalswitcher.js"></script>
