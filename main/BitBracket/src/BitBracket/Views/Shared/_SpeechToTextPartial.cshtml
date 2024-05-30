@@ -1,0 +1,12 @@
+@model BitBracket.ViewModels.SpeechToTextViewModel
+
+<div>
+    <select id="languageSelect" asp-for="SelectedLanguage" asp-items="Model.Languages"></select>
+    <button id="startRecord">Record Audio</button>
+    <button id="stopRecord" disabled>Stop Recording</button>
+    <input type="text" id="transcriptionResult" placeholder="Speak something...">
+</div>
+
+@section Scripts {
+    <script src="~/js/speechToText.js"></script>
+}

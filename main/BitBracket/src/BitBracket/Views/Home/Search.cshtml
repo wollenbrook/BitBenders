@@ -1,0 +1,34 @@
+﻿@{
+}
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css">
+</head>
+<body class="announcement-background">
+    <h1 class="title-styling">Search
+        <a class="ui icon small">
+            <i class="info circle icon large inverted announcement-background" data-content="Welcome to our search page! Here you can search for users and tournaments!" data-position="top center"></i>
+        </a>
+    </h1>
+    
+    <div class="section-gap"></div>
+    <div class="section-gap"></div>
+    <div class="search-bar" style="text-align: center;">
+        <button id="searchButtonId" class="ui small secondary button" style="font-size: 24px;">Search</button>
+
+        <input id="searchInputId" type="text" class="BetterSearchBar" style="font-size: 30px; width: 400px;" placeholder="Search...">
+        <select id="statusDropdownId" class="dropdown BetterFilterStyle" style="font-size: 24px; width: 100px;">
+            <option value="" selected disabled>Select a filter option</option>
+            <option value="Any">Any</option>
+            <option value="Users">Users</option>
+            <option value="Tournaments">Tournaments</option>
+        </select>
+        <button id="searchAllButtonId" class="ui small secondary button">All</button>
+
+    </div>
+    <div class="section-gap"></div>
+    <div class="announcement-background" id="bitUsersContainer" style="display: none;">
+        <h1>Items searched for will appear here!</h1>
+    </div>
+</body>
+<script src="~/js/search.js"></script>
+<script src="~/js/modalswitcher.js"></script>

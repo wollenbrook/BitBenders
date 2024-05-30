@@ -1,0 +1,41 @@
+@model BitBracket.Models.BitUser
+
+<div class="ui container">
+    @if (Model == null)
+    {
+        <div class="ui negative message">
+            <div class="header">
+                User not found.
+            </div>
+            <p>We couldn't find the user you were looking for. Please try again.</p>
+        </div>
+    }
+    else
+    {
+        <div class="ui segment">
+            <h2 class="ui header">@Model.Username</h2>
+            <div class="ui buttons">
+                <button id="optInButton" class="ui positive button @(Model.OptInConfirmation ? "disabled" : "")" onclick="optIn()" @(Model.OptInConfirmation ? "disabled" : "")>Opted In</button>
+                <div class="or"></div>
+                <button id="optOutButton" class="ui negative button @(Model.OptInConfirmation ? "" : "disabled")" onclick="optOut()" @(Model.OptInConfirmation ? "" : "disabled")>Opted Out</button>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="~/js/optInConfirmation.js"></script>
+
+<style>
+    @* .ui.container {
+        margin-top: 50px;
+    } *@
+    .ui.segment {
+        text-align: center;
+    }
+    @* .ui.header {
+        margin-bottom: 30px;
+    } *@
+    @* .ui.buttons .button {
+        width: 120px;
+    } *@
+</style>

@@ -1,0 +1,53 @@
+﻿@using BitBracket.ViewModels
+@model UserViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="announcement-background">
+    <div class="ui container">
+        <h1 class="title-styling">Welcome to @Model.Username's profile page!
+            <a class="ui icon">
+                <i class="info circle icon large inverted announcement-background" data-content="Welcome to another users profile page! Here you can view their profile details along with being able to send them a friend request." data-position="top center"></i>
+            </a>
+        </h1>
+
+
+        <div class="ui very padded segment">
+            <div class="ui divided items">
+                <div class="item">
+                    <div class="image">
+                        <img id="profileImage" src="@Model.ProfilePictureUrl" alt="Profile Picture" class="ui medium rounded image" />
+                    
+                    </div>
+                    <div class="content">
+                        <a class="header" id="persons-name">@Model.Username</a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <button class="ui small secondary button" id="friend-button"></button>
+                            <button class="ui small secondary button" id="block-button">Block</button>
+                            <div id="hiddenElement" style="visibility: hidden;">@Model.ProfileID</div>
+                            
+                        }
+
+
+                        <div class="meta">
+                            <span>@Model.Email</span>
+                            <p><strong>Tag:</strong> <div id="tagId" class="ui label">@Model.Tag</div></p>
+                            <p><strong>Bio:</strong> <div id="bioId" class="ui small fluid input">@Model.Bio</div></p>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/UsersPage.js" ></script>
+    <script src="~/js/modalswitcher.js"></script>
+
+</body>

@@ -1,0 +1,39 @@
+@model IEnumerable<BitBracket.Models.Tournament>
+
+@{
+    Layout = "_Layout";  // Assuming you have a layout page for consistent header/footer
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<body class="announcement-background">
+    <div class="ui container mt-5">
+        <h1 class="title-styling">All Tournaments</h1>
+        <div id="tournamentsContainer" class="ui very padded segment">
+            @if (Model != null && Model.Any())
+            {
+                <div class="ui divided items">
+                    @foreach (var tournament in Model)
+                    {
+                        <div class="item" style="cursor: pointer;" onclick="location.href='/Home/TournamentProfile?id=@tournament.Id'">
+                            <div class="content">
+                                <h3 class="ui header">@tournament.Name</h3>
+                                <div class="description">
+                                    <p>@tournament.Location</p>
+                                    <p>Status: @tournament.Status</p>
+                                    <p>Organized by: @tournament.OwnerNavigation.Username</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>.</p>
+            }
+        </div>
+    </div>
+    <script src="~/js/allTournaments.js"></script>
+</body>
+</html>

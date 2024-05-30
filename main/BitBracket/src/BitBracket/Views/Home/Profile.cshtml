@@ -1,0 +1,84 @@
+﻿@using BitBracket.ViewModels
+@model UserViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="announcement-background">
+    <div class="ui container">
+
+        <h1 class="title-styling">
+            Welcome, @Model.Username, to your profile page!
+            <a class="ui icon">
+                <i class="info circle icon large inverted announcement-background" data-content="Welcome to your very own profile page! On this page you can change a few things regarding your profile such as your tag,
+                bio, and profile picture. Feel free to explore and customize your profile to make it truly yours.
+                From this page, you can also navigate to your announcements and tournaments you are registered for!" data-position="top center"></i>
+            </a>
+        </h1>
+
+
+     
+        <p class="text-styling">Thank you for choosing BitBracket. We hope to provide a great experience.</p>
+
+        <div class="ui very padded segment">
+            <div class="ui divided items">
+                <div class="item">
+                    <div class="image">
+                        <img id="profileImage" src="@Model.ProfilePictureUrl" alt="Profile Picture" class="ui medium rounded image">
+                        <input type="file" id="profileImageInput" style="display: none;" accept="image/*">
+                        <a class="ui teal ribbon label clickable">Profile Picture</a>
+                    </div>
+                    <div class="content">
+                        <a class="header" id="username-thing">@Model.Username</a>
+                        <div class="meta">
+                            <span>@Model.Email</span>
+                        </div>
+                        <div class="description">
+                            <p><strong>Tag:</strong> <div id="tagId" class="ui label">@Model.Tag</div></p>
+                            <p><strong>Bio:</strong> <div id="bioId" class="ui small fluid input">@Model.Bio</div></p>
+                        </div>
+                        <div class="extra">
+                            <button id="saveTagButtonId" class="ui small primary button">Save Tag</button>
+                            <button id="saveBioButtonId" class="ui small secondary button">Save Bio</button>
+                        </div>
+                      
+                    </div>
+                    <div>
+                        <a class="ui icon">
+                            <i class="ui icon info circle icon large inverted announcement-background" data-content="The Estimated Skill Level is an estimation of your general skill level based on your previous
+                                    tournament performances. We take into account streaks when calculating the skill level, and it is generally a little harder
+                                    to reach a higher skill level. This is to ensure that the skill level is accurate and not easily
+                                    manipulated. Please keep in mind that this is an estimation and not a definitive skill level." data-position="top left"></i>
+                        </a>
+                        <h2>Estimated Skill Level
+       
+                        </h2>
+
+
+                        <div id="estimated-skill-level">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="@Url.Action("ManageAnnouncement", "Home")" class="ui button secondary">Manage Announcements</a>
+    <a href="@Url.Action("TournamentImIn", "Home")" class="ui button secondary">View Registered Tournament</a>
+    <a href="@Url.Action("friendly", "Home")" class="ui button secondary">View Friends</a>
+    <a href="@Url.Action("Standings", "Home")" class="ui button secondary">View Standings</a>
+
+    <button class="ui button secondary" id="show-blocked-users">Show Blocked Users</button>
+    <div class="announcement-background" id="show-blocked-container" style="display: none;">
+        <h3>Blocked Users</h3>
+        <div id="blocked-users-list"></div>
+    </div>
+    <script src="~/js/profilepage.js"></script>
+
+</body>
+</html>

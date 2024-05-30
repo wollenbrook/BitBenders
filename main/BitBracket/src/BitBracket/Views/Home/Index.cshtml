@@ -1,0 +1,128 @@
+@model BitBracket.Models.Announcement
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@* @{
+    var alert = TempData["Alert"] as string;
+    if (!string.IsNullOrEmpty(alert))
+    {
+        <div class="alert alert-warning">
+            @alert
+        </div>
+    }
+} *@
+<head>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .background-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .background-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .background-container img.blur {
+            filter: blur(8px);
+        }
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            padding: 20px;
+            background-color: rgba(167, 167, 167, 0.5);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+        }
+        .ui.button {
+            margin: 10px 0;
+        }
+        .title-styling {
+            font-size: 2em;
+            @* white-space: nowrap; /* Ensure title stays on one line */ *@
+        }
+        .text-styling {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .ui.animated.button {
+            margin: 5px;
+        }
+        .ui.buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image1.JPG" alt="Image 1">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image2.JPG" alt="Image 2">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image3.JPG" alt="Image 3">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image4.JPG" alt="Image 4">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image5.JPG" alt="Image 5">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image6.JPG" alt="Image 6">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image7.JPG" alt="Image 7">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image8.JPG" alt="Image 8">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image9.JPG" alt="Image 9">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image10.JPG" alt="Image 10">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image11.JPG" alt="Image 11">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image12.JPG" alt="Image 12">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image13.JPG" alt="Image 13">
+        <img class="ui image" src="https://bitbracketimagestorage.blob.core.windows.net/images/Image14.JPG" alt="Image 14">
+    </div>
+
+    <div class="overlay">
+        <h1 class="title-styling">Welcome to BitBracket
+        </h1>
+        <p class="text-styling">Your ultimate platform for organizing and participating in tournaments.</p>
+
+        <div class="ui buttons">
+            <a href="@Url.Action("CreateBracket", "Bracket")" class="ui animated button" tabindex="0">
+                <div class="visible content">Basic Bracket</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
+            </a>
+            <a href="@Url.Action("UserAnnouncementForm", "Home")" class="ui animated button" tabindex="0">
+                <div class="visible content">Announcements</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
+            </a>
+            <a href="@Url.Action("Privacy", "Home")" class="ui animated button" tabindex="0">
+                <div class="visible content">About</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
+            </a>
+            <a href="@Url.Action("Search", "Home")" class="ui animated button" tabindex="0">
+                <div class="visible content">Search</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
+            </a>
+            <a href="@Url.Action("TournamentDashboard", "Bracket")" class="ui animated button" tabindex="0">
+                <div class="visible content">Tournament Dashboard</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    @* <script src="~/js/modalswitcher.js"></script> *@
+    <script src="~/js/homeSlideshow.js"></script>
+</body>
+</html>

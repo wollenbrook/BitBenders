@@ -1,0 +1,407 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* CustomStyles.css or within a <style> tag */
+.container {
+  max-width: 800px; /* Adjust based on your preference */
+}
+
+.card-header {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+}
+
+.btn-primary {
+  background-color: #0056b3; /* Slightly darker primary color for the button */
+  border: none;
+}
+
+.form-control:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+.bodyprofile {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+
+.user-card {
+    height: 120px;
+    width: calc(33% - 20px);
+    display: inline-block;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    cursor: pointer;
+    margin: 10px;
+}
+.user {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.user h3 {
+        margin: 0;
+}
+
+.user p {
+    margin: 0;
+}
+.tooltip {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    position: relative;
+}
+
+.user-card:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.profile-info {
+    margin-top: 20px;
+}
+
+.profile-info div {
+    margin-bottom: 10px;
+}
+
+.profile-info label {
+    font-weight: bold;
+}
+
+.profile-info p {
+    margin: 0;
+}
+
+.section-gap {
+  margin-bottom: 20px;
+}
+.name {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.form-info {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+.no-bitusers-found {
+    font-size: 20px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+
+:root {
+  /* Define light theme colors */
+  --background-color-light: #7f9a8d, #00535f;
+  --text-color-light: white;
+  --navbar-background-light: #f8d291;
+  --title-color-light: #f4886d;
+  --icon-color-light: #f4886d;
+  --medium-text-light: #323232;
+  --small-text-light: #777;
+  --navbar-text-light: #000;
+
+  /* Define dark theme colors */
+  --background-color-dark: #131c6a, #712e5c; 
+  --text-color-dark: #b6aabb; 
+  --navbar-background-dark: #2e1467; 
+  --title-color-dark: #79268c; 
+  --icon-color-dark: #89CFF0;
+  --medium-text-dark: #CCCCCC;
+  --small-text-dark: #AAAAAA;
+  --navbar-text-dark: #fff;
+}
+
+body.light-theme {
+  /* Apply light theme colors to corresponding CSS variables */
+  --background-color: var(--background-color-light);
+  --text-color: var(--text-color-light);
+  --navbar-background: var(--navbar-background-light);
+  --title-color: var(--title-color-light);
+  --icon-color: var(--icon-color-light);
+  --medium-text: var(--medium-text-light);
+  --small-text: var(--small-text-light);
+  --navbar-text-color: var(--navbar-text-light);
+}
+
+body.dark-theme {
+  /* Apply dark theme colors to corresponding CSS variables */
+  --background-color: var(--background-color-dark);
+  --text-color: var(--text-color-dark);
+  --navbar-background: var(--navbar-background-dark);
+  --title-color: var(--title-color-dark);
+  --icon-color: var(--icon-color-dark);
+  --medium-text: var(--medium-text-dark);
+  --small-text: var(--small-text-dark);
+  --navbar-text-color: var(--navbar-text-dark);
+}
+
+.announcement-background {
+  /* Set the background gradient using the theme's background color */
+  background: linear-gradient(to right, var(--background-color));
+}
+
+.text-styling, .navbar-background, .title-styling {
+  /* Common text styling for multiple elements */
+  color: var(--text-color);
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+}
+
+.navbar-background {
+    /* Set the background color for the navbar */
+    background-color: var(--navbar-background) !important;
+
+}
+
+.ceru {
+    background-color: darkslateblue;
+    padding: 20px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.BetterSearchBar {
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background-color: white;
+}
+.BetterFilterStyle {
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background-color: white;
+}
+
+.navbar-text {
+    /* Set the text color for the navbar */
+    color: var(--navbar-text-color) !important;
+    font-size: 10px;
+}
+.accept-button{
+  /* Set the background color for the accept button */
+  background-color: #5cb85c;
+  border: none;
+  font-size: 10px;
+}
+.decline-button{
+  /* Set the background color for the decline button */
+  background-color: #d9534f;
+  border: none;
+  font-size: 10px;
+}
+.title-styling {
+  /* Specific styling for titles */
+  font-family: 'Copperplate', 'Copperplate Gothic Light', sans-serif;
+  color: var(--title-color);
+  font-weight: bold; 
+  font-size: 40px; 
+  text-align: center; 
+}
+
+.icon-color i {
+  /* Set the color for icons */
+  color: var(--icon-color);
+}
+
+.medium-text {
+  /* Set the color for medium-sized text */
+  color: var(--medium-text);
+}
+
+.small-text {
+  /* Set the color for small-sized text */
+  color: var(--small-text);
+}
+
+
+.announcement-container {
+  max-width: 900px; 
+  margin: auto; 
+}
+
+#generateButton {
+  display: none;
+}
+
+#captcha {
+  display: none;
+}
+
+.large-text {
+  font-size: 2em;
+}
+
+/* Existing styles... */
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+/* Existing styles... */
+
+/* The Info Button */
+#myBtn {
+    background-color: #007bff; /* Bootstrap primary color */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+#mySkillBtn {
+    background-color: #007bff; /* Bootstrap primary color */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+    #myBtn:hover {
+        background-color: #0056b3; /* Darker shade for hover */
+    }
+
+    .ui.large.images {
+      text-align: center; /* Center-align the image container */
+      width: 100%; /* Use full width */
+      height: 500px; /* Set a fixed height to make images larger */
+      margin: 20px auto; /* Center-align the container block, add some vertical space */
+      position: relative; /* Set position context for images */
+      overflow: hidden; /* Hide anything outside the container */
+  }
+  
+  .ui.large.images .ui.image {
+      display: none; /* Ensure images are hidden initially */
+      width: 100%; /* Stretch images to fill the container */
+      height: 100%; /* Stretch height to fill container */
+      object-fit: cover; /* Ensure images cover the area without distortion */
+      transition: opacity 1s ease-in-out; /* Smooth transition for the opacity change */
+  }
+  
+  .ui.image.blur {
+      filter: blur(5px); /* Apply blur effect */
+  }
+  
+  .ui.segment.center.aligned2 {
+    padding: 5px; /* Adjusted padding to provide a visual buffer around the image */
+    max-width: calc(100% - 40px); /* Adjust the width to account for padding */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    background-color: #fff; /* Ensure background color is white for visibility */
+    margin: auto; /* Center the segment */
+    display: block; /* Ensures that the segment is properly block displayed */
+}
+
+.ui.segment.center.aligned {
+    padding: 5px 0; /* Add more padding for better visual spacing */
+}
+
+#myBtn:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+}
+
+.skill-level-bar {
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+  
+.white-label {
+  color: white !important;
+}

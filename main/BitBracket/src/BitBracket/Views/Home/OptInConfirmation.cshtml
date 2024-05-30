@@ -1,0 +1,18 @@
+@{
+    ViewData["Title"] = "OptIn/Out";
+}
+
+<body class="announcement-background"></body>
+<div class="section-gap"></div>
+<h1 class="title-styling">@ViewData["Title"]</h1>
+
+<div class="section-gap"></div>
+
+
+<div class="section-gap"></div>
+
+@Html.Partial("~/Views/Announcements/_OptInConfirmation.cshtml")
+
+@section Scripts {
+    <script src="~/js/optInConfirmation.js"></script>
+}

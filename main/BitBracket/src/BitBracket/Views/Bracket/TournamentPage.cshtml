@@ -1,0 +1,234 @@
+@* TournamentPage.cshtml *@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tournament Page</title>
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .title-styling {
+            color: #d35400;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .ui.container.mb-3, .ui.segment {
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #3498db;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        .ui.sub.header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        .accordion .title, .accordion .content {
+            padding: 10px;
+            background-color: #ecf0f1;
+            border: none;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        .accordion .title {
+            cursor: pointer;
+        }
+        .accordion .title:hover {
+            background-color: #dcdde1;
+        }
+        .section-gap {
+            margin-top: 40px;
+        }
+        .white-label {
+            color: #fff;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        .modal-header, .modal-footer {
+            border: none;
+        }
+        .modal-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="announcement-background">
+    <button class="ui icon button" id="backButton" style="margin-top: 20px;">
+        <i class="arrow left icon"></i>
+    </button>
+    <h1 class="title-styling">
+        Tournament Page
+        <a class="ui icon small">
+            <i class="info circle icon large inverted announcement-background" data-content="Welcome to the tournament page, where you can create a new bracket, set a broadcast link, and manage participation requests! You can also view your created brackets and see them in more detail there."></i>
+        </a>
+    </h1>
+
+    
+    <div class="ui container mb-3">
+        <div class="ui segment">
+            <h1 class="ui sub header" id="tournamentName">Tournament Name</h1>
+            <p class="ui sub header">Organizer: <span id="userTag">User Tag</span></p>
+            <p class="ui sub header">Location: <span id="tournamentLocation">Tournament Location</span></p>
+            <p class="ui sub header">Status: <span id="tournamentStatus">Tournament Status</span></p>
+        </div>
+    </div>
+    <div>
+        <div id="stream-embed"></div>
+    </div>
+        <!-- Broadcast Link Form -->
+    <div class="ui container mb-3">
+        <div class="ui segment">
+            <h2 class="ui sub header">Set Broadcast Link</h2>
+            <form id="broadcastLinkForm">
+                <div class="form-group">
+                    <label for="BroadcastType">Broadcast Type:</label>
+                    <select class="form-control" id="BroadcastType" name="BroadcastType">
+                        <option value="Twitch">Twitch</option>
+                        <option value="YouTube">YouTube</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="BroadcastLink">Broadcast Channel (Twitch Channel Name or YouTube <a href="https://support.google.com/youtube/answer/3250431?hl=en#:~:text=Find%20your%20channel's%20user%20ID%20%26%20channel%20ID&text=Sign%20in%20to%20YouTube.&text=From%20the%20left%20menu%2C%20select,channel's%20user%20and%20channel%20IDs." target="_blank">Channel ID</a>):</label>
+                    <input type="text" class="form-control" id="BroadcastLink" name="BroadcastLink" placeholder="Enter broadcast channel">
+                </div>
+                <button type="submit" class="btn btn-primary">Set Broadcast</button>
+            </form>
+        </div>
+    </div>
+
+        <!-- Button to open the bracket creation form -->
+    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#bracketModal">
+        Create Bracket
+    </button>
+
+    <div class="ui container">
+        <!-- Participation Requests Dropdown -->
+        <div class="ui styled accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Participation Requests
+            </div>
+            <div class="content">
+                <div id="participationRequests"></div>
+            </div>
+        </div>
+
+        <!-- Approved Participants Dropdown -->
+        <div class="ui styled accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Approved Participants
+            </div>
+            <div class="content">
+                <div id="approvedParticipants"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bracket creation form (modal dialog) -->
+   <div class="modal fade" id="bracketModal" tabindex="-1" role="dialog" aria-labelledby="bracketModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bracketModalLabel">Create a New Bracket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="createBracketForm" method="post" class="ui form">
+                    <div class="modal-body">
+                        <div class="field">
+                            <label for="BracketType">Bracket Type:</label>
+                            <select id="BracketType" name="BracketType">
+                                <option value="Write-in Bracket">Write-in Bracket</option>
+                                <option value="Registered User Bracket">Registered User Bracket</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="BracketName">Bracket Name:</label>
+                            <input type="text" id="BracketName" name="BracketName" placeholder="Enter Bracket Name" required>
+                            <button type="button" id="recordBtnBracketName" class="ui icon button"><i class="microphone icon"></i></button>
+                            <button type="button" id="stopBtnBracketName" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+                            <button type="button" id="clearBtnBracketName" class="ui icon button"><i class="undo icon"></i></button>
+                        </div>
+                        <div class="field">
+                            <label id="playerNamesLabel" for="Names">Player Names (comma-delimited, In-Order Seeding):</label>
+                            <textarea id="playerNames" placeholder="Enter Player Names: e.g Player1, Player2" required></textarea>
+                            <button type="button" id="recordBtnPlayerNames" class="ui icon button hidetempb"><i class="microphone icon"></i></button>
+                            <button type="button" id="stopBtnPlayerNames" class="ui icon button hidetempb" disabled><i class="microphone slash icon"></i></button>
+                            <button type="button" id="clearBtnPlayerNames" class="ui icon button hidetempb"><i class="undo icon"></i></button>
+                        </div>
+                        <div class="field">
+                            <label for="Format">Format:</label>
+                            <select id="Format" name="Format">
+                                <option value="Single Elimination">Single Elimination</option>
+                                <option value="Double Elimination">Double Elimination</option>
+                            </select>
+                        </div>
+                        <div class="field hidetemp" style="display: none;">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="SmartSeedingAlgorithm" name="SmartSeedingAlgorithm" value="true"/>
+                                <label for="SmartSeedingAlgorithm">Use Smart Seeding Algorithm (Seed by Skill Level)</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" />
+                                <label for="RandomSeeding">Random Seeding (Overrides other Seeding methods)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Create Bracket">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="section-gap"></div>
+    <div>
+        <h2 class="white-label">Created Brackets</h2>
+    </div>
+
+    <!-- Bracket display -->
+    <div id="bracketsList"></div>
+
+</body>
+</html>
+
+<script src="https://player.twitch.tv/js/embed/v1.js"></script>
+<script src="~/js/tournament.js"></script>
+<script src="~/js/participateRequest.js"></script>
+<script src="~/js/modalswitcher.js"></script>

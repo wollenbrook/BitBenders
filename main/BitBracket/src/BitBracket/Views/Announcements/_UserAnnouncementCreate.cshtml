@@ -1,0 +1,46 @@
+<div class="ui segment">
+
+    <form id="createAnnouncementForm" class="ui form">
+        <div class="field">
+            <label>Title</label>
+            <div class="ui action input">
+                <input type="text" id="title" name="title" placeholder="Announcement Title" required>
+                <button type="button" id="recordBtnTitle" class="ui icon button"><i class="microphone icon"></i></button>
+                <button type="button" id="stopBtnTitle" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+                <button type="button" id="clearBtnTitle" class="ui icon button"><i class="undo icon"></i></button>
+            </div>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <div class="ui action input">
+                <textarea id="description" name="description" placeholder="Detailed Description" required></textarea>
+                <button type="button" id="recordBtnDescription" class="ui icon button"><i class="microphone icon"></i></button>
+                <button type="button" id="stopBtnDescription" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
+                <button type="button" id="clearBtnDescription" class="ui icon button"><i class="undo icon"></i></button>
+            </div>
+        </div>
+                <div class="field">
+            <label>Author</label>
+            <input type="text" id="author" name="author" value="@User.Identity.Name" disabled>
+        </div>
+        <div class="field">
+            <label>Tournament</label>
+            <select id="tournamentDropdown" class="ui fluid dropdown">
+                <!-- Tournament options will be dynamically loaded here -->
+            </select>
+        </div>
+        <div class="field">
+            <label>Status</label>
+            <select id="statusDropdown" class="ui fluid dropdown">
+                <option value="false">Publish</option>
+                <option value="true">Draft</option>
+            </select>
+        </div>
+        <!-- Additional fields remain the same -->
+        <button type="submit" class="ui button primary">Create Announcement</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/userAnnouncementCreate.js"></script>
+}

@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "User Announcements";
+}
+<head>
+    <link rel="stylesheet" href="~/css/site.css" />
+
+</head>
+<body class="announcement-background"></body>
+<h1 class="title-styling">@ViewData["Title"]
+    <a class="ui icon">
+        <i class="info circle icon large inverted" data-content="Welcome to our user announcement page! From here, you can see your latest user announcement, go to create your own user announcement,
+            and go opt in or out of receiving user announcements." data-position="top center"></i>
+    </a>
+</h1>
+
+<div class="section-gap"></div>
+@if (User.Identity.IsAuthenticated)
+{
+    <a href="@Url.Action("UserAnnouncementCreate", "Home")" class="ui button primary">Create User Announcement</a>
+}
+<a href="@Url.Action("Announcement", "Home")" class="ui button primary">Check Admin Announcements</a>
+<a href="@Url.Action("optInConfirmation", "Home")" class="ui button secondary">OptIn/Out</a>
+
+<div class="section-gap"></div>
+
+@Html.Partial("~/Views/Announcements/_UserAnnouncementForm.cshtml")
+
+@section Scripts {
+    <script src="~/js/userAnnouncementForm.js"></script>
+    <script src="~/js/modalswitcher.js"></script>
+
+}

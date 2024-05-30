@@ -1,0 +1,45 @@
+@using BitBracket.ViewModels
+@model TournamentViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Name</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="announcement-background">
+    <p></p>
+    <h1 class="title-styling">Tournament Page
+        <button id="myBtn">i</button>
+    </h1>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Welcome to the tournament page! Here you can view the details of a tournament and send a request to participate.</p>
+        </div>
+    </div>
+
+    <div class="ui container mt-5">
+        <div class="ui segment">
+            <h1 class="ui header">@Model.Name</h1>
+            <p>@Model.Location</p>
+            <p>Status: @Model.Status</p>
+            <button id="participateButton" class="ui button primary">Send Request</button>
+        </div>
+    </div>
+    <p id="userId">@Model.UserId</p>
+    <p id="tournamentId">@Model.TournamentId</p>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tournamentId = @Model.TournamentId;
+            const userId = @Model.UserId; // Correctly retrieve userId from ViewBag
+            checkParticipationStatus(tournamentId, userId); // Check participation status on load
+        });
+    </script>
+</body>
+</html>
+<script src="~/js/tournamentProfile.js"></script>
+<script src="~/js/modalswitcher.js"></script>

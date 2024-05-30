@@ -1,0 +1,27 @@
+﻿@page
+@model PersonalDataModel
+@{
+    ViewData["Title"] = "Personal Data";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<body class="announcement-background"></body>
+<div class="ui container">
+    <h2 class="ui dividing header">@ViewData["Title"]</h2>
+    <div class="ui message">
+        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
+        <p><strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong></p>
+    </div>
+
+    <form class="ui form" id="download-data" asp-page="DownloadPersonalData" method="post">
+        <button class="ui button primary" type="submit">Download</button>
+    </form>
+
+    <div class="ui hidden divider"></div>
+
+    <a asp-page="DeletePersonalData" class="ui button negative">Delete</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

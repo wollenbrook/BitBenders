@@ -1,0 +1,62 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+<head>
+    <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
+
+</head>
+<body class="announcement-background">
+    <div class="section-gap"></div>
+    <div class="ui container">
+        <h1 class="title-styling">@ViewData["Title"]</h1>
+        <div class="ui segment">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="ui form">
+                <h2 class="ui dividing header">Create a new account.</h2>
+
+                <div asp-validation-summary="ModelOnly" class="ui negative message"></div>
+
+                <div class="field">
+                    <label asp-for="Input.UserName">Username</label>
+                    <input asp-for="Input.UserName" placeholder="Username">
+                    <span asp-validation-for="Input.UserName" class="ui red text"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Email">Email</label>
+                    <input asp-for="Input.Email" placeholder="Email">
+                    <span asp-validation-for="Input.Email" class="ui red text"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Tag">Tag</label>
+                    <input asp-for="Input.Tag" placeholder="Tag">
+                    <span asp-validation-for="Input.Tag" class="ui red text"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.Password">Password</label>
+                    <input asp-for="Input.Password" type="password" placeholder="Password">
+                    <span asp-validation-for="Input.Password" class="ui red text"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                    <input asp-for="Input.ConfirmPassword" type="password" placeholder="Confirm Password">
+                    <span asp-validation-for="Input.ConfirmPassword" class="ui red text"></span>
+                </div>
+                <div id="captcha" class="g-recaptcha" data-sitekey="6Lfsr-kpAAAAALEMdy2Npn-5K8M1K6krwnlKEXil" data-callback="captchaCompleted"></div>
+                <button id="registerSubmit" type="submit" class="ui button primary fluid" disabled>Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/captchaRegister.js"></script>
+
+
+}

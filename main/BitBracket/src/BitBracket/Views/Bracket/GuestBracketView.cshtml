@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Guest Bracket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <style>
+        .avatar {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .team .name {
+            font-size: 0.7em;  /* Adjusted font size for player names */
+        }
+        .bracket-container {
+            display: flex;
+            justify-content: flex-start; /* Align container to the start */
+            align-items: flex-start;    /* Align items to the start */
+            margin-top: 20px;
+        }
+        .error-message {
+            color: red;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="announcement-background">
+
+    <div class="container-fluid bracket-container">
+        <div id="minimal" class="row">
+            <div class="col demo"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bracket/0.11.1/jquery.bracket.min.js"></script>
+    <script src="~/js/guestbracket.js"></script>
+</body>
+</html>

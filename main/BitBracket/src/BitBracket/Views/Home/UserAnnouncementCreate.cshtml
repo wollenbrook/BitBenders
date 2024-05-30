@@ -1,0 +1,29 @@
+@{
+    ViewData["Title"] = "Create a User Announcement";
+}
+<head>
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+</head>
+<body class="announcement-background"></body>
+<div class="section-gap"></div>
+<div class="ui container">
+    <div>
+    <h1 class="title-styling">@ViewData["Title"]
+            <a class="ui icon small">
+                <i class="info circle icon large inverted announcement-background" data-content="Welcome to your create announcements page, where you can create an announcement as save it as a draft, or publish it right away!" data-position="top center"></i>
+            </a>
+    </h1>
+
+    @Html.Partial("~/Views/Announcements/_UserAnnouncementCreate.cshtml")
+</div>
+
+    @* <a href="@Url.Action("UserAnnouncementForm", "Home")" class="ui button secondary">Return to Announcement Page</a> *@
+</div>
+
+@section Scripts {
+    <script src="~/js/userAnnouncementCreate.js"></script>
+    <script src="~/js/modalswitcher.js"></script>
+
+}

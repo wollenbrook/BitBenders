@@ -1,0 +1,76 @@
+@model BitBracket.ViewModels.ManageAnnouncementsViewModel
+
+@{
+    ViewData["Title"] = "Manage Announcements";
+}
+
+<div class="ui grid">
+    <div class="eight wide column">
+        <h2 class="white-label">Drafts</h2>
+        <div id="draftsList" class="ui cards">
+            @foreach (var announcement in Model.DraftAnnouncements)
+            {
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">@announcement.Title</div>
+                        <div class="description">@announcement.Description</div>
+                        <div class="author">@announcement.Author</div>
+                    </div>
+                    <div class="extra content">
+                        @* <button class="ui blue button" onclick="updateAnnouncement(@announcement.Id)">Update</button> *@
+                        <button class="ui primary button" onclick="publishAnnouncement(@announcement.Id)">Publish</button>
+                        <button class="ui red button" onclick="deleteAnnouncement(@announcement.Id)">Delete</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="eight wide column">
+        <h2 class="white-label">Published</h2>
+        <div id="publishedList" class="ui cards">
+            @foreach (var announcement in Model.PublishedAnnouncements)
+            {
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">@announcement.Title</div>
+                        <div class="description">@announcement.Description</div>
+                        <div class="author">@announcement.Author</div>
+                    </div>
+                    <div class="extra content">
+                        <button class="ui red button" onclick="deleteAnnouncement(@announcement.Id)">Delete</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@* <div class="ui modal" id="updateModal">
+    <i class="close icon"></i>
+    <div class="header">Update Announcement</div>
+    <div class="content">
+        <form class="ui form">
+            <div class="field">
+                <label>Title</label>
+                <input type="text" id="announcementTitle" placeholder="Title">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea id="announcementDescription" placeholder="Description"></textarea>
+            </div>
+            <div class="field">
+                <label>Author</label>
+                <input type="text" id="announcementAuthor" placeholder="Author" readonly> <!-- Added Author field -->
+            </div>
+            <input type="hidden" id="announcementId">
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui button" onclick="$('#updateModal').modal('hide')">Cancel</div>
+        <div class="ui button" onclick="saveUpdatedAnnouncement()">Save</div>
+    </div>
+</div> *@
+
+<script src="~/js/manageAnnouncement.js"></script>
+
+

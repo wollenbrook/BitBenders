@@ -1,0 +1,41 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<body class="announcement-background">
+    <div class="ui container center aligned" style="padding-top: 50px; padding-bottom: 50px;">
+        <h1 class="title-styling">@ViewData["Title"]</h1>
+        <div class="ui very padded segment">
+            <form id="account" method="post" class="ui large form">
+                <div class="field">
+                    <label>Email</label>
+                    <input asp-for="Input.Email" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="ui pointing red basic label"></span>
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <input asp-for="Input.Password" placeholder="Password" type="password" />
+                    <span asp-validation-for="Input.Password" class="ui pointing red basic label"></span>
+                </div>
+                <div class="ui checkbox">
+                    <input asp-for="Input.RememberMe" type="checkbox" tabindex="0" class="hidden">
+                    <label>@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
+                </div>
+                <button id="login-submit" type="submit" class="ui fluid large teal submit button" style="margin-top: 20px;">Log in</button>
+            </form>
+
+            <div class="ui message" style="margin-top: 20px;">
+                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a> |
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a> |
+                <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

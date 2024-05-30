@@ -1,0 +1,12 @@
+DROP TABLE [Announcements];
+DROP TABLE [UserAnnouncements];
+DROP TABLE [Brackets];
+DROP TABLE [Friends];
+DROP TABLE [FriendRequests];
+DROP TABLE [Participates];
+DROP TABLE [ParticipateRequests];
+DROP TABLE [GuidBracket];
+DROP TABLE [BlockedUsers];
+DROP TABLE [Standings];
+DROP TABLE [Tournaments];
+DROP TABLE [BitUser];
