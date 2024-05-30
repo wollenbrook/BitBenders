@@ -247,3 +247,5 @@ function initializeBracket(bracketFormat, teams) {
         disableTeamEdit: true
     });
 }
+
+$('.ui.icon .info.circle.icon').popup();
