@@ -13,6 +13,58 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <title>Competition Bracket</title>
     <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .title-styling {
+            color: #d35400;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .ui.container.mb-3, .ui.segment {
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .ui.icon.button {
+            background-color: #3498db;
+            color: #fff;
+        }
+        .btn-primary {
+            background-color: #3498db;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        .ui.sub.header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
         .avatar {
             width: 16px;
             height: 16px;
@@ -35,20 +87,27 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        .form-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .g-recaptcha {
+            transform:scale(0.77);
+            transform-origin:0 0;
+        }
     </style>
 </head>
 <body class="announcement-background">
     <div class="ui container">
-        <h2 class="title-styling">@ViewData["Title"]
-            <button id="myBtn">i</button>
+        <h2 class="title-styling">
+            @ViewData["Title"]
+            <a class="ui icon">
+                <i class="info circle icon large inverted announcement-background" data-content="Welcome to the competition bracket page! From here, you can create a bracket for your competition, and generate a bracket link to share with others" data-position="top center"></i>
+            </a>
         </h2>
-        <div id="myModal" class="modal">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <p>Welcome to the competition bracket page! From here, you can create a bracket for your competition, and generate a bracket link to share with others.</p>
-                </div>
-        </div>
+        
+
 
         <div class="ui segment form-container">
             <form id="createBracketForm" method="post" class="ui form">
@@ -58,7 +117,6 @@
                     <button type="button" id="recordBtn" class="ui icon button"><i class="microphone icon"></i></button>
                     <button type="button" id="stopBtn" class="ui icon button" disabled><i class="microphone slash icon"></i></button>
                     <button type="button" id="clearBtn" class="ui icon button"><i class="undo icon"></i></button>
-                    @* <div asp-validation-for="Names" class="ui pointing red basic label"></div> *@
                 </div>
                 <div class="field">
                     <label for="Format">Format:</label>
@@ -72,19 +130,26 @@
                         <input type="checkbox" id="RandomSeeding" name="RandomSeeding" value="true" checked="@Model.RandomSeeding" />
                         <label for="RandomSeeding">Random Seeding (Seeding will be done in entered order otherwise)</label>
                     </div>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Generate Bracket</button>
-                    </div>
-                </form>
-         
+                </div>
+                <div class="d-grid gap-2 mb-3">
+                    <button type="submit" class="btn btn-primary">Generate Bracket</button>
+                </div>
+
+                <div class="form-actions">
+                    <div id="captcha" class="g-recaptcha" data-sitekey="6Lfsr-kpAAAAALEMdy2Npn-5K8M1K6krwnlKEXil"></div>
+                    <button id="generateButton" type="button" class="btn btn-primary">
+                        Generate Bracket Link
+                        <i class="clipboard icon"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="d-grid gap-2">
-        <div id="captcha" class="g-recaptcha" data-sitekey="6Lfsr-kpAAAAALEMdy2Npn-5K8M1K6krwnlKEXil"></div>
-        <button id="generateButton" type="button" class="btn btn-primary">
-            Generate Bracket Link
-            <i class="clipboard icon"></i>
-        </button>     
+
+    <div class="ui icon">
+        <i class="info circle icon large inverted" data-content="Click the Score which should default to 0 or -- and press enter to progress the bracket!" data-position="top center"></i>
     </div>
+    
     <div id="minimal" class="row">
         <div class="col demo"></div>
     </div>

@@ -10,19 +10,17 @@
 </head>
 <body class="announcement-background">
     <div class="ui container">
+
         <h1 class="title-styling">
             Welcome, @Model.Username, to your profile page!
-            <button id="myBtn">i</button>
+            <a class="ui icon">
+                <i class="info circle icon large inverted announcement-background" data-content="Welcome to your very own profile page! On this page you can change a few things regarding your profile such as your tag,
+                bio, and profile picture. Feel free to explore and customize your profile to make it truly yours.
+                From this page, you can also navigate to your announcements and tournaments you are registered for!" data-position="top center"></i>
+            </a>
         </h1>
-        <div id="myModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Welcome to your very own profile page! On this page you can change a few things regarding your profile such as your tag,</p>
-                <p>bio, and profile picture. Feel free to explore and customize your profile to make it truly yours.</p>
-                <p>From this page, you can also navigate to your announcements and tournaments you are registered for!</p>
-            </div>
-        </div>
+
+
      
         <p class="text-styling">Thank you for choosing BitBracket. We hope to provide a great experience.</p>
 
@@ -50,21 +48,17 @@
                       
                     </div>
                     <div>
-                        <h2>Estimated Skill Level
-                            <button id="mySkillBtn">i</button>
-                        </h2>
-                        <div id="myModalSkill" class="modal">
-                            <!-- Modal content -->
-                            <div class="modal-content">
-                                <span class="close2">&times;</span>
-                                <p>The Estimated Skill Level is an estimation of your general skill level based on your previous 
+                        <a class="ui icon">
+                            <i class="ui icon info circle icon large inverted announcement-background" data-content="The Estimated Skill Level is an estimation of your general skill level based on your previous
                                     tournament performances. We take into account streaks when calculating the skill level, and it is generally a little harder
                                     to reach a higher skill level. This is to ensure that the skill level is accurate and not easily
-                                    manipulated. Please keep in mind that this is an estimation and not a definitive skill level, and 
-                                    a tournament organizer can choose to use it when seeding players in a tournament, or disregard it at their discretion. 
-                                </p>
-                            </div>
-                        </div>
+                                    manipulated. Please keep in mind that this is an estimation and not a definitive skill level." data-position="top left"></i>
+                        </a>
+                        <h2>Estimated Skill Level
+       
+                        </h2>
+
+
                         <div id="estimated-skill-level">
                             
                         </div>
@@ -80,13 +74,11 @@
     <a href="@Url.Action("Standings", "Home")" class="ui button secondary">View Standings</a>
 
     <button class="ui button secondary" id="show-blocked-users">Show Blocked Users</button>
-    <div class="ui very padded segment divided items" id="show-blocked-container" style="display: none;">
+    <div class="announcement-background" id="show-blocked-container" style="display: none;">
         <h3>Blocked Users</h3>
         <div id="blocked-users-list"></div>
     </div>
     <script src="~/js/profilepage.js"></script>
-    <script src="~/js/modalswitcher.js"></script>
-    <script src="~/js/extraModel.js"></script>
 
 </body>
 </html>

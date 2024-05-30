@@ -76,11 +76,13 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
 
         // Display tournament broadcast
         var broadcastType = tournament.broadcastType;
-        var broadcastLink = tournament.broadcastLink
+        var broadcastLink = tournament.broadcastLink;
+        
         if (broadcastType === 'Twitch') {
             new Twitch.Player("stream-embed", {
                 channel: tournament.broadcastLink
               });
+              document.getElementById('BroadcastLink').value = tournament.broadcastLink;
         } 
         else if (broadcastType === 'YouTube') {
             var youtubeEmbedUrl = `https://www.youtube.com/embed/live_stream?channel=${broadcastLink}`;
@@ -93,9 +95,16 @@ fetch(`/api/TournamentAPI/${tournamentId}`)
             iframe.title = "YouTube";
             iframe.sandbox = "allow-modals allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation";
             document.getElementById('stream-embed').appendChild(iframe);
+            document.getElementById('BroadcastLink').value = tournament.broadcastLink;
         } 
         else{
-            document.getElementById('stream-embed').textContent = 'No broadcast available';
+            var streamEmbed = document.getElementById('stream-embed');
+            streamEmbed.innerHTML = ''; // Clear the existing content
+            var h2 = document.createElement('h2');
+            h2.textContent = 'No broadcast available';
+            h2.style.textAlign = 'center';
+            h2.classList.add('white-label');
+            streamEmbed.appendChild(h2);
         }
 
 

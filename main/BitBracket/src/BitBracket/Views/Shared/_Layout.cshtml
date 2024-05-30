@@ -4,17 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BitBracket</title>
+    <link rel="icon" href="https://bitbracketimagestorage.blob.core.windows.net/images/BitBracketLogo.png" type="image/png" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/lib/jquery-bracket/jquery.bracket.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BitBracket.styles.css" asp-append-version="true" />
 
-<!-- Semantic UI CSS -->
+    <!-- Semantic UI CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 
     <!-- Bootstrap 5 bundle JS (Includes Popper) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
-        <!-- First jQuery -->
+    <!-- First jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Then Popper.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -32,50 +33,34 @@
         <div class="ui menu borderless navbar-background" id="navbar-background">
             <div class="ui container">
                 <a class="header item navbar-text" asp-area="" asp-controller="Home" asp-action="Index">BitBracket</a>
-                @* <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="Announcement">Admin Announcements</a> *@
-                <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="UserAnnouncementForm">Announcements</a>
-                <a class="item navbar-text" asp-area="" asp-controller="Bracket" asp-action="CreateBracket">Create Bracket</a>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <a class="item navbar-text" asp-area="" asp-controller="Home" asp-action="Profile">Profile</a>
-                    <a class="item navbar-text" asp-area="" asp-controller="Bracket" asp-action="TournamentDashboard">Tournament Dashboard</a>
-                    <!-- Friend Requests Dropdown -->
-                    /*<div class="dropdown" id="friendRequestsDropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Friend Requests
-                        </button>
-                        <div class="dropdown-menu" id="FriendRequest">
-                            <!-- Friend requests will be populated here -->
-
-                        </div>
+                <div class="ui dropdown item navbar-text">
+                    Menu <i class="dropdown icon"></i>
+                    <div class="menu">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="item" asp-area="" asp-controller="Home" asp-action="Profile">Profile</a>
+                        }
+                        <a class="item" asp-area="" asp-controller="Home" asp-action="UserAnnouncementForm">Announcements</a>
+                        <a class="item" asp-area="" asp-controller="Bracket" asp-action="CreateBracket">Create Bracket</a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="item" asp-area="" asp-controller="Bracket" asp-action="TournamentDashboard">Tournament Dashboard</a>
+                        }
+                        <a class="item" asp-area="" asp-controller="Home" asp-action="Search">
+                            <i class="search icon"></i> Search
+                        </a>
                     </div>
-
-                    <!-- Friends Dropdown -->
-                    <div class="dropdown" id="friendsDropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="friendsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Friends
-                        </button>
-                        <div class="dropdown-menu" id="Friends">
-                            <!-- Friends will be populated here -->
-                        </div>
-                    </div>
-                    */
-                }
-                
-                <div class="right menu">
-                    <a class="item" asp-area="" asp-controller="Home" asp-action="Search">
-                        <i class="search icon navbar-text"></i>
-                    </a>
-
+                </div>
+                <div class="item navbar-text">
                     <div class="ui dropdown item navbar-text">
-                        Theme <i class="dropdown icon navbar-text"></i>
+                        Theme <i class="dropdown icon"></i>
                         <div class="menu">
                             <div class="item" id="light-theme">Light Theme</div>
                             <div class="item" id="dark-theme">Dark Theme</div>
                         </div>
                     </div>
-
-
+                </div>
+                <div class="right menu">
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -87,11 +72,7 @@
         </main>
     </div>
 
-
- 
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-   
     <script src="~/lib/jquery-bracket/jquery.bracket.min.js"></script>
     <script src="~/lib/jquery-ui/dist/jquery-ui.min.js"></script>
     <!-- Semantic UI JS -->
@@ -99,8 +80,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/themeSwitcher.js" asp-append-version="true"></script>
     <script>
-      $('.ui.dropdown').dropdown(); // Initialize Semantic UI dropdown
-      //  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        $('.ui.dropdown').dropdown(); // Initialize Semantic UI dropdown
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

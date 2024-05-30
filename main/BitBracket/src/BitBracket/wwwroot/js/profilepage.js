@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     PopulateBlockedUsers();
     showBlockedButton.addEventListener('click', () => ShowBlockedUsers());
     CalculateEstimatedSkillLevel();
+    $('.ui.icon .info.circle.icon').popup();
 });
 
 function CalculateEstimatedSkillLevel() { 
@@ -79,18 +80,26 @@ function PopulateBlockedUsers() {
     fetch('/api/BitUserApi/GetBlockedUsers')
         .then(response => response.json())
         .then(data => {
+            if (data.length === 0) {
+                const noBlockedUsers = document.createElement("div");
+                noBlockedUsers.textContent = "No blocked users.";
+                blockedUsersContainer.appendChild(noBlockedUsers);
+                return;
+            }
             data.forEach(user => {
-                console.log(user.blockedUserNavigation.username);
-                const node = document.createElement('div');
-                node.innerHTML = `
-                    <p class='header'>${user.blockedUserNavigation.username}
-                        <button class='ui small primary button'>Unblock</button>
-                    </p>
-                    `;
-                const button = node.querySelector('button');
+                const tournamentCard = document.createElement("div");
+                tournamentCard.classList.add("user-card");
+                tournamentCard.classList.add("navbar-background");
+                const type = document.createElement("h3");
+                type.textContent = user.blockedUserNavigation.username;
+                tournamentCard.appendChild(type);
+                const button = document.createElement("button");
+                button.textContent = "Unblock";
+                button.classList.add("ui");
                 button.addEventListener('click', () => UnblockUser(user.blockedUserNavigation.username));
+                tournamentCard.appendChild(button);
                 
-                blockedUsersContainer.appendChild(node);
+                blockedUsersContainer.appendChild(tournamentCard);
             });
         });
 }
@@ -112,6 +121,9 @@ function ShowBlockedUsers() {
     const blockedUsersContainer = document.getElementById('show-blocked-container');
     if (blockedUsersContainer.style.display === 'block') {
         blockedUsersContainer.style.display = 'none';
+        const showBlockedButton = document.getElementById('show-blocked-users');
+
+        showBlockedButton.textContent = 'Show Blocked Users';
         return;
     }
     else {

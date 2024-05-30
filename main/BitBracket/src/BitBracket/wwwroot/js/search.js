@@ -1,10 +1,12 @@
 function initialize() {
     const searchAllButton = document.getElementById("searchAllButtonId");
     const searchButton = document.getElementById("searchButtonId");
+
     searchButton.addEventListener("click", Search);
     searchAllButton.addEventListener("click", getAllBitUsers);
 }
 async function Search() {
+
     const statusDropdown = document.getElementById("statusDropdownId");
     console.log('searching');
     const selectedOption = statusDropdown.value;
@@ -77,6 +79,7 @@ async function getAllBitUsers() {
 }
 function displayTournaments(tournamentdata, type) {
     const container = document.getElementById("bitUsersContainer");
+    container.style.display = "block";
     if (type === "Tournaments") {
         container.innerHTML = "";
     }
@@ -90,6 +93,8 @@ function displayTournaments(tournamentdata, type) {
     tournamentdata.forEach(tournament => {
         const tournamentCard = document.createElement("div");
         tournamentCard.classList.add("user-card");
+        tournamentCard.classList.add("navbar-background");
+        tournamentCard.title = `Name: ${tournament.name}\nLocation: ${tournament.location}\nStatus: ${tournament.status}`;
         const type = document.createElement("h3");
         type.textContent = "Tournament";
         type.classList.add("form-info");
@@ -110,7 +115,7 @@ function displayTournaments(tournamentdata, type) {
         status.classList.add("form-info");
         tournamentCard.appendChild(status);
 
-        const tooltip = document.createElement("span");
+        /*const tooltip = document.createElement("span");
         tooltip.classList.add("tooltip");
         tooltip.textContent = `Name: ${tournament.name}\nLocation: ${tournament.location}\nStatus: ${tournament.status}`;
         tournamentCard.appendChild(tooltip);
@@ -123,7 +128,7 @@ function displayTournaments(tournamentdata, type) {
         tournamentCard.addEventListener("mouseout", () => {
             //console.log("should be hidden now")
             tooltip.style.visibility = "hidden";
-        });
+        });*/
 
 
 
@@ -140,6 +145,8 @@ function displayTournaments(tournamentdata, type) {
 function displayBitUsers(bitUsers) {
 
     const container = document.getElementById("bitUsersContainer");
+    container.style.display = "block";
+
     container.innerHTML = "";
     if (bitUsers.length === 0) {
         const noUsersFound = document.createElement("p");
@@ -150,7 +157,9 @@ function displayBitUsers(bitUsers) {
 
         bitUsers.forEach(bitUser => {
             const userCard = document.createElement("div");
+            userCard.title = `Username: ${bitUser.username}\nTag: ${bitUser.tag}\nBio: ${bitUser.bio}`;
             userCard.classList.add("user-card");
+            userCard.classList.add("navbar-background");
             const type = document.createElement("h3");
             type.textContent = "User";
             type.classList.add("form-info");
@@ -171,7 +180,7 @@ function displayBitUsers(bitUsers) {
             bio.classList.add("form-info");
             userCard.appendChild(bio);
 
-            const tooltip = document.createElement("span");
+            /*const tooltip = document.createElement("span");
             tooltip.classList.add("tooltip");
             tooltip.textContent = `Username: ${bitUser.username}\nTag: ${bitUser.tag}\nBio: ${bitUser.bio}`;
             userCard.appendChild(tooltip);
@@ -184,7 +193,7 @@ function displayBitUsers(bitUsers) {
             userCard.addEventListener("mouseout", () => {
                 //console.log("should be hidden now")
                 tooltip.style.visibility = "hidden";
-            });
+            });*/
 
             userCard.addEventListener("click", () => {
                 //console.log("Clicked on user: " + bitUser.username);

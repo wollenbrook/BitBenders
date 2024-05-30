@@ -201,12 +201,31 @@ body.dark-theme {
 
 }
 
+.ceru {
+    background-color: darkslateblue;
+    padding: 20px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.BetterSearchBar {
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background-color: white;
+}
+.BetterFilterStyle {
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background-color: white;
+}
 
 .navbar-text {
-  /* Set the text color for the navbar */
-  color: var(--navbar-text-color) !important;
-  font-size: 10px;    
-
+    /* Set the text color for the navbar */
+    color: var(--navbar-text-color) !important;
+    font-size: 10px;
 }
 .accept-button{
   /* Set the background color for the accept button */
