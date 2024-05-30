@@ -66,7 +66,6 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
             localStorage.setItem('bracketData', json);
             console.log(data);
             var dict = calculateTypeOfBracket(data);
-            console.log(dict);
             SavePlacements(dict);
             
 
@@ -293,7 +292,6 @@ function SavePlacements(dictionaryOfPlacemenets) {
         if (key > 4) {
             Placement = 5;
         }
-        console.log(Placement + ' ' + BitUserName);
         $.ajax({
             url: `/api/BitUserApi/AddOrUpdatePlacement/${BitUserName}/${TournamentId}/${Placement}`,
             type: 'PUT',
