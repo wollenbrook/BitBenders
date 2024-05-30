@@ -66,7 +66,6 @@ fetch(`/api/TournamentAPI/bracket/display/${bracketId}`)
             localStorage.setItem('bracketData', json);
             console.log(data);
             var dict = calculateTypeOfBracket(data);
-            console.log(dict);
             SavePlacements(dict);
             
 
@@ -183,6 +182,91 @@ function singleElimination(data) {
         dictOfPlayerStandings[4] = fourthPlace;
         return dictOfPlayerStandings;
     }
+    if (numberOfRounds === 2) {
+        fithPlace = {}
+        round2p1 = 'efa';
+        round2p2 = 'efa';
+        round2p3 = 'efa';
+        round2p4 = 'efa';
+        finalp1 = 'efa';
+        finalp2 = 'efa';
+        finalp3 = 'efa';
+        finalp4 = 'efa';
+        elimround2 = {}
+        elimround3 = {}
+        if (results[0][0][0][0] > results[0][0][0][1]) {
+            fithPlace[1] = teams[0][1];
+            var round2p1 = teams[0][0];
+        } else {
+            fithPlace[1] = teams[0][0];
+            var round2p1 = teams[0][1];
+        }
+        if (results[0][0][1][0] > results[0][0][1][1]) {
+            fithPlace[2] = teams[1][1];
+            var round2p2 = teams[1][0];
+        } else {
+            fithPlace[2] = teams[1][0];
+            var round2p2 = teams[1][1];
+        }
+        if (results[0][0][2][0] > results[0][0][2][1]) {
+            fithPlace[3] = teams[2][1];
+            var round2p3 = teams[2][0];
+        } else {
+            fithPlace[3] = teams[2][0];
+            var round2p3 = teams[2][1];
+        }
+        if (results[0][0][3][0] > results[0][0][3][1]) {
+            fithPlace[4] = teams[3][1];
+            var round2p4 = teams[3][0];
+        } else {
+            fithPlace[4] = teams[3][0];
+            var round2p4 = teams[3][1];
+        } 
+        //round 2
+        if (results[0][1][0][0] > results[0][1][0][1]) {
+            var finalp1 = round2p1;
+            console.log(finalp1);
+            var finalp3 = round2p2;
+        } else {
+            var finalp1 = round2p2;
+            console.log(finalp1);
+            var finalp3 = round2p1;
+        }
+        if (results[0][1][1][0] > results[0][1][1][1]) {
+            var finalp2 = round2p3;
+            console.log(finalp2);
+            var finalp4 = round2p4;
+        } else {
+            var finalp2 = round2p4;
+            console.log(finalp2);
+            var finalp4 = round2p3;
+        }
+        //finals
+        if (results[0][2][0][0] > results[0][2][0][1]) {
+            var first = finalp1;
+            console.log(first);
+            var second = finalp2;
+        } else {
+            var first = finalp2;
+            var second = finalp1;
+        }
+        if (results[0][2][1][0] > results[0][2][1][1]) {
+            var third = finalp3;
+            var fourth = finalp4;
+        } else {
+            var third = finalp4;
+            var fourth = finalp3;
+        }
+        dictOfPlayerStandings[1] = first;
+        dictOfPlayerStandings[2] = second;
+        dictOfPlayerStandings[3] = third;
+        dictOfPlayerStandings[4] = fourth;
+        dictOfPlayerStandings[5] = fithPlace[1];
+        dictOfPlayerStandings[6] = fithPlace[2];
+        dictOfPlayerStandings[7] = fithPlace[3];
+        dictOfPlayerStandings[8] = fithPlace[4];
+        return dictOfPlayerStandings;
+    }
     return 'nothing yet';
 
 
@@ -202,9 +286,12 @@ function calculateTypeOfBracket(data) {
 function SavePlacements(dictionaryOfPlacemenets) {
     for (var key in dictionaryOfPlacemenets) {
         var Placement = key;
+
         const TournamentId = document.getElementById('TournyId').textContent;
         var BitUserName = dictionaryOfPlacemenets[key];
-        console.log(Placement, TournamentId, BitUserName);
+        if (key > 4) {
+            Placement = 5;
+        }
         $.ajax({
             url: `/api/BitUserApi/AddOrUpdatePlacement/${BitUserName}/${TournamentId}/${Placement}`,
             type: 'PUT',
