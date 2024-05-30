@@ -7,18 +7,11 @@
 </head>
 <body class="announcement-background"></body>
 <h1 class="title-styling">@ViewData["Title"]
-    <button id="myBtn">i</button>
-
+    <a class="ui icon">
+        <i class="info circle icon large inverted" data-content="Welcome to our user announcement page! From here, you can see your latest user announcement, go to create your own user announcement,
+            and go opt in or out of receiving user announcements." data-position="top center"></i>
+    </a>
 </h1>
-<div id="myModal" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Welcome to our user announcement page! From here, you can see your latest user announcement, go to create your own user announcement,
-            and go opt in or out of receiving user announcements.</p>
-
-    </div>
-</div>
 
 <div class="section-gap"></div>
 @if (User.Identity.IsAuthenticated)

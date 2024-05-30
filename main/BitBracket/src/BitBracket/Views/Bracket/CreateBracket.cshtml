@@ -102,15 +102,12 @@
     <div class="ui container">
         <h2 class="title-styling">
             @ViewData["Title"]
-            <button id="myBtn">i</button>
+            <a class="ui icon">
+                <i class="info circle icon large inverted announcement-background" data-content="Welcome to the competition bracket page! From here, you can create a bracket for your competition, and generate a bracket link to share with others" data-position="top center"></i>
+            </a>
         </h2>
         
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Welcome to the competition bracket page! From here, you can create a bracket for your competition, and generate a bracket link to share with others.</p>
-            </div>
-        </div>
+
 
         <div class="ui segment form-container">
             <form id="createBracketForm" method="post" class="ui form">

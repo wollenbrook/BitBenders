@@ -9,20 +9,17 @@
 </head>
 <body class="announcement-background">
     <div class="ui container">
-
-        <div  id="tournament-name" style="visibility: hidden;">@Model.Name</div>
-        </p>
-        <h1 id="tournament-name" class="title-styling">
-            Tournament - @Model.Name
-            <button id="myBtn">i</button>
+        <div id="tournament-name" style="visibility: hidden;">@Model.Name</div>
+        <div id="tournamentId" style="visibility: hidden;">@Model.TournamentId</div>
+        <div id="userId" style="visibility: hidden;">@Model.UserId</div>
+        <h1 id="tournament-nae" class="title-styling">
+            @Model.Name
+            <a class="ui icon small">
+                <i class="info circle icon large inverted announcement-background" data-content="Welcome to tournaments! Here you can see tournament information and send a request to join!" data-position="top center"></i>
+            </a>
         </h1>
 
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Welcome to the tournament page! Here you can view the details of a tournament and send a request to participate.</p>
-            </div>
-        </div>
+
 
     </div>
     <div class="ui very padded segment">
@@ -128,7 +125,6 @@
     <script src="~/js/bracketList.js"></script>
     <script src="~/js/signlar/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>
-    <script src="~/js/modalswitcher.js"></script>
     <script src="~/js/broadcastSet.js"></script>
     <script src="~/js/tournamentProfile.js"></script>
 
