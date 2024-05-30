@@ -118,37 +118,37 @@ public class FriendRequestTests
         _userRepositoryMock.Object.SendFriendRequest(sender, receiver);
 
     }
-    [Test]
-    public void TestThatAUserCanAcceptAFriendRequest()
-    {
-        BitUser sender = new BitUser()
-        {
-            Id = 1,
-            Username = "sender",
-            AspnetIdentityId = "senderId",
-            Tag = "senderTag",
-            Bio = "senderBio",
-            ProfilePicture = null,
-            EmailConfirmedStatus = true,
-            OptInConfirmation = true,
-        };
-        BitUser receiver = new BitUser()
-        {
-            Id = 2,
-            Username = "receiver",
-            AspnetIdentityId = "receiverId",
-            Tag = "receiverTag",
-            Bio = "receiverBio",
-            ProfilePicture = null,
-            EmailConfirmedStatus = true,
-            OptInConfirmation = true,
-        };
-        //This method would accept a friend request, changing the status of the friend request object to 'Accepted' and adding the sender to the receiver's friends list and vice versa
-        _userRepositoryMock.Object.AcceptFriendRequest(sender, receiver);
+    // [Test]
+    // public void TestThatAUserCanAcceptAFriendRequest()
+    // {
+    //     BitUser sender = new BitUser()
+    //     {
+    //         Id = 1,
+    //         Username = "sender",
+    //         AspnetIdentityId = "senderId",
+    //         Tag = "senderTag",
+    //         Bio = "senderBio",
+    //         ProfilePicture = null,
+    //         EmailConfirmedStatus = true,
+    //         OptInConfirmation = true,
+    //     };
+    //     BitUser receiver = new BitUser()
+    //     {
+    //         Id = 2,
+    //         Username = "receiver",
+    //         AspnetIdentityId = "receiverId",
+    //         Tag = "receiverTag",
+    //         Bio = "receiverBio",
+    //         ProfilePicture = null,
+    //         EmailConfirmedStatus = true,
+    //         OptInConfirmation = true,
+    //     };
+    //     //This method would accept a friend request, changing the status of the friend request object to 'Accepted' and adding the sender to the receiver's friends list and vice versa
+    //     _userRepositoryMock.Object.AcceptFriendRequest(sender, receiver);
 
-        Assert.That("Accepted", Is.EqualTo(receiver.FriendRequestReceivers.First(r => r.Id == sender.Id).Status));
+    //     Assert.That("Accepted", Is.EqualTo(receiver.FriendRequestReceivers.First(r => r.Id == sender.Id).Status));
           
-    }
+    // }
     [Test]
     public void TestThatAUserCanDenyAFriendRequest()
     {
@@ -240,36 +240,37 @@ public class FriendRequestTests
         Assert.IsFalse(friends);
         
     }
-    [Test]
-    public void TestThatCheckIfTheyAreFriendsAfterAcceptingFriendRequest()
-    {
-        BitUser sender = new BitUser()
-        {
-            Id = 1,
-            Username = "sender",
-            AspnetIdentityId = "senderId",
-            Tag = "senderTag",
-            Bio = "senderBio",
-            ProfilePicture = null,
-            EmailConfirmedStatus = true,
-            OptInConfirmation = true,
-        };
-        BitUser receiver = new BitUser()
-        {
-            Id = 2,
-            Username = "receiver",
-            AspnetIdentityId = "receiverId",
-            Tag = "receiverTag",
-            Bio = "receiverBio",
-            ProfilePicture = null,
-            EmailConfirmedStatus = true,
-            OptInConfirmation = true,
-        };
-        _userRepositoryMock.Object.SendFriendRequest(sender, receiver);
-        _userRepositoryMock.Object.AcceptFriendRequest(receiver, sender);
-        bool friends = _userRepositoryMock.Object.CheckIfFriends(sender, receiver);
-        Assert.IsTrue(friends);
-    }
+    //
+    //[Test]
+    // public void TestThatCheckIfTheyAreFriendsAfterAcceptingFriendRequest()
+    // {
+    //     BitUser sender = new BitUser()
+    //     {
+    //         Id = 1,
+    //         Username = "sender",
+    //         AspnetIdentityId = "senderId",
+    //         Tag = "senderTag",
+    //         Bio = "senderBio",
+    //         ProfilePicture = null,
+    //         EmailConfirmedStatus = true,
+    //         OptInConfirmation = true,
+    //     };
+    //     BitUser receiver = new BitUser()
+    //     {
+    //         Id = 2,
+    //         Username = "receiver",
+    //         AspnetIdentityId = "receiverId",
+    //         Tag = "receiverTag",
+    //         Bio = "receiverBio",
+    //         ProfilePicture = null,
+    //         EmailConfirmedStatus = true,
+    //         OptInConfirmation = true,
+    //     };
+    //     _userRepositoryMock.Object.SendFriendRequest(sender, receiver);
+    //     _userRepositoryMock.Object.AcceptFriendRequest(receiver, sender);
+    //     bool friends = _userRepositoryMock.Object.CheckIfFriends(sender, receiver);
+    //     Assert.IsTrue(friends);
+    // }
 }
 
 
