@@ -93,33 +93,29 @@
 
     <div class="overlay">
         <h1 class="title-styling">Welcome to BitBracket
-            @* <button id="myBtn" class="ui button small icon">
-                <i class="info circle icon" style="color: white;"></i>
-            </button> *@
         </h1>
-        @* <div id="myModal" class="ui modal">
-            <div class="header">Welcome!</div>
-            <div class="content">
-                <p>Welcome to our home page! From here, you can see the latest admin announcement, see some information about our software's purpose, and get oriented before seeing what we have to offer!</p>
-            </div>
-            <div class="actions">
-                <div class="ui button close">Close</div>
-            </div>
-        </div> *@
         <p class="text-styling">Your ultimate platform for organizing and participating in tournaments.</p>
 
         <div class="ui buttons">
             <a href="@Url.Action("CreateBracket", "Bracket")" class="ui animated button" tabindex="0">
-                <div class="visible content">Got an idea for a tournament?</div>
-                <div class="hidden content">Create a Basic Bracket.</div>
+                <div class="visible content">Basic Bracket</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
             </a>
             <a href="@Url.Action("UserAnnouncementForm", "Home")" class="ui animated button" tabindex="0">
-                <div class="visible content">What have you missed?</div>
-                <div class="hidden content">Check Announcements Page</div>
+                <div class="visible content">Announcements</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
             </a>
             <a href="@Url.Action("Privacy", "Home")" class="ui animated button" tabindex="0">
-                <div class="visible content">What is BitBracket?</div>
-                <div class="hidden content">Check About Page</div>
+                <div class="visible content">About</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
+            </a>
+            <a href="@Url.Action("Search", "Home")" class="ui animated button" tabindex="0">
+                <div class="visible content">Search</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
+            </a>
+            <a href="@Url.Action("TournamentDashboard", "Bracket")" class="ui animated button" tabindex="0">
+                <div class="visible content">Tournament Dashboard</div>
+                <div class="hidden content"><i class="hand pointer outline icon"></i></div>
             </a>
         </div>
     </div>
