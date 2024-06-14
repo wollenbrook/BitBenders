@@ -141,7 +141,7 @@ public class TournamentAPIController : ControllerBase
     //  /api/TournamentAPI/User/{id}
     [HttpGet]
     [Route("User/{id}")]
-    public async Task<IActionResult> GetOwnerTag(int id)
+    public IActionResult GetOwnerTag(int id)
     {
         var user = _bitUserRepository.GetBitUserByRegularId(id);
 
