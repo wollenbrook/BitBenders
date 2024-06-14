@@ -9,7 +9,7 @@ namespace BitBracket.DAL.Abstract
         Task Add(Bracket bracket);
         Task Delete(int id);
         Task<Bracket> Get(int id);
-        Task<IEnumerable<Bracket>> GetAll();
+        //Task<IEnumerable<Bracket>> GetAll();
         Task<IEnumerable<Bracket>> GetAllByTournamentId(int tournamentId);
         Task Update(Bracket bracket);
     }

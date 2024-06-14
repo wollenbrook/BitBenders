@@ -49,8 +49,8 @@ namespace BitBracket.DAL.Concrete
         {
             return await _tournaments.FindAsync(id);
         }
-
-        public async Task<IEnumerable<Tournament>> GetAll()
+        
+        public new async Task<IEnumerable<Tournament>> GetAll()
         {
             return await _tournaments.ToListAsync();
         }
