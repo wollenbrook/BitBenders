@@ -19,7 +19,7 @@ Scenario: TournamentPage page sets Twitch broadcast
 Scenario: TournamentPage page sets YouTube broadcast
 	Given I am a User
 	When I am on the "TournamentPage" page
-        and select the YouTube drop down option in the form
+        And select the YouTube drop down option in the form
 		And enter "111" into the Broadcast Channel textbox
 		And click the Set Broadcast buttton
 	Then the page will reload and a iframe container will appear
@@ -29,14 +29,14 @@ Scenario: TournamentPage page Twitch broadcast is interactable
 	When I am on the "TournamentPage" page
 		And enter "111" into the Broadcast Channel textbox
 		And click the Set Broadcast buttton
-        and the page reloads with a iframe container
+        And the page reloads with a iframe container
 	Then the page the user can interact with the bottom left of the iframe
 
 Scenario: TournamentPage page YouTube broadcast is interactable
 	Given I am a User
 	When I am on the "TournamentPage" page
-        and select the YouTube drop down option in the form
+        And select the YouTube drop down option in the form
 		And enter "111" into the Broadcast Channel textbox
 		And click the Set Broadcast buttton
-        and the page reloads with a iframe container
+        And the page reloads with a iframe container
 	Then the page the user can interact with the bottom right of the iframe
