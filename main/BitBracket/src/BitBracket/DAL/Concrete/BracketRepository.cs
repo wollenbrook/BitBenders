@@ -44,10 +44,12 @@ namespace BitBracket.DAL.Concrete
             return await _brackets.FindAsync(id);
         }
 
+        /*
         public async Task<IEnumerable<Bracket>> GetAll()
         {
             return await _brackets.ToListAsync();
         }
+        */
 
         public async Task<IEnumerable<Bracket>> GetAllByTournamentId(int tournamentId)
         {
