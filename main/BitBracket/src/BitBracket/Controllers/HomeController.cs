@@ -145,7 +145,7 @@ public class HomeController : Controller
         return View(tournament);
     }
 
-        public async Task<IActionResult> OptInConfirmation()
+        public IActionResult OptInConfirmation()
         {
             var userId = _userManager.GetUserId(User);
             if (string.IsNullOrEmpty(userId))
@@ -177,7 +177,7 @@ public class HomeController : Controller
         IdentityUser user = await _userManager.GetUserAsync(User);
         if (bitUser.ProfilePicture == null)
         {
-            _bitUserRepository.UpdateBitUserProfilePictureIfNull(bitUser);
+           await _bitUserRepository.UpdateBitUserProfilePictureIfNull(bitUser);
         }
         UserViewModel userViewModel = new UserViewModel
         {

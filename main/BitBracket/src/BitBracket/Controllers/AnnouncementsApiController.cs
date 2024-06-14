@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -14,17 +15,19 @@ public class AnnouncementsApiController : ControllerBase
     private readonly IEmailService _emailService;
     private readonly ISmsService _smsService; 
     private readonly UserManager<IdentityUser> _userManager;
-    private const string AdminKey = "YourAdminKey";
+    private readonly string _adminKey;
 
     public AnnouncementsApiController(IAnnouncementRepository announcementRepo, 
                                       IEmailService emailService, 
                                       ISmsService smsService, 
-                                      UserManager<IdentityUser> userManager)
+                                      UserManager<IdentityUser> userManager,
+                                      IConfiguration configuration)
     {
         _announcementRepo = announcementRepo;
         _emailService = emailService;
         _smsService = smsService;
         _userManager = userManager;
+        _adminKey = configuration["AdminKey"]; // Retrieve the AdminKey from the configuration
     }
 
     [HttpGet]
@@ -37,7 +40,7 @@ public class AnnouncementsApiController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] Announcement announcement, [FromQuery] string adminKey)
     {
-        if (adminKey != AdminKey)
+        if (adminKey != _adminKey)
         {
             return Unauthorized();
         }
