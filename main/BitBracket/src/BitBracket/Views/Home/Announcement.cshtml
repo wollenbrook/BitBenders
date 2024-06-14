@@ -23,7 +23,7 @@
             <div class="section-gap"></div>
             
             <section>
-                @await Html.PartialAsync("~/Views/Announcements/_AnnouncementsPartial.cshtml")
+                <partial name="~/Views/Announcements/_AnnouncementsPartial.cshtml" />
             </section>
             
         </div>
@@ -31,8 +31,8 @@
 </body>
 
 @section Scripts {
-    <script src="~/js/announcementForm.js"></script> 
-        <script src="~/js/modalswitcher.js"></script>
+    <script src="~/js/announcementForm.js"></script>
+    <script src="~/js/modalswitcher.js"></script>
 
 }
 

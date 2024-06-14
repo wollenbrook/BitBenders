@@ -186,7 +186,7 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
-            _bitUserRepository.SendFriendRequest(sender, reciver);
+            await _bitUserRepository.SendFriendRequest(sender, reciver);
 
             return Ok();
         }
@@ -201,7 +201,7 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
-            _bitUserRepository.AcceptFriendRequest(sender, reciver);
+            await _bitUserRepository.AcceptFriendRequest(sender, reciver);
 
             return Ok();
         }
@@ -215,7 +215,7 @@ namespace BitBracket.Controllers
             {
                 return NotFound();
             }
-            _bitUserRepository.DeclineFriendRequest(sender, reciver);
+            await _bitUserRepository.DeclineFriendRequest(sender, reciver);
 
             return Ok();
         }
@@ -315,7 +315,7 @@ namespace BitBracket.Controllers
             }
             
            
-            _bitUserRepository.BlockUser(viewer ,personBeingViewed);
+            await _bitUserRepository.BlockUser(viewer ,personBeingViewed);
             
             return Ok();
         }
