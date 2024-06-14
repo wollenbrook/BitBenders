@@ -102,6 +102,5 @@
 //             var result = await _controller.UploadProfilePicture(test);
 //             Assert.IsInstanceOf<BadRequestResult>(result);
 //         }
-
 //     }
 // }
