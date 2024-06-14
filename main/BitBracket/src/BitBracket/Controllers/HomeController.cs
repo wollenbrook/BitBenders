@@ -145,7 +145,7 @@ public class HomeController : Controller
         return View(tournament);
     }
 
-        public async Task<IActionResult> OptInConfirmation()
+        public IActionResult OptInConfirmation()
         {
             var userId = _userManager.GetUserId(User);
             if (string.IsNullOrEmpty(userId))
