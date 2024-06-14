@@ -14,6 +14,9 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Load user secrets
+builder.Configuration.AddUserSecrets<Program>();
+
 // Add services to the container.
 builder.Services.AddSignalR();
 var connectionString1 = builder.Configuration.GetConnectionString("AuthenticationConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -58,6 +61,9 @@ builder.Services.AddSingleton<ISmsService>(new SmsService(
         authToken,
         fromNumber
 ));
+
+// Retrieve AdminKey from configuration
+var adminKey = builder.Configuration["AdminKey"];
 
 builder.Services.AddControllers();
 
