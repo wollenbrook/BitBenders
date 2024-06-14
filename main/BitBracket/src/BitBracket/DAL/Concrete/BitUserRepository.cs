@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using EllipticCurve.Utils;
-using BitBracket.DAL.Abstract;
 using NuGet.Protocol.Plugins;
 using System.Reflection;
 using Twilio.TwiML.Fax;

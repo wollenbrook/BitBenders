@@ -177,7 +177,7 @@ public class HomeController : Controller
         IdentityUser user = await _userManager.GetUserAsync(User);
         if (bitUser.ProfilePicture == null)
         {
-            _bitUserRepository.UpdateBitUserProfilePictureIfNull(bitUser);
+           await _bitUserRepository.UpdateBitUserProfilePictureIfNull(bitUser);
         }
         UserViewModel userViewModel = new UserViewModel
         {

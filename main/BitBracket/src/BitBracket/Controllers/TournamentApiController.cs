@@ -92,11 +92,6 @@ public class TournamentAPIController : ControllerBase
     [Route("Bracket/{id}")]
     public async Task<IActionResult> GetBracketsByTournamentId(int id)
     {
-
-        if (id == null)
-        {
-            return NotFound();
-        }
         
         var brackets = await _bracketRepository.GetAllByTournamentId(id);
 
